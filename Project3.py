@@ -1,11 +1,15 @@
 """
 @author: Michayla Ben-Ezra
-SSW555 - project 2
+@author: Nicole Hilden
+@author: Caroline Telma
+@author: Elena Sanchez
+SSW555 - project 3
 
 I pledge my honor that I have abided by the Stevens Honor System
 -Michayla Ben-Ezra 9/10/2018
 
 """
+
 
 #the dictionary below defines all of the levels and their valid tags for GEDCOM family trees
 valid = {
@@ -14,7 +18,7 @@ valid = {
     '2': ['DATE']
     }
 
-def validFile(line):
+def validLine(line):
     
     #this prints each line in the file, strips it of the white space, splits the line up into any array called "tokens"
     #and then the array is used to identify the level, tag, and any associated arugments for the line
@@ -47,7 +51,7 @@ def parseFile(file):
     #ok = validFile(testValidFile)
     
     for line in file:
-        ok = validFile(line)
+        ok = validLine(line)
         line = line.strip()
         print ('-->', line)
         tokens = line.split()
@@ -68,6 +72,7 @@ def parseFile(file):
             if args == "":
                 args = 'N/A'
             print ("<-- " + level.strip()+ "|"+ tag+"|"+ok+"|"+args)
+
                             
 def main():
     #the line below opens the indicated file and reads it
