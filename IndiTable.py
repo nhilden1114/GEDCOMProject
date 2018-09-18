@@ -24,15 +24,7 @@ def createIndiTable(file):
     for line in file:
         arr.append(line.strip())
 
-    #print(arr)
 
-    #for line in file:
-        #ok = validLine(line)
-        #line = line.strip()
-        #tokens = line.split()
-        #level = tokens[0]
-        #tag = tokens[1]
-        #args = " ".join(tokens[2:])
     for i in range(len(arr)):
         line = arr[i]
         ok = validLine(line)
@@ -40,9 +32,6 @@ def createIndiTable(file):
         level = tokens[0]
         tag = tokens[1]
         args = " ".join(tokens[2:])
-
-        #needs to be initialized somewhere else
-        #ID,Name,Gender,Birthday,Age,Alive,Death,Child,Spouse = ("","","","","","","","","")
 
         if ok == "Y" and (tag in ["NAME","SEX","BIRT","DEAT","FAMC","FAMS"] or (len(tokens)>=3 and tokens[2]=="INDI")):
                 
@@ -56,14 +45,12 @@ def createIndiTable(file):
                 
                 #need to access next line for the DATE
                 newLine = arr[i+1]
-                print("newLineB: ", newLine)
                 newOK = validLine(newLine)
                 newTok = newLine.split()
                 newTag = newTok[1]
                 newArgs = " ".join(newTok[2:])
                 
                 if newOK == "Y" and newTag == "DATE":
-                    print("newArgsB: ", newArgs)
                     vals["Birthday"] = newArgs
                     vals["Age"] = determineAge(newArgs, "17 NOV 2018")
 
@@ -72,14 +59,12 @@ def createIndiTable(file):
 
                 #need to access next line for the DATE
                 newLine = arr[i+1]
-                print("newLineD: ", newLine)
                 newOK = validLine(newLine)
                 newTok = newLine.split()
                 newTag = newTok[1]
                 newArgs = " ".join(newTok[2:])
                 
                 if newOK == "Y" and newTag == "DATE":
-                    print("newArgsD: ", newArgs)
                     vals["Death"] = newArgs
                     vals["Age"] = determineAge("4 NOV 1990", newArgs)
 
@@ -99,17 +84,6 @@ def createIndiTable(file):
 
             elif tokens[2] == "INDI":
                 vals["ID"] = tokens[1]
-
-        #elif ok == "Y" and tag == "DATE":
-        #    vals["Age"] = determineAge(args, datetime.date.today())
-        #    print(args, " and ", vals["Age"] )
-
-
-
-        #try: (ID,Name,Gender,Birthday,Age,Alive,Death,Child,Spouse)
-        #except: continue
-
-        #tab.add_row([ID,Name,Gender,Birthday,Age,Alive,Death,Child,Spouse])
             
     return tab
 
