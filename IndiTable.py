@@ -24,14 +24,16 @@ def createIndiTable(file):
     for line in file:
         arr.append(line.strip())
 
-
-    for i in range(len(arr)):
+    i=0;
+    while(i<len(arr)):
         line = arr[i]
         ok = validLine(line)
         tokens = line.split()
         level = tokens[0]
         tag = tokens[1]
         args = " ".join(tokens[2:])
+
+        i+=1
 
         if ok == "Y" and (tag in ["NAME","SEX","BIRT","DEAT","FAMC","FAMS"] or (len(tokens)>=3 and tokens[2]=="INDI")):
                 
@@ -44,7 +46,7 @@ def createIndiTable(file):
             elif tag == "BIRT":
                 
                 #need to access next line for the DATE
-                newLine = arr[i+1]
+                newLine = arr[i]
                 newOK = validLine(newLine)
                 newTok = newLine.split()
                 newTag = newTok[1]
@@ -58,7 +60,7 @@ def createIndiTable(file):
                 vals["Alive"] = "False"
 
                 #need to access next line for the DATE
-                newLine = arr[i+1]
+                newLine = arr[i]
                 newOK = validLine(newLine)
                 newTok = newLine.split()
                 newTag = newTok[1]
@@ -70,10 +72,21 @@ def createIndiTable(file):
 
             elif tag == "FAMS":
                 vals["Spouse"] = args
-                vals["Child"] = "N/A"
-                tab.add_row([vals["ID"],vals["Name"],vals["Gender"],vals["Birthday"],vals["Age"],vals["Alive"],vals["Death"],vals["Child"],vals["Spouse"]])
-                vals["Alive"] = "True"
-                vals["Death"] = "N/A"
+
+                newLine = arr[i]
+                newOK = validLine(newLine)
+                newTok = newLine.split()
+                newTag = newTok[1]
+                newArgs = " ".join(newTok[2:])
+                if newOK == "Y" and newTag == "FAMC":
+                    vals["Child"] = newArgs
+                    tab.add_row([vals["ID"],vals["Name"],vals["Gender"],vals["Birthday"],vals["Age"],vals["Alive"],vals["Death"],vals["Child"],vals["Spouse"]])
+                    i=i+1
+                else:
+                    vals["Child"] = "N/A"
+                    tab.add_row([vals["ID"],vals["Name"],vals["Gender"],vals["Birthday"],vals["Age"],vals["Alive"],vals["Death"],vals["Child"],vals["Spouse"]])
+                    vals["Alive"] = "True"
+                    vals["Death"] = "N/A"
                 
             elif tag == "FAMC":
                 vals["Child"] = args
