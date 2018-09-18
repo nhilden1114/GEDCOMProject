@@ -68,7 +68,7 @@ def createIndiTable(file):
                 
                 if newOK == "Y" and newTag == "DATE":
                     vals["Death"] = newArgs
-                    vals["Age"] = determineAge("4 NOV 1990", newArgs)
+                    vals["Age"] = determineAge(vals["Birthday"], newArgs)
 
             elif tag == "FAMS":
                 vals["Spouse"] = args
