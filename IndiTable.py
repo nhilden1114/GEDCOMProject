@@ -19,9 +19,22 @@ def createIndiTable(file):
 
     vals = dict({"ID":"N/A","Name":"N/A","Gender":"N/A","Birthday":"N/A","Age":"N/A","Alive":"N/A","Death":"N/A","Child":"N/A","Spouse":"N/A"})
 
+    arr = []
     for line in file:
+        arr.append(line.strip())
+
+    print(arr)
+
+    #for line in file:
+        #ok = validLine(line)
+        #line = line.strip()
+        #tokens = line.split()
+        #level = tokens[0]
+        #tag = tokens[1]
+        #args = " ".join(tokens[2:])
+    for i in range(len(arr)):
+        line = arr[i]
         ok = validLine(line)
-        line = line.strip()
         tokens = line.split()
         level = tokens[0]
         tag = tokens[1]
@@ -30,7 +43,7 @@ def createIndiTable(file):
         #needs to be initialized somewhere else
         #ID,Name,Gender,Birthday,Age,Alive,Death,Child,Spouse = ("","","","","","","","","")
 
-        if ok == "Y" and (tag in ["NAME","SEX","FAMC","FAMS"] or (len(tokens)>=3 and tokens[2]=="INDI")):
+        if ok == "Y" and (tag in ["NAME","SEX","BIRTH","DEAT","FAMC","FAMS"] or (len(tokens)>=3 and tokens[2]=="INDI")):
                 
             if tag == "NAME":
                 vals["Name"] = args
@@ -38,11 +51,11 @@ def createIndiTable(file):
             elif tag == "SEX":
                 vals["Gender"] = args
 
- #           elif tag == "BIRT":
+            elif tag == "BIRT":
                 
                 #need to access next line for the DATE
- #               newLine = next(file)
-  #              newTok = newLine.split()
+                newLine = next(file)
+                newTok = newLine.split()
    #             newTag = newTok[1]
     #            newArgs = " ".join(tokens[2:])
      #           if newTag == "DATE":
@@ -93,7 +106,7 @@ def createIndiTable(file):
 def main():
 
     try:
-        file = open('/Users/Test/Documents/SSW555/proj02test.ged')
+        file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
     except:
         print("Cannot open file")
         
