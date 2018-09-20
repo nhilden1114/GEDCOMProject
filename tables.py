@@ -3,6 +3,8 @@ import datetime
 from Project3 import validLine
 
 def determineAge(dob, date):
+
+    '''Calculate the age of a person given two dates'''
     
     currDate = datetime.datetime.strptime(date, "%d %b %Y").date()
     birth = datetime.datetime.strptime(dob, "%d %b %Y").date()
@@ -10,37 +12,60 @@ def determineAge(dob, date):
     return age
 
 class Person():
-
-    idtag, name, gender, birth, age, alive, death, famc, fams = '','','','','','True','N/A',[],[]
+    
+    def __init__(self):
+        self.idtag = "NA"
+        self.name = "NA"
+        self.gender = "NA"
+        self.birth = "NA"
+        self.age = "NA" 
+        self.alive = True
+        self.death = "NA"
+        self.famc = list()
+        self.fams = list()
 
 class Family():
 
-    idtag, marr, div, husbid, husbnam, wifeid, wifename, chil = '','','N/A','','','','',[]
-
+    def __init__(self):
+        self.idtag = "NA"
+        self.marr = "NA"
+        self.div = "N/A"
+        self.husbid = "NA"
+        self.husbnam = "NA" 
+        self.wifeid = "NA"
+        self.wifename = "NA"
+        self.chil = list()
 
 def createTables(file):
 
-    indi = dict()
-    fam = dict()
+    indi = dict() # indi[id] = instance of class Person
+    fam = dict() # fam[id] = instance of class Family
 
-    arr = []
-    for line in file:
-        arr.append(line.strip())
+    arr = file.readlines()
 
-    i=0;
-    while(i<len(arr)):
-        line = arr[i]
-        ok = validLine(line)
-        tokens = line.split()
-        level = tokens[0]
-        tag = tokens[1]
-        args = " ".join(tokens[2:])
+    i = 0
+    person = None
+    family = None
 
-        i+=1
+    while  i < len(arr):
+        line = arr[i].strip()
+        level, tag, args, tokens = validLine(line)
 
-        if ok == "Y" and (tag in ["NAME","SEX","BIRT","DEAT","FAMC","FAMS","MARR","CHIL","DIV","HUSB","WIFE"] or (len(tokens)>=3 and tokens[2] in ["INDI","FAM"])):
+        i += 1
+
+        if tag is not None:
                 
-            if tag == "NAME":
+            if tag == "INDI":
+                person = Person()
+                person.idtag = args
+                indi[person.idtag] = person
+                
+            elif tag == "FAM":
+                family = Family()
+                family.idtag = args
+                fam[family.idtag] = family
+                
+            elif tag == "NAME":
                 person.name = args
                 
             elif tag == "SEX":
@@ -49,29 +74,23 @@ def createTables(file):
             elif tag == "BIRT":
                 
                 #need to access next line for the DATE
-                newLine = arr[i]
-                newOK = validLine(newLine)
-                newTok = newLine.split()
-                newTag = newTok[1]
-                newArgs = " ".join(newTok[2:])
+                newLine = arr[i].strip()
+                new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
-                if newOK == "Y" and newTag == "DATE":
-                    person.birth = newArgs
-                    person.age = determineAge(newArgs, "17 SEP 2018")
+                if new_tag == "DATE":
+                    person.birth = new_args
+                    person.age = determineAge(new_args, "19 SEP 2018")
 
             elif tag == "DEAT":
-                person.alive = "False"
+                person.alive = False
                 
                 #need to access next line for the DATE
-                newLine = arr[i]
-                newOK = validLine(newLine)
-                newTok = newLine.split()
-                newTag = newTok[1]
-                newArgs = " ".join(newTok[2:])
+                newLine = arr[i].strip()
+                new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
-                if newOK == "Y" and newTag == "DATE":
-                    person.death = newArgs
-                    person.age = determineAge(person.birth, newArgs)
+                if new_tag == "DATE":
+                    person.death = new_args
+                    person.age = determineAge(person.birth, new_args)
 
 
             elif tag == "FAMS":
@@ -81,50 +100,33 @@ def createTables(file):
                 person.famc.append(args)
 
             elif tag == "MARR":
+
+                #need to access next line for the DATE
+                newLine = arr[i].strip()
+                new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
-                newLine = arr[i]
-                newOK = validLine(newLine)
-                newTok = newLine.split()
-                newTag = newTok[1]
-                newArgs = " ".join(newTok[2:])
-                
-                if newOK == "Y" and newTag == "DATE":
-                    family.marr = newArgs
+                if new_tag == "DATE":
+                    family.marr = new_args
 
             elif tag == "DIV":
+
+                #need to access next line for the DATE
+                newLine = arr[i].strip()
+                new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
-                newLine = arr[i]
-                newOK = validLine(newLine)
-                newTok = newLine.split()
-                newTag = newTok[1]
-                newArgs = " ".join(newTok[2:])
-                
-                if newOK == "Y" and newTag == "DATE":
-                    family.div = newArgs
+                if new_tag == "DATE":
+                    family.div = new_args
 
             elif tag == "HUSB":
                 family.husbid = args
-                family.husbname = indi[args]
+                family.husbname = indi[args].name
 
             elif tag == "WIFE":
                 family.wifeid = args
-                family.wifename = indi[args]
+                family.wifename = indi[args].name
 
             elif tag == "CHIL":
                 family.chil.append(args)
-
-            elif tokens[2] == "INDI":
-                person = Person()
-                person.idtag = tokens[1]
-                indi[person.idtag] = person
-                person.famc = []
-                person.fams = []
-                
-            elif tokens[2] == "FAM":
-                family = Family()
-                family.idtag = tokens[1]
-                fam[family.idtag] = family
-                family.chil = []
                 
 
     createINDI(indi)
@@ -135,7 +137,7 @@ def createINDI(indi):
     table = PrettyTable()
     table.field_names = ['ID', 'Name', 'Gender', 'Birthday', 'Age','Alive', 'Death', 'Child', 'Spouse']
     
-    for key in indi:
+    for key in sorted(indi.keys()):
         idt = indi[key].idtag
         nam = indi[key].name
         gen = indi[key].gender
@@ -151,9 +153,9 @@ def createINDI(indi):
 
 def createFAM(fam):
     table = PrettyTable()
-    table.field_names = ['ID', 'Married', 'Divorced', 'Husband ID','Wife ID', 'Children']
+    table.field_names = ['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children']
     
-    for key in fam:
+    for key in sorted(fam.keys()):
         idt = fam[key].idtag
         mar = fam[key].marr
         div = fam[key].div
@@ -162,7 +164,7 @@ def createFAM(fam):
         wif = fam[key].wifename
         wid = fam[key].wifeid
         chi = fam[key].chil
-        table.add_row([idt, mar, div, hid, wid, chi])
+        table.add_row([idt, mar, div, hid, hus, wid, wif, chi])
         
     print (table)
     

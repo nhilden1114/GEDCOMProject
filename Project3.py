@@ -19,32 +19,37 @@ valid = {
     }
 
 def validLine(line):
-    
-    #this prints each line in the file, strips it of the white space, splits the line up into any array called "tokens"
-    #and then the array is used to identify the level, tag, and any associated arugments for the line
-    #for line in file:
-        line = line.strip()
-        #print ('-->', line)
-        tokens = line.split()
-        level = tokens[0]
-        tag = tokens[1]
-        args = " ".join(tokens[2:])
-    
-        #this if statement is to decide if the line is valid or invalid
-        #this decision is made by seeing if the tag in the line is at the appropriate level
-        #if level in valid:
-        
-        if level in valid and tag in valid[level]:
-            #print (level)
-            #print (tag)
-            ok = 'Y'
-        else:
-            if len(tokens)>= 3 and tokens[2] in ['INDI', 'FAM']:
-                ok = 'Y'
-            else:
-                ok = 'N'
+    """ 
+        this prints each line in the file, strips it of the white space, splits the line up into any array called "tokens"
+        and then the array is used to identify the level, tag, and any associated arugments for the line
+        for line in file:
+    """
+    line = line.strip()
+    tokens = line.split()
+    level = tokens[0]
+    tag = tokens[1]
+    args = " ".join(tokens[2:])
 
-        return ok
+    #this if statement is to decide if the line is valid or invalid
+    #this decision is made by seeing if the tag in the line is at the appropriate level
+    #if level in valid:
+    
+    if level in valid and tag in valid[level]:
+        #print (level)
+        #print (tag)
+        ok = True
+    else:
+        if len(tokens)>= 3 and tokens[2] in ['INDI', 'FAM']:
+            tag = tokens[2]
+            args = tokens[1]
+            ok = True
+        else:
+            ok = False
+
+    if ok:
+        return level, tag, args, tokens
+    else:
+        return None, None, None, None
                 
 def parseFile(file):
     #testValidFile = file
