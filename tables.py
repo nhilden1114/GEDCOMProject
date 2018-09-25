@@ -4,16 +4,19 @@ from Project3 import validLine
 
 def determineAge(dob, date):
 
-    '''Calculate the age of a person given two dates'''
-    
-    currDate = datetime.datetime.strptime(date, "%d %b %Y").date()
-    birth = datetime.datetime.strptime(dob, "%d %b %Y").date()
-    age = currDate.year - birth.year - ((birth.month, birth.day) > (currDate.month, currDate.day))
+    '''
+       Calculate the age of a person given two dates
+       dob is the person's date of birth
+       date is either the current date or the death date
+    '''
+    age = date.year - dob.year - ((dob.month, dob.day) > (date.month, date.day))
+
+    #age = abs((date – dob)).days / 365.25
+
     return age
 
-def user_story_1(date): #Dates (birth, marriage, divorce, death) should not be after the current date
+def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not be after the current date
 
-    inputDate = datetime.datetime.strptime(date, "%d %b %Y").date()
     current = datetime.datetime.today()
 
     difference = current.year - inputDate.year - ((inputDate.month, inputDate.day) > (current.month, current.day))
@@ -91,8 +94,11 @@ def createTables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
                 if new_tag == "DATE":
-                    person.birth = new_args
-                    person.age = determineAge(new_args, "24 SEP 2018")
+                    #person.birth = new_args
+                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    if user_story_1(new_date):
+                        person.birth = new_date
+                        person.age = determineAge(new_date, datetime.datetime.today())
 
             elif tag == "DEAT":
                 person.alive = False
@@ -102,8 +108,11 @@ def createTables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
                 if new_tag == "DATE":
-                    person.death = new_args
-                    person.age = determineAge(person.birth, new_args)
+                    #person.death = new_args
+                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    if user_story_1(new_date):
+                        person.death = new_date
+                        person.age = determineAge(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -119,7 +128,9 @@ def createTables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
                 if new_tag == "DATE":
-                    family.marr = new_args
+                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    if user_story_1(new_date):
+                        family.marr = new_date
 
             elif tag == "DIV":
 
@@ -128,7 +139,9 @@ def createTables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
                 if new_tag == "DATE":
-                    family.div = new_args
+                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    if user_story_1(new_date):
+                        family.div = new_date
 
             elif tag == "HUSB":
                 family.husbid = args
