@@ -11,6 +11,19 @@ def determineAge(dob, date):
     age = currDate.year - birth.year - ((birth.month, birth.day) > (currDate.month, currDate.day))
     return age
 
+def user_story_1(date): #Dates (birth, marriage, divorce, death) should not be after the current date
+
+    inputDate = datetime.datetime.strptime(date, "%d %b %Y").date()
+    current = datetime.datetime.today()
+
+    difference = current.year - inputDate.year - ((inputDate.month, inputDate.day) > (current.month, current.day))
+
+    if difference < 0:
+        print ("Error: Date should not be after the current one")
+        return False
+    else:
+        return True
+
 class Person():
     
     def __init__(self):
@@ -79,7 +92,7 @@ def createTables(file):
                 
                 if new_tag == "DATE":
                     person.birth = new_args
-                    person.age = determineAge(new_args, "19 SEP 2018")
+                    person.age = determineAge(new_args, "24 SEP 2018")
 
             elif tag == "DEAT":
                 person.alive = False
