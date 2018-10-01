@@ -27,6 +27,15 @@ def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not
     else:
         return True
 
+def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
+    husb_fam = indi[husbid].famc
+    wife_fam = indi[wifeid].famc
+    if husb_fam == wife_fam:
+        print("Incest ouccurring")
+        return False
+    else: return True
+        
+
 class Person():
     
     def __init__(self):
@@ -150,14 +159,17 @@ def createTables(file):
             elif tag == "WIFE":
                 family.wifeid = args
                 family.wifename = indi[args].name
+                
 
             elif tag == "CHIL":
                 family.chil.append(args)
                 
-
+    for key in fam:
+        user_story_18(indi, fam[key].husbid, fam[key].wifeid)
+        
     createINDI(indi)
     createFAM(fam)
-
+    
 def createINDI(indi):
     
     table = PrettyTable()
@@ -193,12 +205,12 @@ def createFAM(fam):
         table.add_row([idt, mar, div, hid, hus, wid, wif, chi])
         
     print (table)
-    
-    
+
 def main():
 
     try:
-        file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
+        #file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
+        file = open ('/Users/carolinetelma/Desktop/NicoleFamily.ged', 'r')
     except:
         print("Cannot open file")
         
