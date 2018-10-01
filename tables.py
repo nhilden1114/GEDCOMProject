@@ -102,7 +102,7 @@ def user_story_6(input_date5, input_date6):  # A person cannot get a divorce aft
 
     if divorce_date != "NA" and divorce_date < datetime.datetime.today():
         if death_date != "NA" and death_date <= datetime.datetime.today():
-            if difference < 0;
+            if difference < 0:
                 print("Error: Divorce date should not occur after death date")
                 return False
             else:

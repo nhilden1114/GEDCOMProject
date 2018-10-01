@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-from tables import user_story_1, user_story_18, user_story_3, user_story_5, user_story_21_a, user_story_21_b
-=======
-from tables import user_story_1, user_story_18
-from tables import user_story_5, user_story_3
-from tables import user_story_2
->>>>>>> e54cddd2b1043c1d8374381e4a473ce25f63e5cf
+from tables import user_story_1, user_story_2
+from tables import user_story_3, user_story_5
+from tables import user_story_6, user_story_18
+from tables import user_story_21_a, user_story_21_b
 from tables import Person
 
 import unittest
