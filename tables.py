@@ -2,6 +2,7 @@ from prettytable import PrettyTable
 import datetime
 from Project3 import validLine
 
+
 def determineAge(dob, date):
 
     '''
@@ -15,6 +16,7 @@ def determineAge(dob, date):
 
     return age
 
+
 def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not be after the current date
 
     current = datetime.datetime.today()
@@ -27,33 +29,20 @@ def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not
     else:
         return True
 
-def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
-    husb_fam = indi[husbid].famc
-    wife_fam = indi[wifeid].famc
-    if husb_fam == wife_fam:
-        print("Incest occurring")
+
+def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before marriage of an individual
+    husb_birth = indi[husbid].birth
+    wife_birth = indi[wifeid].birth
+
+    wife_diff = marr_date.year - wife_birth.year - ((wife_birth.month, wife_birth.day) > (marr_date.month, marr_date.day))
+    husb_diff = marr_date.year - husb_birth.year - ((husb_birth.month, husb_birth.day) > (marr_date.month, marr_date.day))
+
+    if wife_diff < 0 or husb_diff < 0:
+        print("Error: Marriage date cannot be before Birth date")
         return False
-    else: return True
-    
-def user_story_21_a (indi, husbid): #Correct gender role for husband
-    husb_gender = indi[husbid].gender
-    
-    if husb_gender == "M":
-        print("Correct gender for husband")
-        return True
-    else: 
-        print("Incorrect gender for husband")
-        return False
-    
-def user_story_21_b (indi, wifeid): #Correct gender role for wife
-    wife_gender = indi[wifeid].gender
-    
-    if wife_gender == "F":
-        print("Correct gender for wife")
-        return True
     else:
-        print("Incorrect gender for wife")
-        return False      
+        return True
+
 
 def user_story_3(birthday, death_day): # a person's birthday must be before their death date
 
@@ -74,6 +63,29 @@ def user_story_3(birthday, death_day): # a person's birthday must be before thei
         return False
 
 
+def user_story_4(input_date1, input_date2):
+
+    marriage_date = input_date1
+
+    divorce_date = input_date2
+
+    difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
+
+    if marriage_date != "NA" and marriage_date < datetime.datetime.today():
+        if divorce_date != "NA" and divorce_date <= datetime.datetime.today():
+            if difference < 0:
+                print("Error: Divorce date should not be before the marriage date")
+                return False
+            else:
+                return True
+        else:
+            print("Error: Divorce date not valid")
+            return False
+    else:
+        print("Error: Marriage date not valid")
+        return False
+
+
 def user_story_5(marriage_date, death_date): # A person cannot get married after their death date
 
     difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
@@ -91,6 +103,7 @@ def user_story_5(marriage_date, death_date): # A person cannot get married after
     else:
         print("Error: Marriage date not valid")
         return False
+
 
 def user_story_6(input_date5, input_date6):  # A person cannot get a divorce after death
 
@@ -114,18 +127,38 @@ def user_story_6(input_date5, input_date6):  # A person cannot get a divorce aft
         print("Error: Divorce date not valid")
         return False
 
-def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before marriage of an individual
-    husb_birth = indi[husbid].birth
-    wife_birth = indi[wifeid].birth
 
-    wife_diff = marr_date.year - wife_birth.year - ((wife_birth.month, wife_birth.day) > (marr_date.month, marr_date.day))
-    husb_diff = marr_date.year - husb_birth.year - ((husb_birth.month, husb_birth.day) > (marr_date.month, marr_date.day))
-
-    if wife_diff < 0 or husb_diff < 0:
-        print("Error: Marriage date cannot be before Birth date")
+def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
+    husb_fam = indi[husbid].famc
+    wife_fam = indi[wifeid].famc
+    if husb_fam == wife_fam:
+        print("Incest occurring")
         return False
     else:
         return True
+
+
+def user_story_21_a(indi, husbid):  # Correct gender role for husband
+    husb_gender = indi[husbid].gender
+
+    if husb_gender == "M":
+        print("Correct gender for husband")
+        return True
+    else:
+        print("Incorrect gender for husband")
+        return False
+
+
+def user_story_21_b(indi, wifeid):  # Correct gender role for wife
+    wife_gender = indi[wifeid].gender
+
+    if wife_gender == "F":
+        print("Correct gender for wife")
+        return True
+    else:
+        print("Incorrect gender for wife")
+        return False
+
 
 class Person():
     
@@ -151,6 +184,7 @@ class Family():
         self.wifeid = "NA"
         self.wifename = "NA"
         self.chil = list()
+
 
 def createTables(file):
 
@@ -261,7 +295,8 @@ def createTables(file):
         
     createINDI(indi)
     createFAM(fam)
-    
+
+
 def createINDI(indi):
     
     table = PrettyTable()
@@ -281,7 +316,8 @@ def createINDI(indi):
         fs = indi[key].fams
         table.add_row([idt, nam, gen, bir, age, ali, dea, fc, fs])
         
-    print (table)
+    print(table)
+
 
 def createFAM(fam):
     table = PrettyTable()
@@ -298,7 +334,8 @@ def createFAM(fam):
         chi = fam[key].chil
         table.add_row([idt, mar, div, hid, hus, wid, wif, chi])
         
-    print (table)
+    print(table)
+
 
 def main():
 

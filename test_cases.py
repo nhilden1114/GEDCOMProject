@@ -1,11 +1,13 @@
 from tables import user_story_1, user_story_2
-from tables import user_story_3, user_story_5
-from tables import user_story_6, user_story_18
+from tables import user_story_3, user_story_4
+from tables import user_story_5, user_story_6
+from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
 from tables import Person
 
 import unittest
 import datetime
+
 
 class Test(unittest.TestCase):
 
@@ -42,6 +44,13 @@ class Test(unittest.TestCase):
         self.assertFalse(user_story_3(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
         self.assertTrue(user_story_3(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
         self.assertFalse(user_story_3(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
+
+    def test_us3(self):
+        self.assertTrue(user_story_4(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
+        self.assertFalse(user_story_4(datetime.datetime(2000, 2, 11), datetime.datetime(1900, 2, 11)), False)
+        self.assertFalse(user_story_4(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
+        self.assertTrue(user_story_4(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
+        self.assertFalse(user_story_4(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
 
     def test_us6(self):
         self.assertTrue(user_story_6(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
