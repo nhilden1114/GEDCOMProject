@@ -72,15 +72,15 @@ def user_story_4(marriage_date, divorce_date):
     if marriage_date != "NA" and marriage_date < datetime.datetime.today():
         if divorce_date != "NA" and divorce_date <= datetime.datetime.today():
             if difference < 0:
-                print("Error: Divorce date should not be before the marriage date")
+                print("ERROR: US04: Divorce date should not be before the marriage date")
                 return False
             else:
                 return True
         else:
-            print("Error: Divorce date not valid")
+            print("ERROR: US04: Divorce date not valid")
             return False
     else:
-        print("Error: Marriage date not valid")
+        print("ERROR: US04: Marriage date not valid")
         return False
 
 
@@ -110,15 +110,15 @@ def user_story_6(divorce_date, death_date):  # A person cannot get a divorce aft
     if divorce_date != "NA" and divorce_date < datetime.datetime.today():
         if death_date != "NA" and death_date <= datetime.datetime.today():
             if difference < 0:
-                print("Error: Divorce date should not occur after death date")
+                print("ERROR: US06: Divorce date should not occur after death date")
                 return False
             else:
                 return True
         else:
-            print("Error: Death date not valid")
+            print("ERROR: US06: Death date not valid")
             return False
     else:
-        print("Error: Divorce date not valid")
+        print("ERROR: US06: Divorce date not valid")
         return False
 
 
