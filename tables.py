@@ -34,6 +34,26 @@ def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
         print("Incest ouccurring")
         return False
     else: return True
+    
+def user_story_21_a (indi, husbid): #Correct gender role for husband
+    husb_gender = indi[husbid].gender
+    
+    if husb_gender == "M":
+        print("Correct gender for husband")
+        return True
+    else: 
+        print("Incorrect gender for husband")
+        return False
+    
+def user_story_21_b (indi, wifeid): #Correct gender role for wife
+    wife_gender = indi[wifeid].gender
+    
+    if wife_gender == "F":
+        print("Correct gender for wife")
+        return True
+    else:
+        print("Incorrect gender for wife")
+        return False      
 
 def user_story_3(input_date1, input_date2): # a person's birthday must be before their death date
 
