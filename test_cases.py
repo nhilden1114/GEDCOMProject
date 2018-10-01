@@ -1,4 +1,6 @@
 from tables import user_story_1, user_story_18
+from tables import user_story_5, user_story_3
+from tables import user_story_2
 from tables import Person
 
 import unittest
@@ -13,6 +15,25 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_1(datetime.datetime(2018, 9, 7)), True)
         self.assertEqual(user_story_1(datetime.datetime(2010, 8, 19)), True)
         self.assertEqual(user_story_1(datetime.datetime(1990, 3, 30)), True)
+
+    def test_us2(self):
+        indi = dict()
+        #make person 1
+        person = Person()
+        person.idtag = 1
+        indi[person.idtag] = person
+        person.birth = datetime.datetime(1980, 5, 5)
+        #make person 2
+        person = Person()
+        person.idtag = 2
+        indi[person.idtag] = person
+        person.birth = datetime.datetime(1985, 6, 26)
+
+        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 8, 16), 1, 2), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(2010, 9, 23), 1, 2), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1980, 1, 5), 1, 2), False)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1983, 7, 13), 1, 2), False)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1985, 12, 30), 1, 2), True)
 
     def test_us3(self):
         self.assertTrue(user_story_3(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
