@@ -20,6 +20,13 @@ class Test(unittest.TestCase):
         self.assertFalse(user_story_3(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
         self.assertTrue(user_story_3(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
         self.assertFalse(user_story_3(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
+
+    def test_us6(self):
+        self.assertTrue(user_story_6(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
+        self.assertTrue(user_story_6(datetime.datetime(1950, 2, 14), datetime.datetime(2000, 6, 11)), True)
+        self.assertFalse(user_story_6(datetime.datetime(2018, 5, 19), datetime.datetime(1918, 9, 25)), False)
+        self.assertFalse(user_story_6(datetime.datetime(2017, 7, 20), datetime.datetime(1917, 7, 28)), False)
+        self.assertFalse(user_story_6(datetime.datetime(2016, 8, 22), datetime.datetime(1926, 9, 10)), False)
     
     def test_us18(self):
         indi = dict()
@@ -45,14 +52,10 @@ class Test(unittest.TestCase):
     def test_us5(self):
         self.assertTrue(user_story_5(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
         self.assertTrue(user_story_5(datetime.datetime(1950, 2, 14), datetime.datetime(2000, 6, 11)), True)
-        # changed the line below to assertFalse because the marriage date is after the death date, not valid
         self.assertFalse(user_story_5(datetime.datetime(2018, 5, 19), datetime.datetime(1918, 9, 25)), False)
-        # changed the line below to assertFalse because the marriage date is after the death date, not valid
         self.assertFalse(user_story_5(datetime.datetime(2017, 7, 20), datetime.datetime(1917, 7, 28)), False)
-        # changed the line below to assertFalse because the marriage date is after the death date, not valid
         self.assertFalse(user_story_5(datetime.datetime(2016, 8, 22), datetime.datetime(1926, 9, 10)), False)
 
-        
 
 if __name__ == '__main__':
     print('Running unit tests')

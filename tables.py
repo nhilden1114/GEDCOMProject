@@ -80,7 +80,28 @@ def user_story_5(input_date3, input_date4): # A person cannot get married after 
         print("Error: Marriage date not valid")
         return False
 
-        
+def user_story_6(input_date5, input_date6):  # A person cannot get a divorce after death
+
+    divorce_date = input_date5
+
+    death_date = input_date6
+
+    difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
+
+    if divorce_date != "NA" and divorce_date < datetime.datetime.today():
+        if death_date != "NA" and death_date <= datetime.datetime.today():
+            if difference < 0;
+                print("Error: Divorce date should not occur after death date")
+                return False
+            else:
+                return True
+        else:
+            print("Error: Death date not valid")
+            return False
+    else:
+        print("Error: Divorce date not valid")
+        return False
+
 
 class Person():
     
