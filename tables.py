@@ -34,6 +34,52 @@ def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
         print("Incest ouccurring")
         return False
     else: return True
+
+def user_story_3(input_date1, input_date2): # a person's birthday must be before their death date
+
+    birthday = input_date1
+
+    death_day = input_date2
+
+    difference = death_day.year - birthday.year - ((birthday.month, birthday.day) > (death_day.month, death_day.day))
+
+    if birthday != "NA" and birthday < datetime.datetime.today():
+        if death_day != "NA" and death_day <= datetime.datetime.today():
+            if difference < 0:
+                print("Error: Death date should not be before the birth date")
+                return False
+            else:
+                return True
+        else:
+            print("Error: Death date not valid")
+            return False
+    else:
+        print("Error: Birthday not valid")
+        return False
+
+
+def user_story_5(input_date3, input_date4): # A person cannot get married after their death date
+
+    marriage_date = input_date3
+
+    death_date = input_date4
+
+    difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
+
+    if marriage_date != "NA" and marriage_date < datetime.datetime.today():
+        if death_date != "NA" and death_date <= datetime.datetime.today():
+            if difference < 0:
+                print("Error: Marriage date should not occur after death date")
+                return False
+            else:
+                return True
+        else:
+            print("Error: Death date not valid")
+            return False
+    else:
+        print("Error: Marriage date not valid")
+        return False
+
         
 
 class Person():
