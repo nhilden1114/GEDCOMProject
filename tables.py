@@ -31,7 +31,7 @@ def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
     husb_fam = indi[husbid].famc
     wife_fam = indi[wifeid].famc
     if husb_fam == wife_fam:
-        print("Incest ouccurring")
+        print("Incest occurring")
         return False
     else: return True
     
@@ -55,11 +55,7 @@ def user_story_21_b (indi, wifeid): #Correct gender role for wife
         print("Incorrect gender for wife")
         return False      
 
-def user_story_3(input_date1, input_date2): # a person's birthday must be before their death date
-
-    birthday = input_date1
-
-    death_day = input_date2
+def user_story_3(birthday, death_day): # a person's birthday must be before their death date
 
     difference = death_day.year - birthday.year - ((birthday.month, birthday.day) > (death_day.month, death_day.day))
 
@@ -78,11 +74,7 @@ def user_story_3(input_date1, input_date2): # a person's birthday must be before
         return False
 
 
-def user_story_5(input_date3, input_date4): # A person cannot get married after their death date
-
-    marriage_date = input_date3
-
-    death_date = input_date4
+def user_story_5(marriage_date, death_date): # A person cannot get married after their death date
 
     difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
 
@@ -100,7 +92,40 @@ def user_story_5(input_date3, input_date4): # A person cannot get married after 
         print("Error: Marriage date not valid")
         return False
 
-        
+def user_story_6(input_date5, input_date6):  # A person cannot get a divorce after death
+
+    divorce_date = input_date5
+
+    death_date = input_date6
+
+    difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
+
+    if divorce_date != "NA" and divorce_date < datetime.datetime.today():
+        if death_date != "NA" and death_date <= datetime.datetime.today():
+            if difference < 0;
+                print("Error: Divorce date should not occur after death date")
+                return False
+            else:
+                return True
+        else:
+            print("Error: Death date not valid")
+            return False
+    else:
+        print("Error: Divorce date not valid")
+        return False
+
+def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before marriage of an individual
+    husb_birth = indi[husbid].birth
+    wife_birth = indi[wifeid].birth
+
+    wife_diff = marr_date.year - wife_birth.year - ((wife_birth.month, wife_birth.day) > (marr_date.month, marr_date.day))
+    husb_diff = marr_date.year - husb_birth.year - ((husb_birth.month, husb_birth.day) > (marr_date.month, marr_date.day))
+
+    if wife_diff < 0 or husb_diff < 0:
+        print("Error: Marriage date cannot be before Birth date")
+        return False
+    else:
+        return True
 
 class Person():
     
@@ -205,7 +230,8 @@ def createTables(file):
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date):
-                        family.marr = new_date
+                        if user_story_2(indi, new_date, family.husbid, family.wifeid):
+                            family.marr = new_date
 
             elif tag == "DIV":
 
@@ -240,6 +266,8 @@ def createINDI(indi):
     
     table = PrettyTable()
     table.field_names = ['ID', 'Name', 'Gender', 'Birthday', 'Age','Alive', 'Death', 'Child', 'Spouse']
+
+    print(indi)
     
     for key in sorted(indi.keys()):
         idt = indi[key].idtag
@@ -275,8 +303,8 @@ def createFAM(fam):
 def main():
 
     try:
-        #file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
-        file = open ('/Users/carolinetelma/Desktop/NicoleFamily.ged', 'r')
+        file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
+        #file = open ('/Users/carolinetelma/Desktop/NicoleFamily.ged', 'r')
     except:
         print("Cannot open file")
         
