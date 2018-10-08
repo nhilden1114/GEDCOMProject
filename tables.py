@@ -67,9 +67,9 @@ def user_story_3(birthday, death_day): # a person's birthday must be before thei
 
 
 def user_story_4(marriage_date, divorce_date): #Divorce date should not be before marriage date
-    
+
+    print(marriage_date<date.today())
     #difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
-    print(marriage_date)
     if marriage_date != "NA" and marriage_date < date.today():
         difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
 

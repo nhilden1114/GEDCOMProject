@@ -12,11 +12,10 @@ import datetime
 
 class Test(unittest.TestCase):
 
-    #file = open('NicoleFamily.ged', 'r')
-    #indi, fam = createTables(file)
-    #file.close()
-
     def test_us1(self):
+        '''
+        Dates should not be after the current one
+        '''
         self.assertEqual(user_story_1(datetime.datetime(2019, 3, 11)), False)
         self.assertEqual(user_story_1(datetime.datetime(2100, 11, 20)), False)
         self.assertEqual(user_story_1(datetime.datetime(2020, 1, 22)), False)
@@ -34,23 +33,33 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertEqual(user_story_2(indi, datetime.datetime(1950, 8, 16), "@I02@", "@I03@"), False)
-        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 8, 16), "@I04@", "@I05@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 4, 11), "@I02@", "@I03@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1950, 3, 23), "@I04@", "@I05@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 9, 14), "@I04@", "@I05@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1930, 1, 1), "@I04@", "@I05@"), False)
 
+    def test_us3(self):
+        '''
+        A person's birthday must be before death date
+        '''
+        
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11','%Y-%m-%d').date(),datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date()), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date()), False)
 
-##    def test_us3(self):
-##        self.assertTrue(user_story_3(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
-##        self.assertFalse(user_story_3(datetime.datetime(2000, 2, 11), datetime.datetime(1900, 2, 11)), False)
-##        self.assertFalse(user_story_3(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
-##        self.assertTrue(user_story_3(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
-##        self.assertFalse(user_story_3(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
-##
-##    def test_us4(self):
-##        self.assertTrue(user_story_4(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
-##        self.assertFalse(user_story_4(datetime.datetime(2000, 2, 11), datetime.datetime(1900, 2, 11)), False)
-##        self.assertFalse(user_story_4(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
-##        self.assertTrue(user_story_4(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
-##        self.assertFalse(user_story_4(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
-##
+    def test_us4(self):
+        '''
+        Divorce date should not be before marriage date
+        '''
+        
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date()), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1997-11-2','%Y-%m-%d').date()), False)
+
 ##    def test_us6(self):
 ##        self.assertTrue(user_story_6(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
 ##        self.assertTrue(user_story_6(datetime.datetime(1950, 2, 14), datetime.datetime(2000, 6, 11)), True)
