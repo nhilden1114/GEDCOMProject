@@ -38,10 +38,10 @@ def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before m
     husb_diff = marr_date.year - husb_birth.year - ((husb_birth.month, husb_birth.day) > (marr_date.month, marr_date.day))
 
     if wife_diff < 0:
-        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[wifeid].name)
+        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[wifeid].name + " which is " + wife_birth.strftime('%Y-%m-%d'))
         return False
     if husb_diff < 0:
-        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[husbid].name)
+        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[husbid].name + " which is " + husb_birth.strftime('%Y-%m-%d'))
         return False
     else:
         return True
@@ -72,7 +72,7 @@ def user_story_4(marriage_date, divorce_date): #Divorce date should not be befor
         difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
 
         if difference < 0:
-            print("ERROR: US04: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ "should not be before the marriage date of " + marriage_date.strftime('%Y-%m-%d'))
+            print("ERROR: US04: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not be before the marriage date of " + marriage_date.strftime('%Y-%m-%d'))
             return False
         else:
             return True
@@ -103,7 +103,7 @@ def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a d
         if death_date != "NA":
             difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
             if difference < 0:
-                print("ERROR: US06: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not occur after death date")
+                print("ERROR: US06: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not occur after death date of " + death_date.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
@@ -116,7 +116,7 @@ def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
 
     if husb_fam != [] and wife_fam != []:
         if husb_fam == wife_fam:
-            print("ERROR: US18: Incest occurring with " + str(indi[husbid].idtag) + " and " + str(indi[wifeid].idtag))
+            print("ERROR: US18: Incest occurring with " + str(indi[husbid].name) + " and " + str(indi[wifeid].name))
             return False
         else:
             return True
