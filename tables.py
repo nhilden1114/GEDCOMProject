@@ -1,5 +1,6 @@
 from prettytable import PrettyTable
 import datetime
+from datetime import date
 from Project3 import validLine
 
 
@@ -19,7 +20,7 @@ def determineAge(dob, date):
 
 def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not be after the current date
 
-    current = datetime.datetime.today()
+    current = date.today()
 
     difference = current.year - inputDate.year - ((inputDate.month, inputDate.day) > (current.month, current.day))
 
@@ -49,9 +50,9 @@ def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before m
 def user_story_3(birthday, death_day): # a person's birthday must be before their death date
 
     difference = death_day.year - birthday.year - ((birthday.month, birthday.day) > (death_day.month, death_day.day))
-
-    if birthday != "NA" and birthday < datetime.datetime.today():
-        if death_day != "NA" and death_day <= datetime.datetime.today():
+    
+    if birthday != "NA" and birthday < date.today():
+        if death_day != "NA" and death_day <= date.today():
             if difference < 0:
                 print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " should not be before their birth date of " + birthday.strftime('%Y-%m-%d'))
                 return False
@@ -65,71 +66,63 @@ def user_story_3(birthday, death_day): # a person's birthday must be before thei
         return False
 
 
-def user_story_4(marriage_date, divorce_date):
+def user_story_4(marriage_date, divorce_date): #Divorce date should not be before marriage date
+    
+    #difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
+    print(marriage_date)
+    if marriage_date != "NA" and marriage_date < date.today():
+        difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
 
-    difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
-
-    if marriage_date != "NA" and marriage_date < datetime.datetime.today():
-        if divorce_date != "NA" and divorce_date <= datetime.datetime.today():
-            if difference < 0:
-                print("ERROR: US04: Divorce date should not be before the marriage date")
-                return False
-            else:
-                return True
-        else:
-            print("ERROR: US04: Divorce date not valid")
+        if difference < 0:
+            print("ERROR: US04: Divorce date should not be before the marriage date")
             return False
+        else:
+            return True
     else:
         print("ERROR: US04: Marriage date not valid")
         return False
 
 
-def user_story_5(marriage_date, death_date): # A person cannot get married after their death date
+def user_story_5(marriage_date, husbid, wifeid, indi): # A person cannot get married after their death date
 
-    difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
+    deaths = [indi[husbid].death, indi[wifeid].death]
 
-    if marriage_date != "NA" and marriage_date < datetime.datetime.today():
-        if death_date != "NA" and death_date <= datetime.datetime.today():
+    for death_date in deaths:
+        if death_date != "NA":
+            difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
             if difference < 0:
-                print("ERROR: US05: Marriage date of " + marriage_date.strftime('%Y-%m-%d') + " should not occur after death date of " + death_date.strftime('%Y-%m-%d'))
+                print("ERROR: US05: Marriage date should not occur after death date")
                 return False
             else:
                 return True
-        else:
-            print("ERROR: US05: Death date of " + death_date.strftime('%Y-%m-%d') + " not valid")
-            return False
-    else:
-        print("ERROR: US05: Marriage date of " + marriage_date.strftime('%Y-%m-%d') + " not valid")
-        return False
+        return True
 
+def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a divorce after death
 
-def user_story_6(divorce_date, death_date):  # A person cannot get a divorce after death
+    deaths = [indi[husbid].death, indi[wifeid].death]
 
-    difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
-
-    if divorce_date != "NA" and divorce_date < datetime.datetime.today():
-        if death_date != "NA" and death_date <= datetime.datetime.today():
+    for death_date in deaths:
+        if death_date != "NA":
+            difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
             if difference < 0:
                 print("ERROR: US06: Divorce date should not occur after death date")
                 return False
             else:
                 return True
-        else:
-            print("ERROR: US06: Death date not valid")
-            return False
-    else:
-        print("ERROR: US06: Divorce date not valid")
-        return False
+        return True
 
 
 def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
     husb_fam = indi[husbid].famc
     wife_fam = indi[wifeid].famc
-    if husb_fam == wife_fam:
-        print("ERROR: US18: Incest occurring with " + str(indi[husbid].idtag) + " and " + str(indi[wifeid].idtag))
-        return False
-    else:
-        return True
+
+    if husb_fam != [] and wife_fam != []:
+        if husb_fam == wife_fam:
+            print("ERROR: US18: Incest occurring with " + str(indi[husbid].idtag) + " and " + str(indi[wifeid].idtag))
+            return False
+        else:
+            return True
+    return True
 
 
 def user_story_21_a(indi, husbid):  # Correct gender role for husband
@@ -221,7 +214,7 @@ def createTables(file):
                 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):
+                    if user_story_1(new_date): #test that date is not in future
                         person.birth = new_date
                         person.age = determineAge(new_date, datetime.datetime.today())
 
@@ -234,9 +227,10 @@ def createTables(file):
                 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):
-                        person.death = new_date
-                        person.age = determineAge(person.birth, new_date)
+                    if user_story_1(new_date): #test that date is not in the future
+                        if user_story_3(person.birth, new_date): #test that death is after birth
+                            person.death = new_date
+                            person.age = determineAge(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -253,9 +247,12 @@ def createTables(file):
                 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):
-                        if user_story_2(indi, new_date, family.husbid, family.wifeid):
-                            family.marr = new_date
+                    if user_story_1(new_date): #check date not in future
+                        if user_story_2(indi, new_date, family.husbid, family.wifeid): #check birth before marriage
+                            if user_story_18(indi, family.husbid, family.wifeid): #check not siblings
+                                if user_story_5(new_date, family.husbid, family.wifeid, indi): #check marr before death
+                                    if user_story_21_a(indi, family.husbid) and user_story_21_b(indi, family.wifeid):
+                                        family.marr = new_date
 
             elif tag == "DIV":
 
@@ -265,8 +262,10 @@ def createTables(file):
                 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):
-                        family.div = new_date
+                    if user_story_1(new_date): #test that date is not in future
+                        if user_story_4(family.marr, new_date): #check div after marr
+                           if user_story_6(new_date, family.husbid, family.wifeid, indi):
+                               family.div = new_date
 
             elif tag == "HUSB":
                 family.husbid = args
@@ -280,19 +279,13 @@ def createTables(file):
             elif tag == "CHIL":
                 family.chil.append(args)
                 
-    #for key in fam:
-     #   user_story_18(indi, fam[key].husbid, fam[key].wifeid)
-        
-    createINDI(indi)
-    createFAM(fam)
+    return indi, fam
 
 
 def createINDI(indi):
     
     table = PrettyTable()
     table.field_names = ['ID', 'Name', 'Gender', 'Birthday', 'Age','Alive', 'Death', 'Child', 'Spouse']
-
-    #print(indi)
     
     for key in sorted(indi.keys()):
         idt = indi[key].idtag
@@ -330,12 +323,18 @@ def createFAM(fam):
 def main():
 
     try:
-        file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
+        #file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
+        file = open('NicoleFamily.ged', 'r')
         #file = open ('/Users/carolinetelma/Desktop/NicoleFamily.ged', 'r')
     except:
         print("Cannot open file")
         
-    print(createTables(file))
+    #print(createTables(file))
+
+    indi_info, fam_info = createTables(file)
+
+    createINDI(indi_info)
+    createFAM(fam_info)
     
 if __name__ == '__main__':
     main()
