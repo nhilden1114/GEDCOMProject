@@ -47,49 +47,50 @@ def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before m
         return True
 
 
-def user_story_3(birthday, death_day): # a person's birthday must be before their death date
+def user_story_3(birthday, death_day, name): # a person's birthday must be before their death date
 
     difference = death_day.year - birthday.year - ((birthday.month, birthday.day) > (death_day.month, death_day.day))
     
     if birthday != "NA" and birthday < date.today():
         if death_day != "NA" and death_day <= date.today():
             if difference < 0:
-                print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " should not be before their birth date of " + birthday.strftime('%Y-%m-%d'))
+                print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " should not be before "+ name +"'s birth date of " + birthday.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
         else:
-            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " not valid")
+            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " not valid for " + name )
             return False
     else:
-        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " not valid")
+        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " not valid for " + name )
         return False
 
 
-def user_story_4(marriage_date, divorce_date): #Divorce date should not be before marriage date
+def user_story_4(marriage_date, divorce_date, husbname, wifename): #Divorce date should not be before marriage date
 
     if marriage_date != "NA" and marriage_date < date.today():
         difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
 
         if difference < 0:
-            print("ERROR: US04: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not be before the marriage date of " + marriage_date.strftime('%Y-%m-%d'))
+            print("ERROR: US04: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not be before the marriage date of " + marriage_date.strftime('%Y-%m-%d') + " for " + husbname + " and " + wifename)
             return False
         else:
             return True
     else:
-        print("ERROR: US04: Marriage date of " + marriage_date + " not valid")
+        print("ERROR: US04: Marriage date of " + marriage_date + " not valid " + " for " + husbname + " and " + wifename)
         return False
 
 
 def user_story_5(marriage_date, husbid, wifeid, indi): # A person cannot get married after their death date
 
-    deaths = [indi[husbid].death, indi[wifeid].death]
+    deaths = [[indi[husbid].death, indi[husbid].name], [indi[wifeid].death, indi[wifeid].name]]
 
     for death_date in deaths:
-        if death_date != "NA":
-            difference = death_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (death_date.month, death_date.day))
+        dday = death_date[0]
+        if dday != "NA":
+            difference = dday.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (dday.month, dday.day))
             if difference < 0:
-                print("ERROR: US05: Marriage date of " + marriage_date.strftime('%Y-%m-%d')+ " should not occur after death date")
+                print("ERROR: US05: Marriage date of " + marriage_date.strftime('%Y-%m-%d')+ " should not occur after death date for " + death_date[1] + " which is " + dday.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
@@ -97,13 +98,14 @@ def user_story_5(marriage_date, husbid, wifeid, indi): # A person cannot get mar
 
 def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a divorce after death
 
-    deaths = [indi[husbid].death, indi[wifeid].death]
+    deaths = [[indi[husbid].death, indi[husbid].name], [indi[wifeid].death, indi[wifeid].name]]
 
     for death_date in deaths:
-        if death_date != "NA":
-            difference = death_date.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (death_date.month, death_date.day))
+        dday = death_date[0]
+        if dday != "NA":
+            difference = dday.year - divorce_date.year - ((divorce_date.month, divorce_date.day) > (dday.month, dday.day))
             if difference < 0:
-                print("ERROR: US06: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not occur after death date of " + death_date.strftime('%Y-%m-%d'))
+                print("ERROR: US06: Divorce date of " + divorce_date.strftime('%Y-%m-%d')+ " should not occur after death date for " + death_date[1] + " which is " + dday.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
@@ -123,23 +125,23 @@ def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
     return True
 
 
-def user_story_21_a(indi, husbid):  # Correct gender role for husband
+def user_story_21_a(indi, husbid, name):  # Correct gender role for husband
     husb_gender = indi[husbid].gender
 
     if husb_gender == "M":
         return True
     else:
-        print("ERROR: US21: Incorrect gender " + husb_gender + " for husband")
+        print("ERROR: US21: Incorrect gender " + husb_gender + " for husband " + name)
         return False
 
 
-def user_story_21_b(indi, wifeid):  # Correct gender role for wife
+def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
     wife_gender = indi[wifeid].gender
 
     if wife_gender == "F":
         return True
     else:
-        print("ERROR: US21: Incorrect gender " + wife_gender + " for wife")
+        print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name )
         return False
 
 
@@ -226,7 +228,7 @@ def createTables(file):
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date): #test that date is not in the future
-                        if user_story_3(person.birth, new_date): #test that death is after birth
+                        if user_story_3(person.birth, new_date, person.name): #test that death is after birth
                             person.death = new_date
                             person.age = determineAge(person.birth, new_date)
 
@@ -249,7 +251,7 @@ def createTables(file):
                         if user_story_2(indi, new_date, family.husbid, family.wifeid): #check birth before marriage
                             if user_story_18(indi, family.husbid, family.wifeid): #check not siblings
                                 if user_story_5(new_date, family.husbid, family.wifeid, indi): #check marr before death
-                                    if user_story_21_a(indi, family.husbid) and user_story_21_b(indi, family.wifeid): #check genders
+                                    if user_story_21_a(indi, family.husbid, family.husbname) and user_story_21_b(indi, family.wifeid, family.wifename): #check genders
                                         family.marr = new_date
 
             elif tag == "DIV":
@@ -261,8 +263,7 @@ def createTables(file):
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date): #test that date is not in future
-                        #print(family.marr)
-                        if user_story_4(family.marr, new_date): #check div after marr
+                        if user_story_4(family.marr, new_date, family.husbname, family.wifename): #check div after marr
                            if user_story_6(new_date, family.husbid, family.wifeid, indi):#check no div after death
                                family.div = new_date
 
@@ -322,9 +323,7 @@ def createFAM(fam):
 def main():
 
     try:
-        #file = open('/Users/Test/Documents/SSW555/NicoleFamily.ged')
         file = open('NicoleFamily.ged', 'r')
-        #file = open ('/Users/carolinetelma/Desktop/NicoleFamily.ged', 'r')
     except:
         print("Cannot open file")
         

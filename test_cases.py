@@ -41,22 +41,22 @@ class Test(unittest.TestCase):
         A person's birthday must be before death date
         '''
         
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11','%Y-%m-%d').date(),datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date()), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date()), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Nicole"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11','%Y-%m-%d').date(),datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), False)
 
     def test_us4(self):
         '''
         Divorce date should not be before marriage date
         '''
         
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date()), False)
-        self.assertEqual(user_story_4("NA",datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date()), False)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date()), True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1997-11-2','%Y-%m-%d').date()), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(), "Robert", "Judy"), False)
+        self.assertEqual(user_story_4("NA",datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Noel", "Carol"), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "John", "Jane"), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1997-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), False)
 
     def test_us5(self):
         '''
@@ -113,11 +113,11 @@ class Test(unittest.TestCase):
         indi, fam = createTables(file)
         file.close()
         
-        self.assertEqual(user_story_21_a(indi, "@I02@"), True)
-        self.assertEqual(user_story_21_a(indi, "@I01@"), False)
-        self.assertEqual(user_story_21_a(indi, "@I04@"), True)
-        self.assertEqual(user_story_21_a(indi, "@I03@"), False)
-        self.assertEqual(user_story_21_a(indi, "@I07@"), False)
+        self.assertEqual(user_story_21_a(indi, "@I02@", "John"), True)
+        self.assertEqual(user_story_21_a(indi, "@I01@", "Jane"), False)
+        self.assertEqual(user_story_21_a(indi, "@I04@", "Simon"), True)
+        self.assertEqual(user_story_21_a(indi, "@I03@", "Caroline"), False)
+        self.assertEqual(user_story_21_a(indi, "@I07@", "David"), False)
        
     def test_us21_b(self):
         '''
@@ -128,11 +128,11 @@ class Test(unittest.TestCase):
         indi, fam = createTables(file)
         file.close()
         
-        self.assertEqual(user_story_21_b(indi, "@I02@"), False)
-        self.assertEqual(user_story_21_b(indi, "@I01@"), True)
-        self.assertEqual(user_story_21_b(indi, "@I04@"), False)
-        self.assertEqual(user_story_21_b(indi, "@I03@"), True)
-        self.assertEqual(user_story_21_b(indi, "@I07@"), True)
+        self.assertEqual(user_story_21_b(indi, "@I02@", "David"), False)
+        self.assertEqual(user_story_21_b(indi, "@I01@","Nicole"), True)
+        self.assertEqual(user_story_21_b(indi, "@I04@", "Kevin"), False)
+        self.assertEqual(user_story_21_b(indi, "@I03@", "Ann"), True)
+        self.assertEqual(user_story_21_b(indi, "@I07@","Michayla"), True)
         
 
 if __name__ == '__main__':
