@@ -3,8 +3,7 @@ from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
-from tables import Person
-#test comment
+from tables import createTables
 import unittest
 import datetime
 
@@ -12,6 +11,9 @@ import datetime
 class Test(unittest.TestCase):
 
     def test_us1(self):
+        '''
+        Dates should not be after the current one
+        '''
         self.assertEqual(user_story_1(datetime.datetime(2019, 3, 11)), False)
         self.assertEqual(user_story_1(datetime.datetime(2100, 11, 20)), False)
         self.assertEqual(user_story_1(datetime.datetime(2020, 1, 22)), False)
@@ -20,128 +22,118 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_1(datetime.datetime(1990, 3, 30)), True)
 
     def test_us2(self):
-        indi = dict()
-        #make person 1
-        person = Person()
-        person.idtag = 1
-        indi[person.idtag] = person
-        person.birth = datetime.datetime(1980, 5, 5)
-        #make person 2
-        person = Person()
-        person.idtag = 2
-        indi[person.idtag] = person
-        person.birth = datetime.datetime(1985, 6, 26)
+        '''
+        Birth should occur before marriage
+        '''
 
-        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 8, 16), 1, 2), True)
-        self.assertEqual(user_story_2(indi, datetime.datetime(2010, 9, 23), 1, 2), True)
-        self.assertEqual(user_story_2(indi, datetime.datetime(1980, 1, 5), 1, 2), False)
-        self.assertEqual(user_story_2(indi, datetime.datetime(1983, 7, 13), 1, 2), False)
-        self.assertEqual(user_story_2(indi, datetime.datetime(1985, 12, 30), 1, 2), True)
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+
+        self.assertEqual(user_story_2(indi, datetime.datetime(1950, 8, 16), "@I02@", "@I03@"), False)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 4, 11), "@I02@", "@I03@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1950, 3, 23), "@I04@", "@I05@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1990, 9, 14), "@I04@", "@I05@"), True)
+        self.assertEqual(user_story_2(indi, datetime.datetime(1930, 1, 1), "@I04@", "@I05@"), False)
 
     def test_us3(self):
-        self.assertTrue(user_story_3(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
-        self.assertFalse(user_story_3(datetime.datetime(2000, 2, 11), datetime.datetime(1900, 2, 11)), False)
-        self.assertFalse(user_story_3(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
-        self.assertTrue(user_story_3(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
-        self.assertFalse(user_story_3(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
+        '''
+        A person's birthday must be before death date
+        '''
+        
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Nicole"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11','%Y-%m-%d').date(),datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), False)
 
     def test_us4(self):
-        self.assertTrue(user_story_4(datetime.datetime(1900, 2, 11), datetime.datetime(2000, 2, 11)), True)
-        self.assertFalse(user_story_4(datetime.datetime(2000, 2, 11), datetime.datetime(1900, 2, 11)), False)
-        self.assertFalse(user_story_4(datetime.datetime(3000, 2, 11), datetime.datetime(2000, 2, 11)), False)
-        self.assertTrue(user_story_4(datetime.datetime(1999, 2, 11), datetime.datetime(1999, 2, 11)), True)
-        self.assertFalse(user_story_4(datetime.datetime(1998, 2, 11), datetime.datetime(3000, 2, 12)), False)
-
-    def test_us6(self):
-        self.assertTrue(user_story_6(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
-        self.assertTrue(user_story_6(datetime.datetime(1950, 2, 14), datetime.datetime(2000, 6, 11)), True)
-        self.assertFalse(user_story_6(datetime.datetime(2018, 5, 19), datetime.datetime(1918, 9, 25)), False)
-        self.assertFalse(user_story_6(datetime.datetime(2017, 7, 20), datetime.datetime(1917, 7, 28)), False)
-        self.assertFalse(user_story_6(datetime.datetime(2016, 8, 22), datetime.datetime(1926, 9, 10)), False)
-    
-    def test_us18(self):
-        indi = dict()
-        i = 0
-        while(i<2):
-            person = Person()
-            person.idtag = i
-            indi[person.idtag] = person
-            person.famc = 2
-            i+=1
-        while(i<4):
-            person = Person()
-            person.idtag = i
-            indi[person.idtag] = person
-            person.famc = 1
-            i+=1
-        self.assertEqual(user_story_18(indi, 0, 2), True)
-        self.assertEqual(user_story_18(indi, 0, 1), False)
-        self.assertEqual(user_story_18(indi, 1, 2), True)
-        self.assertEqual(user_story_18(indi, 2, 3), False)
-        self.assertEqual(user_story_18(indi, 0, 3), True)
+        '''
+        Divorce date should not be before marriage date
+        '''
+        
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(), "Robert", "Judy"), False)
+        self.assertEqual(user_story_4("NA",datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Noel", "Carol"), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "John", "Jane"), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1997-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), False)
 
     def test_us5(self):
-        self.assertTrue(user_story_5(datetime.datetime(1850, 3, 12), datetime.datetime(1950, 4, 17)), True)
-        self.assertTrue(user_story_5(datetime.datetime(1950, 2, 14), datetime.datetime(2000, 6, 11)), True)
-        self.assertFalse(user_story_5(datetime.datetime(2018, 5, 19), datetime.datetime(1918, 9, 25)), False)
-        self.assertFalse(user_story_5(datetime.datetime(2017, 7, 20), datetime.datetime(1917, 7, 28)), False)
-        self.assertFalse(user_story_5(datetime.datetime(2016, 8, 22), datetime.datetime(1926, 9, 10)), False)
-        
-    def test_us21_a(self):
-        indi = dict()
-        i = 0
-        while(i<1):
-            person = Person()
-            person.idtag = i
-            indi[person.idtag] = person
-            person.gender = 'M' #testing for a male husband
-            i+=1
-        self.assertEqual(user_story_21_a(indi, 0), True)
-        j = 0
-        while(j<1):
-            person = Person()
-            person.idtag = j
-            indi[person.idtag] = person
-            person.gender = 'F' #testing for a female husband
-            j+=1
-        self.assertEqual(user_story_21_a(indi, 0), False)
-        k = 0
-        while(k<1):
-            person = Person()
-            person.idtag = k
-            indi[person.idtag] = person
-            person.gender = 'hfjshdjshds' #testing for an incorrect husband
-            k+=1
-        self.assertEqual(user_story_21_a(indi, 0), False)
-        
-    def test_us21_b(self):
-        indi = dict()
-        i = 0
-        while(i<1):
-            person = Person()
-            person.idtag = i
-            indi[person.idtag] = person
-            person.gender = 'F' #testing for a female wife
-            i+=1
-        self.assertEqual(user_story_21_b(indi, 0), True)
-        j = 0
-        while(j<1):
-            person = Person()
-            person.idtag = j
-            indi[person.idtag] = person
-            person.gender = 'M' #testing for a male wife
-            j+=1
-        self.assertEqual(user_story_21_b(indi, 0), False)
-        k = 0
-        while(k<1):
-            person = Person()
-            person.idtag = k
-            indi[person.idtag] = person
-            person.gender = 'hfjshdjshds' #testing for an incorrect wife
-            k+=1
-        self.assertEqual(user_story_21_b(indi, 0), False)
-        
+        '''
+        A person cannot get married after their death
+        '''
 
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+
+        self.assertEqual(user_story_5(datetime.datetime(1980, 8, 16), "@I08@", "@I09@", indi), False)
+        self.assertEqual(user_story_5(datetime.datetime(1955, 10, 3), "@I08@", "@I09@", indi), True)
+        self.assertEqual(user_story_5(datetime.datetime(1965, 2, 27), "@I08@", "@I09@", indi), True)
+        self.assertEqual(user_story_5(datetime.datetime(2100, 7, 20), "@I01@", "@I03@", indi), False)
+        self.assertEqual(user_story_5(datetime.datetime(2010, 7, 20), "@I01@", "@I03@", indi), True)
+
+    def test_us6(self):
+        '''
+        A person cannot get divorced after death
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+
+        self.assertEqual(user_story_6(datetime.datetime(1980, 8, 16), "@I08@", "@I09@", indi), False)
+        self.assertEqual(user_story_6(datetime.datetime(1955, 10, 3), "@I08@", "@I09@", indi), True)
+        self.assertEqual(user_story_6(datetime.datetime(1965, 2, 27), "@I08@", "@I09@", indi), True)
+        self.assertEqual(user_story_6(datetime.datetime(2000, 7, 20), "@I01@", "@I03@", indi), True)
+        self.assertEqual(user_story_6(datetime.datetime(2019, 7, 20), "@I01@", "@I04@", indi), False)
+
+    def test_us18(self):
+        '''
+        Siblings should not marry
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+
+        self.assertEqual(user_story_18(indi, "@I01@", "@I06@"), False)
+        self.assertEqual(user_story_18(indi, "@I03@", "@I07@"), False)
+        self.assertEqual(user_story_18(indi, "@I02@", "@I12@"), False)
+        self.assertEqual(user_story_18(indi, "@I02@", "@I03@"), True)
+        self.assertEqual(user_story_18(indi, "@I08@", "@I09@"), True)
+
+
+    def test_us21_a(self):
+        '''
+        Correct gender for husband
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+        
+        self.assertEqual(user_story_21_a(indi, "@I02@", "John"), True)
+        self.assertEqual(user_story_21_a(indi, "@I01@", "Jane"), False)
+        self.assertEqual(user_story_21_a(indi, "@I04@", "Simon"), True)
+        self.assertEqual(user_story_21_a(indi, "@I03@", "Caroline"), False)
+        self.assertEqual(user_story_21_a(indi, "@I07@", "David"), False)
+       
+    def test_us21_b(self):
+        '''
+        Correct gender for wife
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = createTables(file)
+        file.close()
+        
+        self.assertEqual(user_story_21_b(indi, "@I02@", "David"), False)
+        self.assertEqual(user_story_21_b(indi, "@I01@","Nicole"), True)
+        self.assertEqual(user_story_21_b(indi, "@I04@", "Kevin"), False)
+        self.assertEqual(user_story_21_b(indi, "@I03@", "Ann"), True)
+        self.assertEqual(user_story_21_b(indi, "@I07@","Michayla"), True)
+        
 
 if __name__ == '__main__':
     print('Running unit tests')
