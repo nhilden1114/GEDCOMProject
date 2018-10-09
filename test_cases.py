@@ -21,12 +21,12 @@ class Test(unittest.TestCase):
 
     def test_us2(self):
         indi = dict()
-        #make person 1
+        # make person 1
         person = Person()
         person.idtag = 1
         indi[person.idtag] = person
         person.birth = datetime.datetime(1980, 5, 5)
-        #make person 2
+        # make person 2
         person = Person()
         person.idtag = 2
         indi[person.idtag] = person
@@ -62,18 +62,19 @@ class Test(unittest.TestCase):
     def test_us18(self):
         indi = dict()
         i = 0
-        while(i<2):
-            person = Person()
+        while i < 2:
+            person = Person
             person.idtag = i
             indi[person.idtag] = person
             person.famc = 2
-            i+=1
-        while(i<4):
-            person = Person()
+            i += 1
+        while i < 4:
+            person = Person
             person.idtag = i
             indi[person.idtag] = person
             person.famc = 1
-            i+=1
+            i += 1
+
         self.assertEqual(user_story_18(indi, 0, 2), True)
         self.assertEqual(user_story_18(indi, 0, 1), False)
         self.assertEqual(user_story_18(indi, 1, 2), True)
@@ -90,28 +91,28 @@ class Test(unittest.TestCase):
     def test_us21_a(self):
         indi = dict()
         i = 0
-        while(i<1):
-            person = Person()
+        while i < 1:
+            person = Person
             person.idtag = i
             indi[person.idtag] = person
-            person.gender = 'M' #testing for a male husband
-            i+=1
+            person.gender = 'M' # testing for a male husband
+            i += 1
         self.assertEqual(user_story_21_a(indi, 0), True)
         j = 0
-        while(j<1):
-            person = Person()
+        while j < 1:
+            person = Person
             person.idtag = j
             indi[person.idtag] = person
-            person.gender = 'F' #testing for a female husband
-            j+=1
+            person.gender = 'F' # testing for a female husband
+            j += 1
         self.assertEqual(user_story_21_a(indi, 0), False)
         k = 0
-        while(k<1):
-            person = Person()
+        while k < 1:
+            person = Person
             person.idtag = k
             indi[person.idtag] = person
             person.gender = 'hfjshdjshds' #testing for an incorrect husband
-            k+=1
+            k += 1
         self.assertEqual(user_story_21_a(indi, 0), False)
         
     def test_us21_b(self):
