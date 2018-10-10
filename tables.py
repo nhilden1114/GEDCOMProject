@@ -4,16 +4,16 @@ from datetime import date
 from Project3 import validLine
 
 
-def determineAge(dob, date):
+def determine_age(dob, date):
 
-    '''
+    """
        Calculate the age of a person given two dates
        dob is the person's date of birth
        date is either the current date or the death date
-    '''
+    """
     age = date.year - dob.year - ((dob.month, dob.day) > (date.month, date.day))
 
-    #age = abs((date – dob)).days / 365.25
+    # age = abs((date – dob)).days / 365.25
 
     return age
 
@@ -26,6 +26,7 @@ def user_story_1(inputDate):
     Dates (birth, marriage, divorce, death) should not be after the current date
     inputDate can be a birthday, death date, date of marriage or divorce
     '''
+
     current = date.today()
 
     difference = calc_difference(inputDate, current)
@@ -36,7 +37,8 @@ def user_story_1(inputDate):
     else:
         return True
 
-def user_story_2(indi, marr_date, husbid, wifeid):  #Birth should occur before marriage of an individual
+
+def user_story_2(indi, marr_date, husbid, wifeid):  # Birth should occur before marriage of an individual
     husb_birth = indi[husbid].birth
     wife_birth = indi[wifeid].birth
 
@@ -127,7 +129,7 @@ def user_story_7(birth, comp_date, name): #Death should be less than 150 years a
 
 
 
-def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
+def user_story_18(indi, husbid, wifeid): # Siblings should NOT marry
     husb_fam = indi[husbid].famc
     wife_fam = indi[wifeid].famc
 
@@ -160,7 +162,7 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
         return False
 
 
-class Person():
+class Person:
     
     def __init__(self):
         self.idtag = "NA"
@@ -173,7 +175,8 @@ class Person():
         self.famc = list()
         self.fams = list()
 
-class Family():
+
+class Family:
 
     def __init__(self):
         self.idtag = "NA"
@@ -186,7 +189,7 @@ class Family():
         self.chil = list()
 
 
-def createTables(file):
+def create_tables(file):
 
     indi = dict() # indi[id] = instance of class Person
     fam = dict() # fam[id] = instance of class Family
@@ -197,7 +200,7 @@ def createTables(file):
     person = None
     family = None
 
-    while  i < len(arr):
+    while i < len(arr):
         line = arr[i].strip()
         level, tag, args, tokens = validLine(line)
 
@@ -223,7 +226,7 @@ def createTables(file):
 
             elif tag == "BIRT":
                 
-                #need to access next line for the DATE
+                # need to access next line for the DATE
                 newLine = arr[i].strip()
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
@@ -231,12 +234,12 @@ def createTables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date): #test that date is not in future
                         person.birth = new_date
-                        person.age = determineAge(new_date, datetime.datetime.today())
+                        person.age = determine_age(new_date, datetime.datetime.today())
 
             elif tag == "DEAT":
                 person.alive = False
                 
-                #need to access next line for the DATE
+                # need to access next line for the DATE
                 newLine = arr[i].strip()
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
@@ -256,7 +259,7 @@ def createTables(file):
 
             elif tag == "MARR":
 
-                #need to access next line for the DATE
+                # need to access next line for the DATE
                 newLine = arr[i].strip()
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
@@ -271,7 +274,7 @@ def createTables(file):
 
             elif tag == "DIV":
 
-                #need to access next line for the DATE
+                # need to access next line for the DATE
                 newLine = arr[i].strip()
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
                 
@@ -289,15 +292,14 @@ def createTables(file):
             elif tag == "WIFE":
                 family.wifeid = args
                 family.wifename = indi[args].name
-                
 
             elif tag == "CHIL":
                 family.chil.append(args)
-                
+
     return indi, fam
 
 
-def createINDI(indi):
+def create_indi(indi):
     
     table = PrettyTable()
     table.field_names = ['ID', 'Name', 'Gender', 'Birthday', 'Age','Alive', 'Death', 'Child', 'Spouse']
@@ -317,7 +319,7 @@ def createINDI(indi):
     print(table)
 
 
-def createFAM(fam):
+def create_fam(fam):
     table = PrettyTable()
     table.field_names = ['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children']
     
@@ -337,8 +339,9 @@ def createFAM(fam):
 
 def main():
 
+    """ Need to put a descriptive docstring here"""
     try:
-        file = open('NicoleFamily.ged', 'r')
+       file = open('NicoleFamily.ged', 'r')
     except:
         print("Cannot open file")
         

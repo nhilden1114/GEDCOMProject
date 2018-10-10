@@ -120,7 +120,6 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_18(indi, "@I02@", "@I03@"), True)
         self.assertEqual(user_story_18(indi, "@I08@", "@I09@"), True)
 
-
     def test_us21_a(self):
         '''
         Correct gender for husband
@@ -129,7 +128,7 @@ class Test(unittest.TestCase):
         file = open('NicoleFamily.ged', 'r')
         indi, fam = createTables(file)
         file.close()
-        
+
         self.assertEqual(user_story_21_a(indi, "@I02@", "John"), True)
         self.assertEqual(user_story_21_a(indi, "@I01@", "Jane"), False)
         self.assertEqual(user_story_21_a(indi, "@I04@", "Simon"), True)
