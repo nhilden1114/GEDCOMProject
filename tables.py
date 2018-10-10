@@ -29,27 +29,30 @@ def user_story_1(inputDate):
 
     current = date.today()
 
-    difference = calc_difference(inputDate, current)
-
-    if difference < 0:
+    if calc_difference(inputDate, current) < 0:
         print ("ERROR: US01: Date: " + inputDate.strftime('%Y-%m-%d') + " should not be after the current one")
         return False
     else:
         return True
 
 
-def user_story_2(indi, marr_date, husbid, wifeid):  # Birth should occur before marriage of an individual
-    husb_birth = indi[husbid].birth
-    wife_birth = indi[wifeid].birth
+def user_story_2(indi, marr_date, husbid, wifeid):
+    '''
+    Birth should occur before marriage of an individual
+    indi is the table of all individuals in the GEDCOM file
+    marr_date is the marriage date
+    husbid is the id of the husband of this marriage
+    wifeid is the id of the wife of this marriage
+    '''
 
-    wife_diff = marr_date.year - wife_birth.year - ((wife_birth.month, wife_birth.day) > (marr_date.month, marr_date.day))
-    husb_diff = marr_date.year - husb_birth.year - ((husb_birth.month, husb_birth.day) > (marr_date.month, marr_date.day))
+    wife_diff = calc_difference(indi[wifeid].birth, marr_date)
+    husb_diff = calc_difference(indi[husbid].birth, marr_date)
 
     if wife_diff < 0:
-        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[wifeid].name + " which is " + wife_birth.strftime('%Y-%m-%d'))
+        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[wifeid].name + " which is " + indi[wifeid].birth.strftime('%Y-%m-%d'))
         return False
     if husb_diff < 0:
-        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[husbid].name + " which is " + husb_birth.strftime('%Y-%m-%d'))
+        print("ERROR: US02: Marriage date of " + marr_date.strftime('%Y-%m-%d') + " cannot be before Birth date of " + indi[husbid].name + " which is " + indi[husbid].birth.strftime('%Y-%m-%d'))
         return False
     else:
         return True
