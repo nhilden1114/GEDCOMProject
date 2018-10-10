@@ -248,7 +248,7 @@ def create_tables(file):
                     if user_story_1(new_date): #test that date is not in the future
                         if user_story_3(person.birth, new_date, person.name): #test that death is after birth
                             person.death = new_date
-                            person.age = determineAge(person.birth, new_date)
+                            person.age = determine_age(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -345,10 +345,10 @@ def main():
     except:
         print("Cannot open file")
         
-    indi_info, fam_info = createTables(file)
+    indi_info, fam_info = create_tables(file)
 
-    createINDI(indi_info)
-    createFAM(fam_info)
+    create_indi(indi_info)
+    create_fam(fam_info)
     
 if __name__ == '__main__':
     main()
