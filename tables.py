@@ -17,12 +17,18 @@ def determineAge(dob, date):
 
     return age
 
+def calc_difference(date1, date2):
+    '''Calculates the difference between 2 dates'''
+    return date2.year - date1.year - ((date1.month, date1.day) > (date2.month, date2.day))
 
-def user_story_1(inputDate): #Dates (birth, marriage, divorce, death) should not be after the current date
-
+def user_story_1(inputDate):
+    '''
+    Dates (birth, marriage, divorce, death) should not be after the current date
+    inputDate can be a birthday, death date, date of marriage or divorce
+    '''
     current = date.today()
 
-    difference = current.year - inputDate.year - ((inputDate.month, inputDate.day) > (current.month, current.day))
+    difference = calc_difference(inputDate, current)
 
     if difference < 0:
         print ("ERROR: US01: Date: " + inputDate.strftime('%Y-%m-%d') + " should not be after the current one")
@@ -110,6 +116,15 @@ def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a d
             else:
                 return True
         return True
+    
+def user_story_7(birth, comp_date, name): #Death should be less than 150 years after birth for dead people, and current date should be less than 150 years after birth for all living people
+#Comp date is either the current date or the death date
+    difference = comp_date.year - birth.year - ((birth.month, birth.day) > (comp_date.month, comp_date.day))
+    if difference >= 150:
+        print("ERROR: US07: " + name + " must be less than 150 years old")
+        return False
+    return True
+
 
 
 def user_story_18(indi, husbid, wifeid): #Siblings should NOT marry
