@@ -99,7 +99,28 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_7(datetime.datetime(1852, 1, 2), datetime.datetime.today(), "Caroline"), False)
         self.assertEqual(user_story_7(datetime.datetime(1990, 9, 22), datetime.datetime.today(), "Michayla"), True)
         self.assertEqual(user_story_7(datetime.datetime(1492, 7, 9), datetime.datetime(2000, 8, 16), "Elena"), False)
-
+  
+    def test_us15(self):
+        '''
+        There should be fewer than 15 siblings in a family
+        '''
+        
+        file = open('user_story_geds/us15.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        families = []
+        family_tags = []
+        for family in fam:
+            family_tags.append(family)
+            families.append(fam[family].chil)
+    
+        self.assertTrue(user_story_15(families[0], family_tags[0]))
+        self.assertFalse(user_story_15(families[1], family_tags[1]))
+        self.assertTrue(user_story_15(families[2], family_tags[2]))
+        self.assertTrue(user_story_15(families[3], family_tags[3]))
+        self.assertTrue(user_story_15(["Nicole", "Caroline"], ["Test fam"]))
+        
     def test_us18(self):
         '''
         Siblings should not marry

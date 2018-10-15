@@ -141,6 +141,12 @@ def user_story_7(birth, comp_date, name):
         return False
     return True
 
+def user_story_15(child_list, family_tag): #There should be fewer than 15 siblings in a family
+    if len(child_list) < 15:
+        return True
+    else: 
+        print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
+        return False
 
 def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
     husb_fam = indi[husbid].famc
@@ -318,8 +324,9 @@ def create_tables(file):
                 family.wifename = indi[args].name
 
             elif tag == "CHIL":
-                family.chil.append(args)
-
+                if user_story_15(family.chil, family.idtag):    
+                    family.chil.append(args)
+               
     return indi, fam
 
 
@@ -363,8 +370,8 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        file = open('NicoleFamily.ged', 'r')
-        #file = open('user_story_geds/us07.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
+        file = open('user_story_geds/us15.ged', 'r')
     except:
         print("Cannot open file")
 
