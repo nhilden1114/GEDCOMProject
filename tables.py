@@ -137,6 +137,12 @@ def user_story_7(birth, comp_date,
         return False
     return True
 
+def user_story_15(family): #There should be fewer than 15 siblings in a family
+    if len(family.chil) < 15:
+        return True
+    else: 
+        print("ERROR: US15: There should be fewer than 15 siblings in family " + family.idtag)
+        return False
 
 def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
     husb_fam = indi[husbid].famc
@@ -306,7 +312,9 @@ def create_tables(file):
                 family.wifename = indi[args].name
 
             elif tag == "CHIL":
-                family.chil.append(args)
+                if user_story_15(family):    
+                    family.chil.append(args)
+               
 
     return indi, fam
 
