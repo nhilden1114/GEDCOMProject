@@ -356,7 +356,8 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        file = open('NicoleFamily.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
+        file = open('user_story_geds/us07.ged', 'r')
     except:
         print("Cannot open file")
 
