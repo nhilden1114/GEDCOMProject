@@ -1,8 +1,8 @@
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
-from tables import user_story_7, user_story_15
-from tables import user_story_18
+from tables import user_story_7, user_story_11
+from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import create_tables, create_indi, create_fam
 import unittest
@@ -99,6 +99,21 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_7(datetime.datetime(1852, 1, 2), datetime.datetime.today(), "Caroline"), False)
         self.assertEqual(user_story_7(datetime.datetime(1990, 9, 22), datetime.datetime.today(), "Michayla"), True)
         self.assertEqual(user_story_7(datetime.datetime(1492, 7, 9), datetime.datetime(2000, 8, 16), "Elena"), False)
+
+    def test_us11(self):
+        '''
+        Marriage should not occur during marriage to another spouse
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I03@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@I02@", "@I07@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@I06@", "@I07@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I09@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@I10@", "@I12@"), False)
   
     def test_us15(self):
         '''

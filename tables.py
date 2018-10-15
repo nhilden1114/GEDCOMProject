@@ -135,11 +135,45 @@ def user_story_7(birth, comp_date, name):
     Comp date is either the current date or the death date
     '''
     
-    #difference = comp_date.year - birth.year - ((birth.month, birth.day) > (comp_date.month, comp_date.day))
     if calc_difference(birth, comp_date) >= 150:
         print("ERROR: US07: " + name + " must be less than 150 years old")
         return False
     return True
+
+def user_story_11(indi, fam, husbid, wifeid):
+    '''
+    Marriage should not occur during marriage to another spouse
+    indi is the dict of all individuals in the GEDCOM file
+    fam is the dict of all families in the GEDCOM file
+    husbid is the husband's id
+    wifeid is the wife's id
+    '''
+    if indi[husbid].fams != []:
+        for family_h in indi[husbid].fams:
+            this_wife = fam[family_h].wifeid
+            if fam[family_h].div != "NA":
+                continue
+            if fam[family_h].div == "NA":
+                print("ERROR: US11: " + indi[husbid].name + " is not divorced yet from " + indi[this_wife].name)
+                return False
+            elif indi[this_wife].death == "NA":
+                print("ERROR: US11: " + indi[husbid].name + "'s wife " + indi[this_wife].name + " is still alive and married to him")
+                return False
+    if indi[wifeid].fams != []:
+        for family_w in indi[wifeid].fams:
+            this_husb = fam[family_w].husbid
+            if fam[family_w].div != "NA":
+                continue
+            if fam[family_w].div == "NA":
+                print("ERROR: US11: " + indi[wifeid].name + " is not divorced yet from " + indi[this_husb].name)
+                return False
+            elif indi[this_husb].death == "NA":
+                print("ERROR: US11: " + indi[wife].name + "'s husband " + indi[this_husb].name + " is still alive and married to her")
+                return False
+    return True
+        
+    
+    
 
 def user_story_15(child_list, family_tag): #There should be fewer than 15 siblings in a family
     if len(child_list) < 15:
@@ -370,8 +404,8 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        #file = open('NicoleFamily.ged', 'r')
-        file = open('user_story_geds/us15.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/us15.ged', 'r')
     except:
         print("Cannot open file")
 
