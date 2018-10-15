@@ -4,7 +4,7 @@ from tables import user_story_5, user_story_6
 from tables import user_story_7
 from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
-from tables import create_tables
+from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
 
@@ -46,7 +46,7 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11','%Y-%m-%d').date(),datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
         self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
         self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1998-11-1','%Y-%m-%d').date(), "David"), False)
 
     def test_us4(self):
         '''
@@ -99,11 +99,10 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertEqual(user_story_7(datetime.datetime(1900, 8, 16), datetime.datetime(1980, 8, 16), "Nicole"), True)
-        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
-        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
-        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
-        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
-        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 3, 10), datetime.datetime(1988, 9, 12), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1852, 1, 2), datetime.datetime.today(), "Caroline"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1990, 9, 22), datetime.datetime.today(), "Michayla"), True)
+        self.assertEqual(user_story_7(datetime.datetime(1492, 7, 9), datetime.datetime(2000, 8, 16), "Elena"), False)
 
     def test_us18(self):
         '''
@@ -154,4 +153,9 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
     print('Running unit tests')
+    file = open('NicoleFamily.ged', 'r')
+    indi, fam = create_tables(file)
+    create_indi(indi)
+    create_fam(fam)
+    file.close()
     unittest.main()

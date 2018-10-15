@@ -128,11 +128,15 @@ def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a d
         return True
 
 
-def user_story_7(birth, comp_date,
-                 name):  # Death should be less than 150 years after birth for dead people, and current date should be less than 150 years after birth for all living people
-    # Comp date is either the current date or the death date
-    difference = comp_date.year - birth.year - ((birth.month, birth.day) > (comp_date.month, comp_date.day))
-    if difference >= 150:
+def user_story_7(birth, comp_date, name):
+    '''
+    Death should be less than 150 years after birth for dead people,
+    and current date should be less than 150 years after birth for all living people
+    Comp date is either the current date or the death date
+    '''
+    
+    #difference = comp_date.year - birth.year - ((birth.month, birth.day) > (comp_date.month, comp_date.day))
+    if calc_difference(birth, comp_date) >= 150:
         print("ERROR: US07: " + name + " must be less than 150 years old")
         return False
     return True
@@ -240,9 +244,10 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):  # test that date is not in future
-                        person.birth = new_date
-                        person.age = determine_age(new_date, datetime.datetime.today())
+                    if user_story_1(new_date): # test that date is not in future
+                        if user_story_7(new_date, datetime.datetime.today(), person.name): #test <150 years old
+                            person.birth = new_date
+                            person.age = determine_age(new_date, datetime.datetime.today())
 
             elif tag == "DEAT":
                 person.alive = False
@@ -255,8 +260,9 @@ def create_tables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date):  # test that date is not in the future
                         if user_story_3(person.birth, new_date, person.name):  # test that death is after birth
-                            person.death = new_date
-                            person.age = determine_age(person.birth, new_date)
+                            if user_story_7(person.birth, new_date, person.name): #test <150 years old
+                                person.death = new_date
+                                person.age = determine_age(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -292,8 +298,7 @@ def create_tables(file):
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date):  # test that date is not in future
-                        if user_story_4(family.marr, new_date, family.husbname,
-                                        family.wifename):  # check div after marr
+                        if user_story_4(family.marr, new_date, family.husbname, family.wifename):  # check div after marr
                             if user_story_6(new_date, family.husbid, family.wifeid, indi):  # check no div after death
                                 family.div = new_date
 
