@@ -1,7 +1,7 @@
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
-from tables import user_story_7, user_story_15
+from tables import user_story_7
 from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
 from tables import create_tables, create_indi, create_fam
@@ -94,28 +94,11 @@ class Test(unittest.TestCase):
         A person cannot be more than 150 years old
         '''
 
-        file = open('NicoleFamily.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-
         self.assertEqual(user_story_7(datetime.datetime(1900, 8, 16), datetime.datetime(1980, 8, 16), "Nicole"), True)
         self.assertEqual(user_story_7(datetime.datetime(1800, 3, 10), datetime.datetime(1988, 9, 12), "David"), False)
         self.assertEqual(user_story_7(datetime.datetime(1852, 1, 2), datetime.datetime.today(), "Caroline"), False)
         self.assertEqual(user_story_7(datetime.datetime(1990, 9, 22), datetime.datetime.today(), "Michayla"), True)
         self.assertEqual(user_story_7(datetime.datetime(1492, 7, 9), datetime.datetime(2000, 8, 16), "Elena"), False)
-
-  
-    def test_us15(self):
-        '''
-        There should be fewer than 15 siblings in a family
-        '''
-        
-        file = open('/user_story_geds/US15.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-        
-        self.assertEqual(user_story_15())
-        
 
     def test_us18(self):
         '''

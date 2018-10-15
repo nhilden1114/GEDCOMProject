@@ -141,12 +141,6 @@ def user_story_7(birth, comp_date, name):
         return False
     return True
 
-def user_story_15(family): #There should be fewer than 15 siblings in a family
-    if len(family.chil) < 15:
-        return True
-    else: 
-        print("ERROR: US15: There should be fewer than 15 siblings in family " + family.idtag)
-        return False
 
 def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
     husb_fam = indi[husbid].famc
@@ -252,8 +246,11 @@ def create_tables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     if user_story_1(new_date): # test that date is not in future
                         if user_story_7(new_date, datetime.datetime.today(), person.name): #test <150 years old
-                            person.birth = new_date
-                            person.age = determine_age(new_date, datetime.datetime.today())
+                            x=3
+                            #person.birth = new_date
+                            #person.age = determine_age(new_date, datetime.datetime.today())
+                person.birth = new_date
+                person.age = determine_age(new_date, datetime.datetime.today())
 
             elif tag == "DEAT":
                 person.alive = False
@@ -264,11 +261,15 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    #print("testing deaths " + " death: " + new_args + " name: " + person.name + " birth: " + person.birth)
                     if user_story_1(new_date):  # test that date is not in the future
                         if user_story_3(person.birth, new_date, person.name):  # test that death is after birth
                             if user_story_7(person.birth, new_date, person.name): #test <150 years old
-                                person.death = new_date
-                                person.age = determine_age(person.birth, new_date)
+                                x=3 
+                                #person.death = new_date
+                                #person.age = determine_age(person.birth, new_date)
+                person.death = new_date
+                person.age = determine_age(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -317,9 +318,7 @@ def create_tables(file):
                 family.wifename = indi[args].name
 
             elif tag == "CHIL":
-                if user_story_15(family):    
-                    family.chil.append(args)
-               
+                family.chil.append(args)
 
     return indi, fam
 
@@ -364,8 +363,8 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        #file = open('NicoleFamily.ged', 'r')
-        file = open('user_story_geds/us07.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/us07.ged', 'r')
     except:
         print("Cannot open file")
 
