@@ -110,7 +110,7 @@ class Test(unittest.TestCase):
         There should be fewer than 15 siblings in a family
         '''
         
-        file = open('US15.ged', 'r')
+        file = open('/user_story_geds/US15.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
         
