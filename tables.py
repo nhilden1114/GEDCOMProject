@@ -48,26 +48,23 @@ def user_story_2(indi, marr_date, husbid, wifeid):  # Birth should occur before 
         return True
 
 
-def user_story_3(birthday, death_day, name): # a person's birthday must be before their death date
+def user_story_3(birthday, death_day, name):  # a person's birthday must be before their death date
 
     difference = death_day.year - birthday.year - ((birthday.month, birthday.day) > (death_day.month, death_day.day))
-    
-    if birthday != "NA" and birthday < date.today():
-        if death_day != "NA" and death_day <= date.today():
-            if difference < 0:
-                print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " should not be before "+ name +"'s birth date of " + birthday.strftime('%Y-%m-%d'))
-                return False
-            else:
-                return True
-        else:
-            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " not valid for " + name )
+
+    if death_day != "NA" and death_day <= date.today():
+        if difference < 0:
+            print("ERROR: US03: Death date of " + death_day.strftime(
+                '%Y-%m-%d') + " should not be before " + name + "'s birth date of " + birthday.strftime('%Y-%m-%d'))
             return False
+        else:
+            return True
     else:
-        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " not valid for " + name )
+        print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " not valid for " + name)
         return False
 
 
-def user_story_4(marriage_date, divorce_date, husbname, wifename): #Divorce date should not be before marriage date
+def user_story_4(marriage_date, divorce_date, husbname, wifename): # Divorce date should not be before marriage date
 
     if marriage_date != "NA" and marriage_date < date.today():
         difference = divorce_date.year - marriage_date.year - ((marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
@@ -96,6 +93,7 @@ def user_story_5(marriage_date, husbid, wifeid, indi): # A person cannot get mar
             else:
                 return True
         return True
+
 
 def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a divorce after death
 
@@ -232,8 +230,7 @@ def create_tables(file):
                     if user_story_1(new_date): #test that date is not in the future
                         if user_story_3(person.birth, new_date, person.name): #test that death is after birth
                             person.death = new_date
-                            person.age = determineAge(person.birth, new_date)
-
+                            person.age = determine_age(person.birth, new_date)
 
             elif tag == "FAMS":
                 person.fams.append(args)
@@ -329,11 +326,12 @@ def main():
     except:
         print("Cannot open file")
         
-    indi_info, fam_info = createTables(file)
+    indi_info, fam_info = create_tables(file)
 
-    createINDI(indi_info)
-    createFAM(fam_info)
-    
+    create_indi(indi_info)
+    create_fam(fam_info)
+
+
 if __name__ == '__main__':
     main()
         
