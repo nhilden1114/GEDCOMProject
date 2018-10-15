@@ -1,9 +1,10 @@
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
+from tables import user_story_7
 from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
-from tables import createTables
+from tables import create_tables
 import unittest
 import datetime
 
@@ -27,7 +28,7 @@ class Test(unittest.TestCase):
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
 
         self.assertEqual(user_story_2(indi, datetime.datetime(1950, 8, 16), "@I02@", "@I03@"), False)
@@ -64,7 +65,7 @@ class Test(unittest.TestCase):
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
 
         self.assertEqual(user_story_5(datetime.datetime(1980, 8, 16), "@I08@", "@I09@", indi), False)
@@ -79,7 +80,7 @@ class Test(unittest.TestCase):
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
 
         self.assertEqual(user_story_6(datetime.datetime(1980, 8, 16), "@I08@", "@I09@", indi), False)
@@ -88,13 +89,29 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_6(datetime.datetime(2000, 7, 20), "@I01@", "@I03@", indi), True)
         self.assertEqual(user_story_6(datetime.datetime(2019, 7, 20), "@I01@", "@I04@", indi), False)
 
+    def test_us7(self):
+        '''
+        A person cannot be more than 150 years old
+        '''
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_7(datetime.datetime(1900, 8, 16), datetime.datetime(1980, 8, 16), "Nicole"), True)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+        self.assertEqual(user_story_7(datetime.datetime(1800, 8, 16), datetime.datetime(1980, 8, 16), "David"), False)
+
     def test_us18(self):
         '''
         Siblings should not marry
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
 
         self.assertEqual(user_story_18(indi, "@I01@", "@I06@"), False)
@@ -103,15 +120,16 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_18(indi, "@I02@", "@I03@"), True)
         self.assertEqual(user_story_18(indi, "@I08@", "@I09@"), True)
 
+
     def test_us21_a(self):
         '''
         Correct gender for husband
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
-
+        
         self.assertEqual(user_story_21_a(indi, "@I02@", "John"), True)
         self.assertEqual(user_story_21_a(indi, "@I01@", "Jane"), False)
         self.assertEqual(user_story_21_a(indi, "@I04@", "Simon"), True)
@@ -124,7 +142,7 @@ class Test(unittest.TestCase):
         '''
 
         file = open('NicoleFamily.ged', 'r')
-        indi, fam = createTables(file)
+        indi, fam = create_tables(file)
         file.close()
         
         self.assertEqual(user_story_21_b(indi, "@I02@", "David"), False)
