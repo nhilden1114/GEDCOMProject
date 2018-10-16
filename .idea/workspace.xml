@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f55a0d3-83be-4c5e-aace-94e86039ac76" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/US15.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us01.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us02.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us07.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us11.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us22.ged" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_story_geds/us23.ged" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/tables.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_cases.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases_refactored.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,34 +24,43 @@
     <session id="-1255912839">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="ged" value="7" />
+          <entry key="py" value="9" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="4" />
+          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="Python" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="33" />
-          <entry key="py" value="432" />
+          <entry key="ged" value="2" />
+          <entry key="py" value="3677" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="432" />
+          <entry key="PLAIN_TEXT" value="35" />
+          <entry key="Python" value="3677" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -53,24 +68,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tables.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
-              <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
+            <state relative-caret-position="3978">
+              <caret line="234" column="37" lean-forward="true" selection-start-line="234" selection-start-column="37" selection-end-line="234" selection-end-column="37" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <marker date="1539119138087" expanded="true" signature="3553:3607" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../tables_us_3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_cases.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+            <state relative-caret-position="-697">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -78,7 +101,50 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user_story_geds/us22.ged">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user_story_geds/us23.ged">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/unittest/case.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="765">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NicoleFamily.ged">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2873">
+              <caret line="169" column="6" selection-start-line="169" selection-start-column="6" selection-end-line="169" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>create</find>
+      <find>wife_gen</find>
+      <find>tables</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -86,15 +152,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/test_cases_refactored.py" />
+        <option value="$PROJECT_DIR$/tables_refactored.py" />
+        <option value="$PROJECT_DIR$/us_15.ged" />
+        <option value="$PROJECT_DIR$/us_22.ged" />
         <option value="$PROJECT_DIR$/tables.py" />
+        <option value="$PROJECT_DIR$/../tables_us_3.py" />
         <option value="$PROJECT_DIR$/test_cases.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="1" />
-    <option name="width" value="1111" />
+    <option name="width" value="1044" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
@@ -102,6 +171,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,15 +179,27 @@
               <item name="GEDCOMProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="GEDCOMProject" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="GEDCOMProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GEDCOMProject" type="462c0819:PsiDirectoryNode" />
+              <item name="user_story_geds" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mbenezra\SSW-555\GEDCOMProject\user_story_geds" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mbenezra\SSW-555\GEDCOMProject" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -131,7 +213,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tables">
+  <component name="RunManager" selected="Python tests.Unittests in test_cases.py">
     <configuration name="tables" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GEDCOMProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,7 +235,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_cases.Test.test_us18" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_cases.Test" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="GEDCOMProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -163,11 +245,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cases.Test.test_us18&quot;" />
+      <option name="_new_target" value="&quot;test_cases.Test&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_cases.Test.test_us6" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_cases.Test.test_us22" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="GEDCOMProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -177,7 +259,21 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cases.Test.test_us6&quot;" />
+      <option name="_new_target" value="&quot;test_cases.Test.test_us22&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_cases.Test.test_us4" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="GEDCOMProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cases.Test.test_us4&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -196,17 +292,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.Unittests for test_cases.Test.test_us6" />
       <item itemvalue="Python tests.Unittests in test_cases.py" />
-      <item itemvalue="Python tests.Unittests for test_cases.Test.test_us18" />
+      <item itemvalue="Python tests.Unittests for test_cases.Test.test_us22" />
+      <item itemvalue="Python tests.Unittests for test_cases.Test" />
+      <item itemvalue="Python tests.Unittests for test_cases.Test.test_us4" />
       <item itemvalue="Python.tables" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.tables" />
-        <item itemvalue="Python tests.Unittests for test_cases.Test.test_us18" />
         <item itemvalue="Python tests.Unittests in test_cases.py" />
-        <item itemvalue="Python tests.Unittests for test_cases.Test.test_us6" />
+        <item itemvalue="Python tests.Unittests for test_cases.Test.test_us22" />
+        <item itemvalue="Python.tables" />
+        <item itemvalue="Python tests.Unittests for test_cases.Test" />
+        <item itemvalue="Python tests.Unittests for test_cases.Test.test_us4" />
       </list>
     </recent_temporary>
   </component>
@@ -224,29 +322,47 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_cases_Test_test_us6 - 2018.10.01 at 16h 54m 53s.xml">
-      <configuration name="Unittests for test_cases.Test.test_us6" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_cases_py - 2018.10.01 at 16h 55m 00s.xml">
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.16 at 02h 39m 26s.xml">
       <configuration name="Unittests in test_cases.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_cases_py - 2018.10.01 at 18h 49m 12s.xml">
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.16 at 02h 40m 19s.xml">
       <configuration name="Unittests in test_cases.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_cases_Test_test_us18 - 2018.10.04 at 12h 52m 07s.xml">
-      <configuration name="Unittests for test_cases.Test.test_us18" configurationId="tests" />
+    <history-entry file="Unittests_for_test_cases_Test_test_us22 - 2018.10.16 at 02h 50m 05s.xml">
+      <configuration name="Unittests for test_cases.Test.test_us22" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_cases_Test - 2018.10.16 at 02h 50m 47s.xml">
+      <configuration name="Unittests for test_cases.Test" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_cases_Test_test_us22 - 2018.10.16 at 02h 52m 02s.xml">
+      <configuration name="Unittests for test_cases.Test.test_us22" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.16 at 03h 00m 50s.xml">
+      <configuration name="Unittests in test_cases.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_cases_Test - 2018.10.16 at 03h 01m 18s.xml">
+      <configuration name="Unittests for test_cases.Test" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.16 at 03h 03m 46s.xml">
+      <configuration name="Unittests in test_cases.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_cases_Test_test_us22 - 2018.10.16 at 03h 06m 56s.xml">
+      <configuration name="Unittests for test_cases.Test.test_us22" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.16 at 03h 07m 03s.xml">
+      <configuration name="Unittests in test_cases.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1111" height="1040" extended-state="0" />
+    <frame x="0" y="0" width="1044" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21248835" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21073559" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32855567" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36383682" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32855567" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3660419" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -264,23 +380,66 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tables.py">
+    <entry file="file://$PROJECT_DIR$/tables_refactored.py" />
+    <entry file="file://$PROJECT_DIR$/test_cases_refactored.py" />
+    <entry file="file://$PROJECT_DIR$/Test.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/us_15.ged" />
+    <entry file="file://$PROJECT_DIR$/user_story_geds/US15.ged">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/unittest/case.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1539119138087" expanded="true" signature="3553:3607" ph="..." />
-          </folding>
+        <state relative-caret-position="765">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NicoleFamily.ged">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2873">
+          <caret line="169" column="6" selection-start-line="169" selection-start-column="6" selection-end-line="169" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tables_us_3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_story_geds/us23.ged">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_story_geds/us22.ged">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_cases.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+        <state relative-caret-position="-697">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3978">
+          <caret line="234" column="37" lean-forward="true" selection-start-line="234" selection-start-column="37" selection-end-line="234" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
