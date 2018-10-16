@@ -210,7 +210,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(user_story_22(indi))
 
-    def test_us_23(self):
+    def test_us23(self):
         """
         No more than one individual with the same name and birth date should appear in a GEDCOM file
         """
@@ -234,6 +234,12 @@ class Test(unittest.TestCase):
         self.assertTrue(user_story_23(indi))
 
         file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertTrue(user_story_23(indi))
+        
+        file = open('user_story_geds/us01.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 

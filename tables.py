@@ -181,26 +181,6 @@ def user_story_11(indi, fam, husbid, wifeid):
                 print("ERROR: US11: " + indi[wifeid].name + "'s husband " + indi[this_husb].name + " is still alive and married to her")
                 return False
     return True
-<<<<<<< HEAD
-
-
-def user_story_15(child_list, family_tag): #There should be fewer than 15 siblings in a family
-    if len(child_list) < 15:
-        return True
-    else: 
-        print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
-        return False
-
-"""def user_story_14(indi, fam, birth, idtag):
-    siblings = indi[idtag].chil
-    birthdays = []
-
-    for i > 0 in siblings:
-"""
-=======
-        
-    
->>>>>>> f1a549d8618a264f073d72eedd959ef3a8b48219
 
 
 def user_story_15(child_list, family_tag):  # There should be fewer than 15 siblings in a family
@@ -261,7 +241,7 @@ def user_story_23(indi): #No more than one individual with the same name and bir
     if(len(unique) == len(set(unique))):
         return True
     else:
-        print("ERROR: US23: duplicates found in file " )
+        print("ERROR: US23: Duplicates found in file " )
         return False
 
 
