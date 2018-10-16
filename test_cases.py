@@ -4,6 +4,7 @@ from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_15
 from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
+from tables import user_story_23
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -171,6 +172,34 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_21_b(indi, "@I03@", "Ann"), True)
         self.assertEqual(user_story_21_b(indi, "@I07@","Michayla"), True)
         
+    def test_us_23(self):
+        '''
+        No more than one individual with the same name and birth date should appear in a GEDCOM file
+        '''
+        
+        file = open('user_story_geds/us23.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertFalse(user_story_23(indi))
+        
+        file = open('user_story_geds/us07.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertTrue(user_story_23(indi))
+        
+        file = open('user_story_geds/us11.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertTrue(user_story_23(indi))
+        
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertTrue(user_story_23(indi))
 
 if __name__ == '__main__':
     print('Running unit tests')

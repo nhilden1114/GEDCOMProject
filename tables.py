@@ -180,6 +180,16 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
         print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name)
         return False
 
+def user_story_23(indi): #No more than one individual with the same name and birth date should appear in a GEDCOM file
+    unique = list()
+    
+    for i in indi:
+        unique.append((indi[i].name, indi[i].birth))
+    if(len(unique) == len(set(unique))):
+        return True
+    else:
+        print("ERROR: US23: duplicates found in file " )
+        return False
 
 class Person:
 
@@ -327,6 +337,7 @@ def create_tables(file):
                 if user_story_15(family.chil, family.idtag):    
                     family.chil.append(args)
                
+    #user_story_23(indi)
     return indi, fam
 
 
@@ -370,8 +381,8 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        #file = open('NicoleFamily.ged', 'r')
-        file = open('user_story_geds/us15.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/us15.ged', 'r')
     except:
         print("Cannot open file")
 
