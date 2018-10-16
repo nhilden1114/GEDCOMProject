@@ -183,21 +183,6 @@ def user_story_11(indi, fam, husbid, wifeid):
     return True
         
     
-    
-
-def user_story_15(child_list, family_tag): #There should be fewer than 15 siblings in a family
-    if len(child_list) < 15:
-        return True
-    else: 
-        print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
-        return False
-
-"""def user_story_14(indi, fam, birth, idtag):
-    siblings = indi[idtag].chil
-    birthdays = []
-
-    for i > 0 in siblings:
-"""
 
 
 def user_story_15(child_list, family_tag):  # There should be fewer than 15 siblings in a family
@@ -239,6 +224,16 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
     else:
         print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name)
         return False
+    
+def user_story_22(indi):  # ensure only unique ids
+    unique = list()
+
+    for i in indi:
+        unique.append(indi[i].idtag)
+    if len(unique) == len(set(unique)):
+        return True
+    else:
+        print("ERROR: US22: duplicate individual ids found in file")
 
 def user_story_23(indi): #No more than one individual with the same name and birth date should appear in a GEDCOM file
     unique = list()
@@ -250,16 +245,6 @@ def user_story_23(indi): #No more than one individual with the same name and bir
     else:
         print("ERROR: US23: duplicates found in file " )
         return False
-
-def user_story_22(indi):  # ensure only unique ids
-    unique = list()
-
-    for i in indi:
-        unique.append(indi[i].idtag)
-    if len(unique) == len(set(unique)):
-        return True
-    else:
-        print("ERROR: US22: duplicate individual ids found in file")
 
 
 def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
