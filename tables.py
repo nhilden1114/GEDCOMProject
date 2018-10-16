@@ -181,9 +181,7 @@ def user_story_11(indi, fam, husbid, wifeid):
                 print("ERROR: US11: " + indi[wifeid].name + "'s husband " + indi[this_husb].name + " is still alive and married to her")
                 return False
     return True
-        
-    
-    
+
 
 def user_story_15(child_list, family_tag): #There should be fewer than 15 siblings in a family
     if len(child_list) < 15:
