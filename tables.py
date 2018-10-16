@@ -334,6 +334,7 @@ def create_tables(file):
                                     if user_story_21_a(indi, family.husbid, family.husbname) and user_story_21_b(indi,
                                                                                                                  family.wifeid,
                                                                                                                  family.wifename):  # check genders
+                                        #if user_story_11(indi, fam, family.husbid, family.wifeid):
                                         family.marr = new_date
 
             elif tag == "DIV":
@@ -405,7 +406,7 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         file = open('NicoleFamily.ged', 'r')
-        #file = open('user_story_geds/us15.ged', 'r')
+        #file = open('user_story_geds/us11.ged', 'r')
     except:
         print("Cannot open file")
 
