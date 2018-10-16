@@ -417,7 +417,7 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         file = open('NicoleFamily.ged', 'r')
-        #file = open('user_story_geds/us11.ged', 'r')
+        #file = open('user_story_geds/us01.ged', 'r')
 
     except:
         print("Cannot open file")
