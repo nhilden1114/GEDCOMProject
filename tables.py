@@ -40,7 +40,7 @@ def user_story_1(inputDate):
 def user_story_2(indi, marr_date, husbid, wifeid):
     '''
     Birth should occur before marriage of an individual
-    indi is the table of all individuals in the GEDCOM file
+    indi is the dict of all individuals in the GEDCOM file
     marr_date is the marriage date
     husbid is the id of the husband of this marriage
     wifeid is the id of the wife of this marriage
@@ -82,10 +82,8 @@ def user_story_3(birthday, death_day, name):  # a person's birthday must be befo
 def user_story_4(marriage_date, divorce_date, husbname, wifename):  # Divorce date should not be before marriage date
 
     if marriage_date != "NA" and marriage_date < date.today():
-        difference = divorce_date.year - marriage_date.year - (
-                (marriage_date.month, marriage_date.day) > (divorce_date.month, divorce_date.day))
 
-        if difference < 0:
+        if calc_difference(marriage_date, divorce_date) < 0:
             print("ERROR: US04: Divorce date of " + divorce_date.strftime(
                 '%Y-%m-%d') + " should not be before the marriage date of " + marriage_date.strftime(
                 '%Y-%m-%d') + " for " + husbname + " and " + wifename)
@@ -105,9 +103,7 @@ def user_story_5(marriage_date, husbid, wifeid, indi):  # A person cannot get ma
     for death_date in deaths:
         dday = death_date[0]
         if dday != "NA":
-            difference = dday.year - marriage_date.year - (
-                    (marriage_date.month, marriage_date.day) > (dday.month, dday.day))
-            if difference < 0:
+            if calc_difference(marriage_date, dday) < 0:
                 print("ERROR: US05: Marriage date of " + marriage_date.strftime(
                     '%Y-%m-%d') + " should not occur after death date for " + death_date[
                           1] + " which is " + dday.strftime('%Y-%m-%d'))
@@ -124,9 +120,7 @@ def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a d
     for death_date in deaths:
         dday = death_date[0]
         if dday != "NA":
-            difference = dday.year - divorce_date.year - (
-                    (divorce_date.month, divorce_date.day) > (dday.month, dday.day))
-            if difference < 0:
+            if calc_difference(divorce_date, dday) < 0:
                 print("ERROR: US06: Divorce date of " + divorce_date.strftime(
                     '%Y-%m-%d') + " should not occur after death date for " + death_date[
                           1] + " which is " + dday.strftime('%Y-%m-%d'))
@@ -151,6 +145,9 @@ def user_story_7(birth, comp_date, name):
 def user_story_10(indi, family, fam):
     '''
     Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)
+    indi is the dict of individuals
+    family is the current family tag
+    fam is the dict of families
     '''
 
     wife_diff = calc_difference(indi[fam[family].wifeid].birth, fam[family].marr)
@@ -239,7 +236,7 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
         print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name)
         return False
     
-def user_story_22(indi):  # Ensure only unique ids
+def user_story_22(indi):  # ensure only unique ids
     unique = list()
 
     for i in indi:
@@ -247,9 +244,9 @@ def user_story_22(indi):  # Ensure only unique ids
     if len(unique) == len(set(unique)):
         return True
     else:
-        print("ERROR: US22: Duplicate individual ids found in file")
+        print("ERROR: US22: duplicate individual ids found in file")
 
-def user_story_23(indi): # No more than one individual with the same name and birth date should appear in a GEDCOM file
+def user_story_23(indi): #No more than one individual with the same name and birth date should appear in a GEDCOM file
     unique = list()
     
     for i in indi:
@@ -261,7 +258,7 @@ def user_story_23(indi): # No more than one individual with the same name and bi
         return False
 
 
-def user_story_29_helper(indi, idtag):  # To only return the idtags of people who are deceased
+def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
     death_status = indi[idtag].death
     if death_status != 'NA':
         return idtag
@@ -269,7 +266,7 @@ def user_story_29_helper(indi, idtag):  # To only return the idtags of people wh
         return None
 
 
-def user_story_29(indi):  # Return a list of the deceased
+def user_story_29(indi):  # return a list of the deceased
     deceased = []
 
     for i in indi:
@@ -277,22 +274,6 @@ def user_story_29(indi):  # Return a list of the deceased
         if temp:
             deceased.append(temp)
     return deceased
-
-def user_story_30_helper(indi, i, fam): 
-    for f in fam:
-        if fam[f].husbid == i or fam[f].wifeid == i:
-            if fam[f].div == "NA":
-                if indi[i].death == "NA":
-                    return True
-
-def user_story_30(indi, fam): # List all living married people in a GEDCOM file
-    married = []
-
-    for i in indi:
-        if user_story_30_helper(indi, i, fam):
-            married.append(i)
-    return married
-
 
 
 class Person:
@@ -364,13 +345,10 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):  # test that date is not in future
-                        if user_story_7(new_date, datetime.datetime.today(), person.name):  # test <150 years old
-                            x = 3
-                            # person.birth = new_date
-                            # person.age = determine_age(new_date, datetime.datetime.today())
-                person.birth = new_date
-                person.age = determine_age(new_date, datetime.datetime.today())
+
+                    user_story_1(new_date)
+                    person.birth = new_date
+                    person.age = determine_age(new_date, datetime.datetime.today())
 
             elif tag == "DEAT":
                 person.alive = False
@@ -381,15 +359,13 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    # print("testing deaths " + " death: " + new_args + " name: " + person.name + " birth: " + person.birth)
-                    if user_story_1(new_date):  # test that date is not in the future
-                        if user_story_3(person.birth, new_date, person.name):  # test that death is after birth
-                            if user_story_7(person.birth, new_date, person.name):  # test <150 years old
-                                x = 3
-                                # person.death = new_date
-                                # person.age = determine_age(person.birth, new_date)
-                person.death = new_date
-                person.age = determine_age(person.birth, new_date)
+                    
+                    user_story_1(new_date)
+                    user_story_3(person.birth, new_date, person.name)
+                    user_story_7(person.birth, new_date, person.name)
+                    
+                    person.death = new_date
+                    person.age = determine_age(person.birth, new_date)
 
 
             elif tag == "FAMS":
@@ -406,16 +382,17 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):  # check date not in future
-                        if user_story_2(indi, new_date, family.husbid, family.wifeid):  # check birth before marriage
-                            if user_story_18(indi, family.husbid, family.wifeid):  # check not siblings
-                                if user_story_5(new_date, family.husbid, family.wifeid,
-                                                indi):  # check marr before death
-                                    if user_story_21_a(indi, family.husbid, family.husbname) and user_story_21_b(indi,
-                                                                                                                 family.wifeid,
-                                                                                                                 family.wifename):  # check genders
-                                        # if user_story_11(indi, fam, family.husbid, family.wifeid):
-                                        family.marr = new_date
+                    
+                    user_story_1(new_date)
+                    user_story_2(indi, new_date, family.husbid, family.wifeid)
+                    user_story_18(indi, family.husbid, family.wifeid)
+                    user_story_5(new_date, family.husbid, family.wifeid, indi)
+                    user_story_21_a(indi, family.husbid, family.husbname)
+                    user_story_21_b(indi, family.wifeid, family.wifename)
+                    
+                    family.marr = new_date
+
+                    user_story_10(indi, family.idtag, fam)
 
             elif tag == "DIV":
 
@@ -425,11 +402,12 @@ def create_tables(file):
 
                 if new_tag == "DATE":
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-                    if user_story_1(new_date):  # test that date is not in future
-                        if user_story_4(family.marr, new_date, family.husbname,
-                                        family.wifename):  # check div after marr
-                            if user_story_6(new_date, family.husbid, family.wifeid, indi):  # check no div after death
-                                family.div = new_date
+
+                    user_story_1(new_date)
+                    user_story_4(family.marr, new_date, family.husbname, family.wifename)
+                    user_story_6(new_date, family.husbid, family.wifeid, indi)
+
+                    family.div = new_date
 
             elif tag == "HUSB":
                 family.husbid = args
@@ -443,7 +421,6 @@ def create_tables(file):
                 if user_story_15(family.chil, family.idtag):
                     family.chil.append(args)
 
-    # user_story_23(indi)
     return indi, fam
 
 
@@ -488,8 +465,8 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        #file = open('NicoleFamily.ged', 'r')
-         file = open('user_story_geds/us10.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/us10.ged', 'r')
         # file = open('user_story_geds/us02.ged', 'r')
     except OSError:
         print("Cannot open file")
