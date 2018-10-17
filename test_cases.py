@@ -270,11 +270,13 @@ class Test(unittest.TestCase):
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_29(indi), ['@I01@', '@I08@'])
-        self.assertNotEqual(user_story_29(indi), [])
-        self.assertNotEqual(user_story_29(indi), ['@F1@'])
-        self.assertNotEqual(user_story_29(indi), ['@T07@'])
-        self.assertNotEqual(user_story_29(indi), ['@I01@', '@I08@', '@F1@'])
+        result = user_story_29(indi)
+        
+        self.assertIn("@I01@", result)
+        self.assertIn("@I08@", result)
+        self.assertNotIn("@I10@", result)
+        self.assertNotIn("@I09@", result)
+        self.assertNotIn("@I05@", result)
 
 
 if __name__ == '__main__':
