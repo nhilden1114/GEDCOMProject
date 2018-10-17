@@ -143,12 +143,28 @@ def user_story_7(birth, comp_date, name):
     Comp date is either the current date or the death date
     '''
 
-    # difference = comp_date.year - birth.year - ((birth.month, birth.day) > (comp_date.month, comp_date.day))
-
     if calc_difference(birth, comp_date) >= 150:
         print("ERROR: US07: " + name + " must be less than 150 years old")
         return False
     return True
+
+def user_story_10(indi, family, fam):
+    '''
+    Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)
+    '''
+
+    wife_diff = calc_difference(indi[fam[family].wifeid].birth, fam[family].marr)
+    husb_diff = calc_difference(indi[fam[family].husbid].birth, fam[family].marr)
+    
+    if wife_diff < 14: 
+        print ("ERROR: US10: Marriage date of " + fam[family].marr.strftime('%Y-%m-%d') + " cannot occur because " + fam[family].wifename + " is under 14 years of age")
+        return False
+
+    elif husb_diff < 14: 
+        print ("ERROR: US10: Marriage date of " + fam[family].marr.strftime('%Y-%m-%d') + " cannot occur because " + fam[family].husbname + " is under 14 years of age")
+        return False
+
+    return True  
 
 def user_story_11(indi, fam, husbid, wifeid):
     '''
@@ -284,7 +300,7 @@ class Family:
         self.marr = "NA"
         self.div = "NA"
         self.husbid = "NA"
-        self.husbnam = "NA"
+        self.husbname = "NA"
         self.wifeid = "NA"
         self.wifename = "NA"
         self.chil = list()
@@ -456,8 +472,8 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        file = open('NicoleFamily.ged', 'r')
-        # file = open('user_story_geds/us15.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
+         file = open('user_story_geds/us10.ged', 'r')
         # file = open('user_story_geds/us02.ged', 'r')
     except OSError:
         print("Cannot open file")

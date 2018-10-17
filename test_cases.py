@@ -1,7 +1,8 @@
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
-from tables import user_story_7, user_story_11
+from tables import user_story_7, user_story_10
+from tables import user_story_11
 from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_29
@@ -101,6 +102,32 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_7(datetime.datetime(1852, 1, 2), datetime.datetime.today(), "Caroline"), False)
         self.assertEqual(user_story_7(datetime.datetime(1990, 9, 22), datetime.datetime.today(), "Michayla"), True)
         self.assertEqual(user_story_7(datetime.datetime(1492, 7, 9), datetime.datetime(2000, 8, 16), "Elena"), False)
+
+    def test_us10(self):
+        '''
+        Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)
+        '''
+
+        file = open('user_story_geds/us10.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        family_tags = []
+        for family in fam:
+            family_tags.append(family)
+            
+        print("Fam tags: " + family_tags[0])
+        print("Fam tags: " + family_tags[1])
+        print("Fam tags: " + family_tags[2])
+        print("Fam tags: " + family_tags[3])
+        print("Fam tags: " + family_tags[4])
+
+        self.assertEqual(user_story_10(indi, family_tags[0], fam),True)
+        self.assertEqual(user_story_10(indi, family_tags[1], fam),False)
+        self.assertEqual(user_story_10(indi, family_tags[2], fam),False)
+        self.assertEqual(user_story_10(indi, family_tags[3], fam),True)
+        self.assertEqual(user_story_10(indi, family_tags[4], fam),True)
+
 
     def test_us11(self):
         '''
