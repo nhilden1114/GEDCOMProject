@@ -5,8 +5,8 @@ from tables import user_story_7, user_story_10
 from tables import user_story_11
 from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
-from tables import user_story_22, user_story_29
-from tables import user_story_23
+from tables import user_story_22, user_story_23
+from tables import user_story_29, user_story_30
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -276,15 +276,36 @@ class Test(unittest.TestCase):
         """
         List deceased
         """
+        
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
-        file.close()
+        file.close
+        
+        result = user_story_29(indi)
+        
+        self.assertIn("@I01@", result)
+        self.assertIn("@I08@", result)
+        self.assertNotIn("@I10@", result)
+        self.assertNotIn("@I09@", result)
+        self.assertNotIn("@I05@", result)
+        
+    
+    def test_us30(self):
+        '''
+        List all living married people in a GEDCOM file
+        '''
 
-        self.assertEqual(user_story_29(indi), ['@I01@', '@I08@'])
-        self.assertNotEqual(user_story_29(indi), [])
-        self.assertNotEqual(user_story_29(indi), ['@F1@'])
-        self.assertNotEqual(user_story_29(indi), ['@T07@'])
-        self.assertNotEqual(user_story_29(indi), ['@I01@', '@I08@', '@F1@'])
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close
+        
+        result = user_story_30(indi, fam)
+        
+        self.assertIn("@I04@", result)
+        self.assertIn("@I05@", result)
+        self.assertIn("@I09@", result)
+        self.assertIn("@I10@", result)
+        self.assertNotIn("@I08@", result)
 
 
 if __name__ == '__main__':
