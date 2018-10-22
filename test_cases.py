@@ -139,9 +139,9 @@ class Test(unittest.TestCase):
         '''
         Birth dates of siblings should be more than 8 months apart or less than 2 days apart
         '''
-        file = open('user_story_geds/us13.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
+        #file = open('user_story_geds/us13.ged', 'r')
+        #indi, fam = create_tables(file)
+        #file.close()
   
     def test_us15(self):
         '''
