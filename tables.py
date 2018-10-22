@@ -276,6 +276,7 @@ def user_story_23(indi): # No more than one individual with the same name and bi
         print("ERROR: US23: Duplicates found in file " )
         return False
 
+
 def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
     death_status = indi[idtag].death
     if death_status != 'NA':
@@ -286,12 +287,15 @@ def user_story_29_helper(indi, idtag):  # to only return the idtags of people wh
 
 def user_story_29(indi):  # return a list of the deceased
     deceased = []
-
+    deceased_names = []
     for i in indi:
         temp = user_story_29_helper(indi, i)
         if temp:
             deceased.append(temp)
+            deceased_names.append(indi[temp].name)
+    print("US29: List of all deceased people in the GEDCOM file: " + str(deceased_names))
     return deceased
+
 
 def user_story_30_helper(indi, i, fam): 
     for f in fam:
@@ -299,13 +303,42 @@ def user_story_30_helper(indi, i, fam):
             if fam[f].div == "NA":
                 if indi[i].death == "NA":
                     return True
-                
+
+
 def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     married = []
+    married_names = []
     for i in indi:
         if user_story_30_helper(indi, i, fam):
             married.append(i)
+            married_names.append(indi[i].name)
+    print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
+
+def user_story_34_helper(indi, fam, family):
+    wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
+    husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
+    
+    if husb_diff < wife_diff * 2:
+        return True
+    if wife_diff < husb_diff * 2:
+        return True
+    else: 
+        return False
+
+    
+def user_story_34(indi, fam): # List all couples who were married when the older spouse was more than twice as old as the younger spouse
+    
+    married = []
+    married_names = []
+    for i in indi:
+        for family in fam:
+            if user_story_30_helper(indi, i, fam) and user_story_34_helper(indi, fam, family):
+                married.append(i)
+                married_names.append(indi[i].name)
+    print("US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(married_names))
+    return married
+    
 
 class Person:
 
@@ -397,7 +430,6 @@ def create_tables(file):
                     
                     person.death = new_date
                     person.age = determine_age(person.birth, new_date)
-
 
             elif tag == "FAMS":
                 person.fams.append(args)
@@ -497,8 +529,9 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        #file = open('NicoleFamily.ged', 'r')
-        file = open('user_story_geds/us13.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        # file = open('user_story_geds/*.ged', 'r')
+        # file = open('user_story_geds/us02.ged', 'r')
     except OSError:
         print("Cannot open file")
 
