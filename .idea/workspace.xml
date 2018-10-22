@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9f55a0d3-83be-4c5e-aace-94e86039ac76" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/tables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_cases.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,13 +44,13 @@
         <counts>
           <entry key="dummy" value="33" />
           <entry key="ged" value="2" />
-          <entry key="py" value="4048" />
+          <entry key="py" value="4049" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="35" />
-          <entry key="Python" value="4048" />
+          <entry key="Python" value="4049" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -68,20 +67,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tables.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="257" column="20" selection-start-line="257" selection-start-column="20" selection-end-line="257" selection-end-column="20" />
+            <state relative-caret-position="151">
+              <caret line="488" column="10" selection-start-line="488" selection-start-column="10" selection-end-line="488" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_cases.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="32" lean-forward="true" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+            <state relative-caret-position="-5524">
+              <caret line="9" column="39" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -143,8 +142,8 @@
         <option value="$PROJECT_DIR$/us_15.ged" />
         <option value="$PROJECT_DIR$/us_22.ged" />
         <option value="$PROJECT_DIR$/../tables_us_3.py" />
-        <option value="$PROJECT_DIR$/tables.py" />
         <option value="$PROJECT_DIR$/test_cases.py" />
+        <option value="$PROJECT_DIR$/tables.py" />
       </list>
     </option>
   </component>
@@ -308,9 +307,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_cases_Test_test_us7 - 2018.10.22 at 17h 14m 04s.xml">
-      <configuration name="Unittests for test_cases.Test.test_us7" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_test_cases_Test_test_us7 - 2018.10.22 at 17h 14m 23s.xml">
       <configuration name="Unittests for test_cases.Test.test_us7" configurationId="tests" />
     </history-entry>
@@ -337,6 +333,9 @@
     </history-entry>
     <history-entry file="Unittests_for_test_cases_Test_test_us30 - 2018.10.22 at 17h 37m 14s.xml">
       <configuration name="Unittests for test_cases.Test.test_us30" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_cases_py - 2018.10.22 at 17h 37m 18s.xml">
+      <configuration name="Unittests in test_cases.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -414,17 +413,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tables.py">
+    <entry file="file://$PROJECT_DIR$/test_cases.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="257" column="20" selection-start-line="257" selection-start-column="20" selection-end-line="257" selection-end-column="20" />
+        <state relative-caret-position="-5524">
+          <caret line="9" column="39" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_cases.py">
+    <entry file="file://$PROJECT_DIR$/tables.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="32" lean-forward="true" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        <state relative-caret-position="151">
+          <caret line="488" column="10" selection-start-line="488" selection-start-column="10" selection-end-line="488" selection-end-column="10" />
         </state>
       </provider>
     </entry>

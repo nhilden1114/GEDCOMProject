@@ -296,11 +296,7 @@ def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 696f0fedabef6ed9cdc3829a6bbd7dffcb1c6378
 class Person:
 
     def __init__(self):
@@ -391,7 +387,6 @@ def create_tables(file):
                     
                     person.death = new_date
                     person.age = determine_age(person.birth, new_date)
-
 
             elif tag == "FAMS":
                 person.fams.append(args)
@@ -491,7 +486,7 @@ def main():
     try:
         # file = open('us_15.ged', 'r')
         file = open('NicoleFamily.ged', 'r')
-        #file = open('user_story_geds/*.ged', 'r')
+        # file = open('user_story_geds/*.ged', 'r')
         # file = open('user_story_geds/us02.ged', 'r')
     except OSError:
         print("Cannot open file")
