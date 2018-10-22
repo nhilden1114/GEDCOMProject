@@ -296,6 +296,30 @@ def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
+def user_story_34_helper(indi, fam, family):
+    wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
+    husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
+    
+    if husb_diff < wife_diff * 2:
+        return True
+    if wife_diff < husb_diff * 2:
+        return True
+    else: 
+        return False
+
+    
+def user_story_34(indi, fam): # List all couples who were married when the older spouse was more than twice as old as the younger spouse
+    
+    married = []
+    married_names = []
+    for i in indi:
+        for family in fam:
+            if user_story_30_helper(indi, i, fam) and user_story_34_helper(indi, fam, family):
+                married.append(i)
+                married_names.append(indi[i].name)
+    print("US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(married_names))
+    return married
+    
 
 class Person:
 

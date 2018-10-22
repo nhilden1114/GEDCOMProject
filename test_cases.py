@@ -7,7 +7,7 @@ from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_29, user_story_30
-from tables import user_story_30_helper
+from tables import user_story_34
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -293,6 +293,19 @@ class Test(unittest.TestCase):
         self.assertIn("@I05@", result)
         self.assertIn("@I09@", result)
         self.assertIn("@I10@", result)
+        self.assertNotIn("@I08@", result)
+        
+    def test_us34(self):
+        '''
+        List all couples who were married when the older spouse was more than twice as old as the younger spouse
+        '''
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        result = user_story_34(indi, fam)
+        
+        
         self.assertNotIn("@I08@", result)
         
 
