@@ -203,6 +203,25 @@ def user_story_15(child_list, family_tag):  # There should be fewer than 15 sibl
         print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
         return False
 
+def user_story_13(indi, fam):
+    '''
+    Birth dates of siblings should be more than 8 months apart or less than 2 days apart
+    indi is the dict of all individuals in the GEDCOM file
+    fam is the dict of all families in the GEDCOM file
+    '''
+    for family in fam:
+        births = list()
+        for child in fam[family].chil:
+            births.append(indi[child].birth)
+        for i in range(len(births)):
+            if i+1 < len(births):
+                if births[i] > births[i+1]:
+                    if (births[i] - births[i+1]).days > 2 and (births[i] - births[i+1]).days < 243:
+                        print("ERROR: US13: Birthdate of " + births[i].strftime('%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i+1].strftime('%Y-%m-%d'))
+                elif (births[i+1] - births[i]).days > 2 and (births[i+1] - births[i]).days < 243:
+                        print("ERROR: US13: Birthdate of " + births[i+1].strftime('%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i].strftime('%Y-%m-%d'))
+    return True
+
 
 def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
     husb_fam = indi[husbid].famc
@@ -433,6 +452,7 @@ def create_tables(file):
                 if user_story_15(family.chil, family.idtag):
                     family.chil.append(args)
 
+    user_story_13(indi, fam)
     return indi, fam
 
 
@@ -477,9 +497,8 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        file = open('NicoleFamily.ged', 'r')
-        #file = open('user_story_geds/*.ged', 'r')
-        # file = open('user_story_geds/us02.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
+        file = open('user_story_geds/us13.ged', 'r')
     except OSError:
         print("Cannot open file")
 
@@ -487,6 +506,8 @@ def main():
 
     create_indi(indi_info)
     create_fam(fam_info)
+
+    file.close()
 
 
 if __name__ == '__main__':

@@ -7,7 +7,6 @@ from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_29, user_story_30
-from tables import user_story_30_helper
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -134,6 +133,14 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_11(indi, fam, "@I06@", "@I07@"), True)
         self.assertEqual(user_story_11(indi, fam, "@I04@", "@I09@"), False)
         self.assertEqual(user_story_11(indi, fam, "@I10@", "@I12@"), False)
+
+    def test_us13(self):
+        '''
+        Birth dates of siblings should be more than 8 months apart or less than 2 days apart
+        '''
+        file = open('user_story_geds/us13.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
   
     def test_us15(self):
         '''
@@ -285,7 +292,7 @@ class Test(unittest.TestCase):
         '''
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
-        file.close
+        file.close()
         
         result = user_story_30(indi, fam)
         
