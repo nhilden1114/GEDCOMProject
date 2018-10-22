@@ -296,11 +296,6 @@ def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 696f0fedabef6ed9cdc3829a6bbd7dffcb1c6378
 class Person:
 
     def __init__(self):
