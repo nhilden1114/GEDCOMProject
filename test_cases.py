@@ -285,7 +285,7 @@ class Test(unittest.TestCase):
         '''
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
-        file.close
+        file.close()
         
         result = user_story_30(indi, fam)
         

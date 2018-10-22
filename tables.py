@@ -257,6 +257,7 @@ def user_story_23(indi): # No more than one individual with the same name and bi
         print("ERROR: US23: Duplicates found in file " )
         return False
 
+
 def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
     death_status = indi[idtag].death
     if death_status != 'NA':
@@ -267,12 +268,15 @@ def user_story_29_helper(indi, idtag):  # to only return the idtags of people wh
 
 def user_story_29(indi):  # return a list of the deceased
     deceased = []
-
+    deceased_names = []
     for i in indi:
         temp = user_story_29_helper(indi, i)
         if temp:
             deceased.append(temp)
+            deceased_names.append(indi[temp].name)
+    print("US29: List of all deceased people in the GEDCOM file: " + str(deceased_names))
     return deceased
+
 
 def user_story_30_helper(indi, i, fam): 
     for f in fam:
@@ -280,13 +284,15 @@ def user_story_30_helper(indi, i, fam):
             if fam[f].div == "NA":
                 if indi[i].death == "NA":
                     return True
-                
+
+
 def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     married = []
     for i in indi:
         if user_story_30_helper(indi, i, fam):
             married.append(i)
     return married
+
 
 class Person:
 
