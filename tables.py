@@ -236,7 +236,7 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
         print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name)
         return False
     
-def user_story_22(indi):  # ensure only unique ids
+def user_story_22(indi):  # Ensure only unique ids
     unique = list()
 
     for i in indi:
@@ -246,7 +246,7 @@ def user_story_22(indi):  # ensure only unique ids
     else:
         print("ERROR: US22: duplicate individual ids found in file")
 
-def user_story_23(indi): #No more than one individual with the same name and birth date should appear in a GEDCOM file
+def user_story_23(indi): # No more than one individual with the same name and birth date should appear in a GEDCOM file
     unique = list()
     
     for i in indi:
@@ -256,7 +256,6 @@ def user_story_23(indi): #No more than one individual with the same name and bir
     else:
         print("ERROR: US23: Duplicates found in file " )
         return False
-
 
 def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
     death_status = indi[idtag].death
@@ -275,6 +274,19 @@ def user_story_29(indi):  # return a list of the deceased
             deceased.append(temp)
     return deceased
 
+def user_story_30_helper(indi, i, fam): 
+    for f in fam:
+        if fam[f].husbid == i or fam[f].wifeid == i:
+            if fam[f].div == "NA":
+                if indi[i].death == "NA":
+                    return True
+                
+def user_story_30(indi, fam): # List all living married people in a GEDCOM file
+    married = []
+    for i in indi:
+        if user_story_30_helper(indi, i, fam):
+            married.append(i)
+    return married
 
 class Person:
 
@@ -465,8 +477,8 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        #file = open('NicoleFamily.ged', 'r')
-        file = open('user_story_geds/*.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/*.ged', 'r')
         # file = open('user_story_geds/us02.ged', 'r')
     except OSError:
         print("Cannot open file")
