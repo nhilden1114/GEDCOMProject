@@ -283,11 +283,15 @@ def user_story_30_helper(indi, i, fam):
                 
 def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     married = []
+    married_names = []
     for i in indi:
         if user_story_30_helper(indi, i, fam):
             married.append(i)
+            married_names.append(indi[i].name)
+    print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
+    
 class Person:
 
     def __init__(self):

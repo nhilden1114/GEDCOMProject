@@ -294,6 +294,7 @@ class Test(unittest.TestCase):
         self.assertIn("@I09@", result)
         self.assertIn("@I10@", result)
         self.assertNotIn("@I08@", result)
+        
 
 if __name__ == '__main__':
     print('Running unit tests')
