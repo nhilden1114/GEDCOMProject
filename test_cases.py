@@ -2,7 +2,7 @@ from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11
+from tables import user_story_11, user_story_13
 from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
@@ -139,9 +139,11 @@ class Test(unittest.TestCase):
         '''
         Birth dates of siblings should be more than 8 months apart or less than 2 days apart
         '''
-        #file = open('user_story_geds/us13.ged', 'r')
-        #indi, fam = create_tables(file)
-        #file.close()
+        file = open('user_story_geds/us13.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), False)
   
     def test_us15(self):
         '''
@@ -319,58 +321,11 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
     print('Running unit tests')
-    file = open('NicoleFamily.ged', 'r')
+    file = open('user_story_geds/allgeds.ged', 'r')
     indi, fam = create_tables(file)
     create_indi(indi)
     create_fam(fam)
     file.close()
 
-    file = open('user_story_geds/us01.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us02.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us07.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us10.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us11.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us15.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us22.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us23.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
     unittest.main()
     unittest.main()
