@@ -2,7 +2,7 @@ from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11
+from tables import user_story_11, user_story_13
 from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
@@ -50,7 +50,7 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(), datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
         self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
         self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), True)
 
     def test_us4(self):
         """
@@ -125,23 +125,49 @@ class Test(unittest.TestCase):
         Marriage should not occur during marriage to another spouse
         '''
 
-        file = open('NicoleFamily.ged', 'r')
+        file = open('user_story_geds/us11.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I03@"), False)
-        self.assertEqual(user_story_11(indi, fam, "@I02@", "@I07@"), True)
-        self.assertEqual(user_story_11(indi, fam, "@I06@", "@I07@"), True)
-        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I09@"), False)
-        self.assertEqual(user_story_11(indi, fam, "@I10@", "@I12@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I01@", "@US11_I02@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I02@", "@US11_I03@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I03@", "@US11_I04@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I04@", "@US11_I07@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I05@", "@US11_I07@"), False)
 
     def test_us13(self):
         '''
         Birth dates of siblings should be more than 8 months apart or less than 2 days apart
         '''
-        #file = open('user_story_geds/us13.ged', 'r')
-        #indi, fam = create_tables(file)
-        #file.close()
+        file = open('user_story_geds/us13.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), False)
+
+        file = open('user_story_geds/us11.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
+        file = open('user_story_geds/us22.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
+        file = open('user_story_geds/us07.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
   
     def test_us15(self):
         '''
@@ -218,23 +244,15 @@ class Test(unittest.TestCase):
         No duplicate id tags in file
         """
 
-        file = open('NicoleFamily.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-
-        self.assertTrue(user_story_22(indi))
-
         file = open('user_story_geds/us22.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertTrue(user_story_22(indi))
-
-        file = open('user_story_geds/US15.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-
-        self.assertTrue(user_story_22(indi))
+        self.assertTrue(user_story_22(indi, "TAG1"))
+        self.assertTrue(user_story_22(indi, "TAG2"))
+        self.assertTrue(user_story_22(indi, "TAG3"))
+        self.assertFalse(user_story_22(indi, "@US22_I1@"))
+        self.assertFalse(user_story_22(indi, "@US22_I2@"))
 
     def test_us23(self):
         """
@@ -319,58 +337,11 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
     print('Running unit tests')
-    file = open('NicoleFamily.ged', 'r')
+    file = open('user_story_geds/bigged.ged', 'r')
     indi, fam = create_tables(file)
     create_indi(indi)
     create_fam(fam)
     file.close()
 
-    file = open('user_story_geds/us01.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us02.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us07.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us10.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us11.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us15.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us22.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us23.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
     unittest.main()
     unittest.main()

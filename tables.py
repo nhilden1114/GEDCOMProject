@@ -18,7 +18,9 @@ def determine_age(dob, date):
 
 
 def calc_difference(date1, date2):
-    '''Calculates the difference between 2 dates'''
+    '''
+    Calculates the difference between 2 dates
+    '''
     return date2.year - date1.year - ((date1.month, date1.day) > (date2.month, date2.day))
 
 
@@ -61,43 +63,66 @@ def user_story_2(indi, marr_date, husbid, wifeid):
         return True
 
 
-def user_story_3(birthday, death_day, name):  # a person's birthday must be before their death date
-    # I added the back because the tests got messed up, will fix!
-    if birthday != "NA" and birthday < date.today():
-        if death_day != "NA" and death_day <= date.today():
+def user_story_3(birthday, death_day, name):
+    '''
+    A person's birthday must be before their death date
+    birthday is the birthday of the person
+    death_day is the date of death of the person
+    name is the person's name
+    '''
+    
+    if birthday != "NA": #and birthday < date.today():
+        if death_day != "NA":# and death_day <= date.today():
             if calc_difference(birthday, death_day) < 0:
                 print("ERROR: US03: Death date of " + death_day.strftime(
                     '%Y-%m-%d') + " should not be before " + name + "'s birth date of " + birthday.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
-        else:
-            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " is not valid")
-            return False
-    else:
-        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " is not valid")
-        return False
+##        else:
+##            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " is not valid")
+##            return False
+##    else:
+##        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " is not valid")
+##        return False
 
 
-def user_story_4(marriage_date, divorce_date, husbname, wifename):  # Divorce date should not be before marriage date
-
-    if marriage_date != "NA" and marriage_date < date.today():
+def user_story_4(marriage_date, divorce_date, husbname, wifename):
+    '''
+    Divorce date should not be before the marriage date
+    marriage_date is the marriage date
+    divorce_date is the date of divorce
+    husbname is the name of the husband
+    wifename is the name of the wife
+    '''
+    if divorce_date == "NA":
+        return True
+    
+    if marriage_date != "NA":
 
         if calc_difference(marriage_date, divorce_date) < 0:
-            print("ERROR: US04: Divorce date of " + divorce_date.strftime(
-                '%Y-%m-%d') + " should not be before the marriage date of " + marriage_date.strftime(
-                '%Y-%m-%d') + " for " + husbname + " and " + wifename)
+            print("ERROR: US04: Divorce date of " + divorce_date.strftime('%Y-%m-%d') + " should not be before the marriage date of " + marriage_date.strftime('%Y-%m-%d') + " for " + husbname + " and " + wifename)
             return False
         else:
             return True
     else:
-        print(
-            "ERROR: US04: Marriage date of " + marriage_date + " not valid " + " for " + husbname + " and " + wifename)
-        return False
+        if marriage_date == "NA":
+            print("ERROR: US04: Marriage date of " + marriage_date + " not valid " + " for " + husbname + " and " + wifename)
+            return False
 
 
-def user_story_5(marriage_date, husbid, wifeid, indi):  # A person cannot get married after their death date
+def user_story_5(marriage_date, husbid, wifeid, indi):
+    '''
+    A person cannot get married after their death date
+    marriage_date is the date of marriage
+    husbid is the id of the husband
+    wifeid is the id of the wife
+    indi is the dictionary that contains all individuals in the file
+    '''
 
+    if marriage_date == "NA":
+        return True
+    
     deaths = [[indi[husbid].death, indi[husbid].name], [indi[wifeid].death, indi[wifeid].name]]
 
     for death_date in deaths:
@@ -113,7 +138,17 @@ def user_story_5(marriage_date, husbid, wifeid, indi):  # A person cannot get ma
         return True
 
 
-def user_story_6(divorce_date, husbid, wifeid, indi):  # A person cannot get a divorce after death
+def user_story_6(divorce_date, husbid, wifeid, indi):
+    '''
+    A person cannot get a divorce after death
+    divorce_date is the date of divorce
+    husbid is the id of the husband
+    wifeid is the id of the wife
+    indi is the dictionary that contains all individuals in the file
+    '''
+
+    if divorce_date == "NA":
+        return True
 
     deaths = [[indi[husbid].death, indi[husbid].name], [indi[wifeid].death, indi[wifeid].name]]
 
@@ -136,6 +171,11 @@ def user_story_7(birth, comp_date, name):
     and current date should be less than 150 years after birth for all living people
     Comp date is either the current date or the death date
     '''
+    if birth == "NA":
+        return True
+
+    if comp_date == "NA":
+        comp_date = date.today()
 
     if calc_difference(birth, comp_date) >= 150:
         print("ERROR: US07: " + name + " must be less than 150 years old")
@@ -149,6 +189,9 @@ def user_story_10(indi, family, fam):
     family is the current family tag
     fam is the dict of families
     '''
+
+    if fam[family].marr == "NA":
+        return True
 
     wife_diff = calc_difference(indi[fam[family].wifeid].birth, fam[family].marr)
     husb_diff = calc_difference(indi[fam[family].husbid].birth, fam[family].marr)
@@ -171,7 +214,7 @@ def user_story_11(indi, fam, husbid, wifeid):
     husbid is the husband's id
     wifeid is the wife's id
     '''
-    if indi[husbid].fams != []:
+    if len(indi[husbid].fams) > 1:
         for family_h in indi[husbid].fams:
             this_wife = fam[family_h].wifeid
             if fam[family_h].div != "NA":
@@ -182,7 +225,7 @@ def user_story_11(indi, fam, husbid, wifeid):
             elif indi[this_wife].death == "NA":
                 print("ERROR: US11: " + indi[husbid].name + "'s wife " + indi[this_wife].name + " is still alive and married to him")
                 return False
-    if indi[wifeid].fams != []:
+    if len(indi[wifeid].fams) > 1:
         for family_w in indi[wifeid].fams:
             this_husb = fam[family_w].husbid
             if fam[family_w].div != "NA":
@@ -195,35 +238,49 @@ def user_story_11(indi, fam, husbid, wifeid):
                 return False
     return True
 
-
-def user_story_15(child_list, family_tag):  # There should be fewer than 15 siblings in a family
-    if len(child_list) < 15:
-        return True
-    else:
-        print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
-        return False
-
 def user_story_13(indi, fam):
     '''
     Birth dates of siblings should be more than 8 months apart or less than 2 days apart
     indi is the dict of all individuals in the GEDCOM file
     fam is the dict of all families in the GEDCOM file
     '''
+    flag = True
     for family in fam:
         births = list()
         for child in fam[family].chil:
-            births.append(indi[child].birth)
+            if indi[child].birth != "NA":
+                births.append(indi[child].birth)
         for i in range(len(births)):
             if i+1 < len(births):
                 if births[i] > births[i+1]:
                     if (births[i] - births[i+1]).days > 2 and (births[i] - births[i+1]).days < 243:
+                        flag = False
                         print("ERROR: US13: Birthdate of " + births[i].strftime('%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i+1].strftime('%Y-%m-%d'))
                 elif (births[i+1] - births[i]).days > 2 and (births[i+1] - births[i]).days < 243:
-                        print("ERROR: US13: Birthdate of " + births[i+1].strftime('%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i].strftime('%Y-%m-%d'))
-    return True
+                    flag = False
+                    print("ERROR: US13: Birthdate of " + births[i+1].strftime('%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i].strftime('%Y-%m-%d'))
+    return flag
 
+def user_story_15(child_list, family_tag):
+    '''
+    There should be fewer than 15 siblings in a family
+    child_list is the list of all children in a family
+    family_tag is the current family from the fam table
+    '''
+    
+    if len(child_list) < 15:
+        return True
+    else:
+        print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
+        return False
 
-def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
+def user_story_18(indi, husbid, wifeid):
+    '''
+    Siblings should NOT marry
+    indi is the dict of all individuals
+    husbid is the id of the husband
+    wifeid is the id of the wife
+    '''
     husb_fam = indi[husbid].famc
     wife_fam = indi[wifeid].famc
 
@@ -236,7 +293,14 @@ def user_story_18(indi, husbid, wifeid):  # Siblings should NOT marry
     return True
 
 
-def user_story_21_a(indi, husbid, name):  # Correct gender role for husband
+def user_story_21_a(indi, husbid, name):
+    '''
+    Correct gender role for husband
+    indi is the dict of all individuals
+    husbid is the id of the husband
+    name is the name of the husband
+    '''
+    
     husb_gender = indi[husbid].gender
 
     if husb_gender == "M":
@@ -246,7 +310,14 @@ def user_story_21_a(indi, husbid, name):  # Correct gender role for husband
         return False
 
 
-def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
+def user_story_21_b(indi, wifeid, name):
+    '''
+    Correct gender role for wife
+    indi is the dict of all individuals
+    wifeid is the id of the wife
+    name is the name of the wife
+    '''
+    
     wife_gender = indi[wifeid].gender
 
     if wife_gender == "F":
@@ -255,29 +326,41 @@ def user_story_21_b(indi, wifeid, name):  # Correct gender role for wife
         print("ERROR: US21: Incorrect gender " + wife_gender + " for wife " + name)
         return False
     
-def user_story_22(indi):  # Ensure only unique ids
-    unique = list()
+def user_story_22(indi, idtag):
+    '''
+    Ensure only unique ids
+    indi is the dict of all individuals
+    '''
 
-    for i in indi:
-        unique.append(indi[i].idtag)
-    if len(unique) == len(set(unique)):
-        return True
+    if idtag in indi:
+        print("ERROR: US22: Someone with the id: " + idtag + " already exists.")
+        return False
     else:
-        print("ERROR: US22: duplicate individual ids found in file")
+        return True
+    
 
-def user_story_23(indi): # No more than one individual with the same name and birth date should appear in a GEDCOM file
+def user_story_23(indi):
+    '''
+    No more than one individual with the same name and birth date should appear in a GEDCOM file
+    indi is the dict of all individuals
+    '''
     unique = list()
     
     for i in indi:
         unique.append((indi[i].name, indi[i].birth))
     if(len(unique) == len(set(unique))):
         return True
-    else:
-        print("ERROR: US23: Duplicates found in file " )
+    else:            
+        print("ERROR: US23: Duplicates found in file, two people with the name name and birthdate")
         return False
 
 
-def user_story_29_helper(indi, idtag):  # to only return the idtags of people who are deceased
+def user_story_29_helper(indi, idtag):
+    '''
+    Returns the idtags of people who are deceased
+    indi is the dict of all individuals
+    idtag is the current id tag of the person
+    '''
     death_status = indi[idtag].death
     if death_status != 'NA':
         return idtag
@@ -285,7 +368,11 @@ def user_story_29_helper(indi, idtag):  # to only return the idtags of people wh
         return None
 
 
-def user_story_29(indi):  # return a list of the deceased
+def user_story_29(indi):
+    '''
+    Return a list of the deceased
+    indi is the dict of all individuals
+    '''
     deceased = []
     deceased_names = []
     for i in indi:
@@ -305,7 +392,12 @@ def user_story_30_helper(indi, i, fam):
                     return True
 
 
-def user_story_30(indi, fam): # List all living married people in a GEDCOM file
+def user_story_30(indi, fam):
+    '''
+    List all living married people in a GEDCOM file
+    indi is the dict of all individuals
+    fam is the dict of all families
+    '''
     married = []
     married_names = []
     for i in indi:
@@ -316,18 +408,24 @@ def user_story_30(indi, fam): # List all living married people in a GEDCOM file
     return married
 
 def user_story_34_helper(indi, fam, family):
-    wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
-    husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
-    
-    if husb_diff < wife_diff * 2:
-        return True
-    if wife_diff < husb_diff * 2:
-        return True
-    else: 
-        return False
+    if fam[family].marr != "NA" and indi[fam[family].wifeid].birth != "NA" and indi[fam[family].husbid].birth != "NA":
+        wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
+        husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
+        
+        if husb_diff < wife_diff * 2:
+            return True
+        if wife_diff < husb_diff * 2:
+            return True
+        else: 
+            return False
 
     
-def user_story_34(indi, fam): # List all couples who were married when the older spouse was more than twice as old as the younger spouse
+def user_story_34(indi, fam):
+    '''
+    List all couples who were married when the older spouse was more than twice as old as the younger spouse
+    indi is the dict of all individuals
+    fam is the dict of all families
+    '''
     
     married = []
     married_names = []
@@ -337,7 +435,7 @@ def user_story_34(indi, fam): # List all couples who were married when the older
                 married.append(i)
                 married_names.append(indi[i].name)
     print("US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(married_names))
-    return married
+    return married    
     
 
 class Person:
@@ -387,8 +485,15 @@ def create_tables(file):
 
             if tag == "INDI":
                 person = Person()
-                person.idtag = args
-                indi[person.idtag] = person
+                if user_story_22(indi, args):
+                    person.idtag = args
+                    indi[person.idtag] = person
+                else:
+                    newLine = arr[i].strip()
+                    new_level, new_tag, new_args, new_tokens = validLine(newLine)
+
+                    if new_tag == "NAME":
+                        print("Not adding " + new_args + " to the table because their I.D. was already in use")
 
             elif tag == "FAM":
                 family = Family()
@@ -425,8 +530,6 @@ def create_tables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
                     
                     user_story_1(new_date)
-                    user_story_3(person.birth, new_date, person.name)
-                    user_story_7(person.birth, new_date, person.name)
                     
                     person.death = new_date
                     person.age = determine_age(person.birth, new_date)
@@ -448,14 +551,9 @@ def create_tables(file):
                     
                     user_story_1(new_date)
                     user_story_2(indi, new_date, family.husbid, family.wifeid)
-                    user_story_18(indi, family.husbid, family.wifeid)
-                    user_story_5(new_date, family.husbid, family.wifeid, indi)
-                    user_story_21_a(indi, family.husbid, family.husbname)
-                    user_story_21_b(indi, family.wifeid, family.wifename)
+                    user_story_11(indi, fam, family.husbid, family.wifeid)
                     
                     family.marr = new_date
-
-                    user_story_10(indi, family.idtag, fam)
 
             elif tag == "DIV":
 
@@ -467,8 +565,6 @@ def create_tables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
 
                     user_story_1(new_date)
-                    user_story_4(family.marr, new_date, family.husbname, family.wifename)
-                    user_story_6(new_date, family.husbid, family.wifeid, indi)
 
                     family.div = new_date
 
@@ -481,10 +577,28 @@ def create_tables(file):
                 family.wifename = indi[args].name
 
             elif tag == "CHIL":
-                if user_story_15(family.chil, family.idtag):
-                    family.chil.append(args)
+                family.chil.append(args)
 
     user_story_13(indi, fam)
+    user_story_23(indi)
+    user_story_29(indi)
+    user_story_30(indi, fam)
+    user_story_34(indi, fam)
+
+    for famtag in fam:
+        user_story_4(fam[famtag].marr, fam[famtag].div, fam[famtag].husbname, fam[famtag].wifename)
+        user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
+        user_story_6(fam[famtag].div, fam[famtag].husbid, fam[famtag].wifeid, indi)
+        user_story_10(indi, famtag, fam)
+        user_story_15(fam[famtag].chil, famtag)
+        user_story_18(indi, fam[famtag].husbid, fam[famtag].wifeid)
+        user_story_21_a(indi, fam[famtag].husbid, fam[famtag].husbname)
+        user_story_21_b(indi, fam[famtag].wifeid, fam[famtag].wifename)
+
+    for per in indi:
+        user_story_3(indi[per].birth, indi[per].death, indi[per].name)
+        user_story_7(indi[per].birth, indi[per].death, indi[per].name)
+    
     return indi, fam
 
 
@@ -529,9 +643,9 @@ def main():
     """ Need to put a descriptive docstring here"""
     try:
         # file = open('us_15.ged', 'r')
-        file = open('NicoleFamily.ged', 'r')
-        # file = open('user_story_geds/*.ged', 'r')
-        # file = open('user_story_geds/us02.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
+        #file = open('user_story_geds/us22.ged', 'r')
+        file = open('user_story_geds/bigged.ged', 'r')
     except OSError:
         print("Cannot open file")
 
