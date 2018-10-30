@@ -725,7 +725,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         # file = open('user_story_geds/us22.ged', 'r')
 
-        file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/bigged.ged', 'r')
+        file = open('user_story_geds/us34.ged')
     except OSError:
         print("Cannot open file")
 

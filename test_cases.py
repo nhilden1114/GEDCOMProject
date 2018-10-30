@@ -349,7 +349,7 @@ class Test(unittest.TestCase):
         '''
         List all couples who were married when the older spouse was more than twice as old as the younger spouse
         '''
-        file = open('NicoleFamily.ged', 'r')
+        file = open('user_story_geds/us34.ged')
         indi, fam = create_tables(file)
         file.close()
 
