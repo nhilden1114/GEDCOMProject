@@ -226,9 +226,9 @@ def user_story_11(indi, fam, husbid, wifeid):
     if len(indi[husbid].fams) > 1:
         for family_h in indi[husbid].fams:
             this_wife = fam[family_h].wifeid
-            if fam[family_h].div != "NA":
+            if fam[family_h].div != "NA":# or indi[this_wife].death != "NA":
                 continue
-            if fam[family_h].div == "NA":
+            elif fam[family_h].div == "NA":
                 print("ERROR: US11: " + indi[husbid].name + " is not divorced yet from " + indi[this_wife].name)
                 return False
             elif indi[this_wife].death == "NA":
@@ -238,9 +238,9 @@ def user_story_11(indi, fam, husbid, wifeid):
     if len(indi[wifeid].fams) > 1:
         for family_w in indi[wifeid].fams:
             this_husb = fam[family_w].husbid
-            if fam[family_w].div != "NA":
+            if fam[family_w].div != "NA":# or indi[this_husb].death != "NA":
                 continue
-            if fam[family_w].div == "NA":
+            elif fam[family_w].div == "NA":
                 print("ERROR: US11: " + indi[wifeid].name + " is not divorced yet from " + indi[this_husb].name)
                 return False
             elif indi[this_husb].death == "NA":
@@ -462,13 +462,19 @@ def user_story_35_helper(indi, idtag):
     birthdays = indi[idtag].birth
     current_date = date.today()
     recent_dates = current_date - timedelta(days=30)
-    if recent_dates <= birthdays <= current_date:
-        return idtag
-    else:
-        return False
+    if birthdays != "NA":
+        if recent_dates <= birthdays <= current_date:
+            return idtag
+        else:
+            return False
+    return False
 
 
 def user_story_35(indi):
+    '''
+    List all people in a GEDCOM file who were born in the last 30 days
+    indi is the dict of all individuals in the file
+    '''
     recent_births = []
     recent_births_names = []
     for i in indi:
@@ -490,11 +496,14 @@ def user_story_36_helper(indi, idtag):
         else:
             return False
     else:
-        print("Error: US36: " + indi[idtag].name + " has not passed away recently")
         return False
 
 
 def user_story_36(indi):
+    '''
+    List all people in a GEDCOM file who died in the last 30 days
+    indi is the dict of all individuals in the file
+    '''
     recent_deaths = []
     recent_deaths_names = []
     for i in indi:
@@ -651,12 +660,15 @@ def create_tables(file):
     user_story_29(indi)
     user_story_30(indi, fam)
     user_story_34(indi, fam)
+    user_story_35(indi)
+    user_story_36(indi)
 
     for famtag in fam:
         user_story_4(fam[famtag].marr, fam[famtag].div, fam[famtag].husbname, fam[famtag].wifename)
         user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_6(fam[famtag].div, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_10(indi, famtag, fam)
+        #user_story_11(indi, fam, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_15(fam[famtag].chil, famtag)
         user_story_18(indi, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_21_a(indi, fam[famtag].husbid, fam[famtag].husbname)
