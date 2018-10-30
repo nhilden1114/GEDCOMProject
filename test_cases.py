@@ -2,14 +2,13 @@ from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11, user_story_15
-from tables import user_story_18
+from tables import user_story_11, user_story_13
+from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_29, user_story_30
 from tables import user_story_34, user_story_35
 from tables import user_story_36
-
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -48,16 +47,12 @@ class Test(unittest.TestCase):
         A person's birthday must be before death date
         """
 
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Nicole"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('1900-2-11', '%Y-%m-%d').date(), "Caroline"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Michayla"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), "Elena"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), "David"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Nicole"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(), datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), True)
+
 
     def test_us4(self):
         """
@@ -182,6 +177,7 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertEqual(user_story_13(indi, fam), True)
+
 
     def test_us15(self):
         '''
@@ -388,6 +384,4 @@ if __name__ == '__main__':
     create_fam(fam)
     file.close()
 
-    unittest.main()
-    unittest.main()
 

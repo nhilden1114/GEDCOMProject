@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 import datetime
-from datetime import date
+from datetime import date, timedelta
 from Project3 import validLine
 
 
@@ -598,7 +598,6 @@ def create_tables(file):
                     new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
 
                     user_story_1(new_date)
-
                     person.death = new_date
                     person.age = determine_age(person.birth, new_date)
 
@@ -713,6 +712,7 @@ def main():
         # file = open('us_15.ged', 'r')
         # file = open('NicoleFamily.ged', 'r')
         # file = open('user_story_geds/us22.ged', 'r')
+
         file = open('user_story_geds/bigged.ged', 'r')
     except OSError:
         print("Cannot open file")
