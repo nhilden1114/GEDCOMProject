@@ -354,11 +354,11 @@ class Test(unittest.TestCase):
         file.close()
 
         result = user_story_35(indi)
-        self.assertIn("@I1@", result)
-        self.assertIn("@I4@", result)
-        self.assertNotIn("@I3@", result)
-        self.assertNotIn("@I5@", result)
-        self.assertNotIn("@I20@", result)
+        self.assertIn("@US35_I1@", result)
+        self.assertIn("@US35_I4@", result)
+        self.assertNotIn("@US35_I3@", result)
+        self.assertNotIn("@US35_I5@", result)
+        self.assertNotIn("@US35_I20@", result)
 
     def test_us36(self):
         """
@@ -369,11 +369,11 @@ class Test(unittest.TestCase):
         file.close()
 
         result = user_story_36(indi)
-        self.assertIn("@I2@", result)
-        self.assertIn("@I6@", result)
-        self.assertNotIn("@I3", result)
-        self.assertNotIn("@I5@", result)
-        self.assertNotIn("@I20@", result)
+        self.assertIn("@US36_I2@", result)
+        self.assertIn("@US36_I6@", result)
+        self.assertNotIn("@US36_I3", result)
+        self.assertNotIn("@US36_I5@", result)
+        self.assertNotIn("@US36_I20@", result)
 
 
 if __name__ == '__main__':

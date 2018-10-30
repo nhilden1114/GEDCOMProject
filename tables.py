@@ -433,7 +433,7 @@ def user_story_34_helper(indi, fam, family):
 
         if husb_diff < wife_diff * 2:
             return True
-        if wife_diff < husb_diff * 2:
+        elif wife_diff < husb_diff * 2:
             return True
         else:
             return False
