@@ -1,3 +1,4 @@
+from tables import determine_age
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
@@ -301,6 +302,17 @@ class Test(unittest.TestCase):
 
         self.assertTrue(user_story_23(indi))
 
+    def test_us27(self):
+        '''
+        Test that individuals ages are calculated
+        '''
+        self.assertEqual(determine_age(datetime.date(2000, 1, 1), datetime.date.today()), 18) 
+        self.assertEqual(determine_age(datetime.date(2000, 11, 11), datetime.date.today()), 17) 
+        self.assertEqual(determine_age(datetime.date(1990, 7, 22), datetime.date.today()), 28) 
+        self.assertEqual(determine_age(datetime.date(1990, 12, 25), datetime.date.today()), 27) 
+        self.assertEqual(determine_age(datetime.date(2020, 1, 1), datetime.date.today()), -2) 
+        self.assertEqual(determine_age(datetime.date(1818, 1, 1), datetime.date.today()), 200) 
+
     def test_us29(self):
         """
         List deceased
@@ -354,11 +366,11 @@ class Test(unittest.TestCase):
         file.close()
 
         result = user_story_35(indi)
-        self.assertIn("@I1@", result)
-        self.assertIn("@I4@", result)
-        self.assertNotIn("@I3@", result)
-        self.assertNotIn("@I5@", result)
-        self.assertNotIn("@I20@", result)
+        self.assertIn("@US35_I1@", result)
+        self.assertIn("@US35_I4@", result)
+        self.assertNotIn("@US35_I3@", result)
+        self.assertNotIn("@US35_I5@", result)
+        self.assertNotIn("@US35_I20@", result)
 
     def test_us36(self):
         """
@@ -369,11 +381,11 @@ class Test(unittest.TestCase):
         file.close()
 
         result = user_story_36(indi)
-        self.assertIn("@I2@", result)
-        self.assertIn("@I6@", result)
-        self.assertNotIn("@I3", result)
-        self.assertNotIn("@I5@", result)
-        self.assertNotIn("@I20@", result)
+        self.assertIn("@US36_I2@", result)
+        self.assertIn("@US36_I6@", result)
+        self.assertNotIn("@US36_I3", result)
+        self.assertNotIn("@US36_I5@", result)
+        self.assertNotIn("@US36_I20@", result)
 
 
 if __name__ == '__main__':
@@ -383,5 +395,7 @@ if __name__ == '__main__':
     create_indi(indi)
     create_fam(fam)
     file.close()
+
+    unittest.main(exit = False, verbosity = 2)
 
 

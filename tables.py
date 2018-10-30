@@ -226,9 +226,9 @@ def user_story_11(indi, fam, husbid, wifeid):
     if len(indi[husbid].fams) > 1:
         for family_h in indi[husbid].fams:
             this_wife = fam[family_h].wifeid
-            if fam[family_h].div != "NA":
+            if fam[family_h].div != "NA":# or indi[this_wife].death != "NA":
                 continue
-            if fam[family_h].div == "NA":
+            elif fam[family_h].div == "NA":
                 print("ERROR: US11: " + indi[husbid].name + " is not divorced yet from " + indi[this_wife].name)
                 return False
             elif indi[this_wife].death == "NA":
@@ -238,9 +238,9 @@ def user_story_11(indi, fam, husbid, wifeid):
     if len(indi[wifeid].fams) > 1:
         for family_w in indi[wifeid].fams:
             this_husb = fam[family_w].husbid
-            if fam[family_w].div != "NA":
+            if fam[family_w].div != "NA":# or indi[this_husb].death != "NA":
                 continue
-            if fam[family_w].div == "NA":
+            elif fam[family_w].div == "NA":
                 print("ERROR: US11: " + indi[wifeid].name + " is not divorced yet from " + indi[this_husb].name)
                 return False
             elif indi[this_husb].death == "NA":
@@ -657,6 +657,7 @@ def create_tables(file):
         user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_6(fam[famtag].div, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_10(indi, famtag, fam)
+        #user_story_11(indi, fam, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_15(fam[famtag].chil, famtag)
         user_story_18(indi, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_21_a(indi, fam[famtag].husbid, fam[famtag].husbname)
