@@ -371,6 +371,34 @@ def user_story_23(indi):
     else:
         print("ERROR: US23: Duplicates found in file, two people with the name name and birthdate")
         return False
+    
+def familylist(indi, fam, family):
+    familylist = list()
+    familylist.append(fam[family].wifeid)
+    familylist.append(fam[family].husbid)
+    for child in fam[family].chil:
+        familylist.append(indi[child].idtag)
+            
+    return familylist
+    
+def user_story_25(indi, fam):
+    '''
+    No more than one child with the same name and birth date should appear in a family
+    '''
+
+    for family in fam:
+        people = familylist(indi, fam, family)
+        for person in people:
+            templist = people
+            while len(templist) != 0:
+                if indi[person].birth == indi[templist[0]].birth:
+                    if indi[person].name == indi[templist[0]].name:
+                        print("ERROR: US25: Duplicates found in file, two people with the same name and birthdate: " +
+                              indi[person].name + " and " + indi[templist[0]].name + " have birthday of: " + indi[person].birth)
+                        return False
+                else:
+                    templist.pop(0)
+    return True  
 
 
 def user_story_29_helper(indi, idtag):
@@ -731,8 +759,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         # file = open('user_story_geds/us22.ged', 'r')
 
-        #file = open('user_story_geds/bigged.ged', 'r')
-        file = open('user_story_geds/us34.ged')
+        file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/us34.ged')
     except OSError:
         print("Cannot open file")
 
