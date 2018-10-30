@@ -428,12 +428,16 @@ def user_story_30(indi, fam):
 
 def user_story_34_helper(indi, fam, family):
     if fam[family].marr != "NA" and indi[fam[family].wifeid].birth != "NA" and indi[fam[family].husbid].birth != "NA":
-        wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
-        husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
+        wife_age_married = calc_difference(indi[fam[family].wifeid].birth, fam[family].marr)
+        husb_age_married = calc_difference(indi[fam[family].husbid].birth, fam[family].marr)
 
-        if husb_diff < wife_diff * 2:
+        if husb_age_married < 0 or wife_age_married < 0:
+            return False
+        if husb_age_married > wife_age_married * 2:
+            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
-        if wife_diff < husb_diff * 2:
+        elif wife_age_married > husb_age_married * 2:
+            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
         else:
             return False
@@ -448,11 +452,13 @@ def user_story_34(indi, fam):
 
     married = []
     married_names = []
-    for i in indi:
-        for family in fam:
-            if user_story_30_helper(indi, i, fam) and user_story_34_helper(indi, fam, family):
-                married.append(i)
-                married_names.append(indi[i].name)
+    for family in fam:
+        if user_story_34_helper(indi, fam, family): 
+            print("appending: " + fam[family].husbname + " and " + fam[family].wifename)
+            married.append(fam[family].husbid)
+            married.append(fam[family].wifeid)
+            married_names.append(fam[family].husbname)
+            married_names.append(fam[family].wifename)
     print(
         "US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(
             married_names))

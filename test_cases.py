@@ -355,7 +355,14 @@ class Test(unittest.TestCase):
 
         result = user_story_34(indi, fam)
 
-        self.assertNotIn("@I08@", result)
+        self.assertNotIn("@US34_I03@", result)
+        self.assertNotIn("@US34_I04@", result)
+        self.assertNotIn("@US34_I07@", result)
+        self.assertNotIn("@US34_I10@", result)
+        self.assertIn("@US34_I01@", result)
+        self.assertIn("@US34_I02@", result)
+        self.assertIn("@US34_I05@", result)
+        self.assertIn("@US34_I06@", result)
         
     def test_us35(self):
         """
