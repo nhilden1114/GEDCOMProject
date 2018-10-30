@@ -2,12 +2,14 @@ from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11
-from tables import user_story_18, user_story_15
+from tables import user_story_11, user_story_15
+from tables import user_story_18
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_29, user_story_30
-from tables import user_story_30_helper
+from tables import user_story_34, user_story_35
+from tables import user_story_36
+
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -46,22 +48,35 @@ class Test(unittest.TestCase):
         A person's birthday must be before death date
         """
 
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Nicole"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(), datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Nicole"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('1900-2-11', '%Y-%m-%d').date(), "Caroline"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Michayla"), False)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), "Elena"), True)
+        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), "David"), True)
 
     def test_us4(self):
         """
         Divorce date should not be before marriage date
         """
-        
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1900-11-2','%Y-%m-%d').date(), "Robert", "Judy"), False)
-        self.assertEqual(user_story_4("NA",datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Noel", "Carol"), False)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "John", "Jane"), True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2','%Y-%m-%d').date(),datetime.datetime.strptime('1997-11-2','%Y-%m-%d').date(), "Kevin", "Debbie"), False)
+
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Kevin", "Debbie"),
+                         True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(), "Robert", "Judy"),
+                         False)
+        self.assertEqual(
+            user_story_4("NA", datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Noel", "Carol"), False)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), "John", "Jane"), True)
+        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(),
+                                      datetime.datetime.strptime('1997-11-2', '%Y-%m-%d').date(), "Kevin", "Debbie"),
+                         False)
 
     def test_us5(self):
         """
@@ -113,53 +128,88 @@ class Test(unittest.TestCase):
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_10(indi, "@US10_F01@", fam),True)
-        self.assertEqual(user_story_10(indi, "@US10_F02@", fam),False)
-        self.assertEqual(user_story_10(indi, "@US10_F03@", fam),False)
-        self.assertEqual(user_story_10(indi, "@US10_F04@", fam),True)
-        self.assertEqual(user_story_10(indi, "@US10_F05@", fam),True)
-
+        self.assertEqual(user_story_10(indi, "@US10_F01@", fam), True)
+        self.assertEqual(user_story_10(indi, "@US10_F02@", fam), False)
+        self.assertEqual(user_story_10(indi, "@US10_F03@", fam), False)
+        self.assertEqual(user_story_10(indi, "@US10_F04@", fam), True)
+        self.assertEqual(user_story_10(indi, "@US10_F05@", fam), True)
 
     def test_us11(self):
         '''
         Marriage should not occur during marriage to another spouse
         '''
 
+        file = open('user_story_geds/us11.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_11(indi, fam, "@US11_I01@", "@US11_I02@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I02@", "@US11_I03@"), False)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I03@", "@US11_I04@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I04@", "@US11_I07@"), True)
+        self.assertEqual(user_story_11(indi, fam, "@US11_I05@", "@US11_I07@"), False)
+
+    def test_us13(self):
+        '''
+        Birth dates of siblings should be more than 8 months apart or less than 2 days apart
+        '''
+        file = open('user_story_geds/us13.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), False)
+
+        file = open('user_story_geds/us11.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
+        file = open('user_story_geds/us22.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I03@"), False)
-        self.assertEqual(user_story_11(indi, fam, "@I02@", "@I07@"), True)
-        self.assertEqual(user_story_11(indi, fam, "@I06@", "@I07@"), True)
-        self.assertEqual(user_story_11(indi, fam, "@I04@", "@I09@"), False)
-        self.assertEqual(user_story_11(indi, fam, "@I10@", "@I12@"), False)
-  
+        self.assertEqual(user_story_13(indi, fam), True)
+
+        file = open('user_story_geds/us07.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_13(indi, fam), True)
+
     def test_us15(self):
         '''
         There should be fewer than 15 siblings in a family
         '''
-        
-        #file = open('user_story_geds/us15.ged', 'r')
-        #indi, fam = create_tables(file)
-        #file.close()
-        
-        #families = []
-        #family_tags = []
-        #for family in fam:
-         #   family_tags.append(family)
-          #  families.append(fam[family].chil)
-    
-        #self.assertTrue(user_story_15(families[0], family_tags[0]))
-        #self.assertFalse(user_story_15(families[1], family_tags[1]))
-        #self.assertTrue(user_story_15(families[2], family_tags[2]))
-        #self.assertTrue(user_story_15(families[3], family_tags[3]))
+
+        # file = open('user_story_geds/us15.ged', 'r')
+        # indi, fam = create_tables(file)
+        # file.close()
+
+        # families = []
+        # family_tags = []
+        # for family in fam:
+        #   family_tags.append(family)
+        #  families.append(fam[family].chil)
+
+        # self.assertTrue(user_story_15(families[0], family_tags[0]))
+        # self.assertFalse(user_story_15(families[1], family_tags[1]))
+        # self.assertTrue(user_story_15(families[2], family_tags[2]))
+        # self.assertTrue(user_story_15(families[3], family_tags[3]))
         self.assertTrue(user_story_15(["Nicole", "Caroline"], "Test fam of 2"))
         self.assertTrue(user_story_15(["Nicole", "Caroline", "Elena", "Michayla"], "Test fam of 4"))
-        self.assertTrue(user_story_15(["Nicole", "Caroline","Elena", "Michayla", "Ann", "David"], "Test fam of 6"))
-        self.assertTrue(user_story_15(["Nicole", "Caroline","Elena"], "Test fam of 3"))
-        self.assertFalse(user_story_15(["Nicole", "Caroline","Elena", "Michayla", "Ann", "David", "John", "Mary", "Vince", "Bob", "Kiki", "AJ", "JJ", "AA", "BB", "CC"], "Test_fam_of_16"))
-        
+        self.assertTrue(user_story_15(["Nicole", "Caroline", "Elena", "Michayla", "Ann", "David"], "Test fam of 6"))
+        self.assertTrue(user_story_15(["Nicole", "Caroline", "Elena"], "Test fam of 3"))
+        self.assertFalse(user_story_15(
+            ["Nicole", "Caroline", "Elena", "Michayla", "Ann", "David", "John", "Mary", "Vince", "Bob", "Kiki", "AJ",
+             "JJ", "AA", "BB", "CC"], "Test_fam_of_16"))
+
     def test_us18(self):
         """
         Siblings should not marry
@@ -183,13 +233,13 @@ class Test(unittest.TestCase):
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
-        
+
         self.assertEqual(user_story_21_a(indi, "@I02@", "John"), True)
         self.assertEqual(user_story_21_a(indi, "@I01@", "Jane"), False)
         self.assertEqual(user_story_21_a(indi, "@I04@", "Simon"), True)
         self.assertEqual(user_story_21_a(indi, "@I03@", "Caroline"), False)
         self.assertEqual(user_story_21_a(indi, "@I07@", "David"), False)
-       
+
     def test_us21_b(self):
         """
         Correct gender for wife
@@ -198,7 +248,7 @@ class Test(unittest.TestCase):
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
-        
+
         self.assertEqual(user_story_21_b(indi, "@I02@", "David"), False)
         self.assertEqual(user_story_21_b(indi, "@I01@", "Nicole"), True)
         self.assertEqual(user_story_21_b(indi, "@I04@", "Kevin"), False)
@@ -210,23 +260,15 @@ class Test(unittest.TestCase):
         No duplicate id tags in file
         """
 
-        file = open('NicoleFamily.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-
-        self.assertTrue(user_story_22(indi))
-
         file = open('user_story_geds/us22.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertTrue(user_story_22(indi))
-
-        file = open('user_story_geds/US15.ged', 'r')
-        indi, fam = create_tables(file)
-        file.close()
-
-        self.assertTrue(user_story_22(indi))
+        self.assertTrue(user_story_22(indi, "TAG1"))
+        self.assertTrue(user_story_22(indi, "TAG2"))
+        self.assertTrue(user_story_22(indi, "TAG3"))
+        self.assertFalse(user_story_22(indi, "@US22_I1@"))
+        self.assertFalse(user_story_22(indi, "@US22_I2@"))
 
     def test_us23(self):
         """
@@ -256,7 +298,7 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertTrue(user_story_23(indi))
-        
+
         file = open('user_story_geds/us01.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
@@ -272,13 +314,13 @@ class Test(unittest.TestCase):
         file.close()
 
         result = user_story_29(indi)
-        
+
         self.assertIn("@I01@", result)
         self.assertIn("@I08@", result)
         self.assertNotIn("@I10@", result)
         self.assertNotIn("@I09@", result)
         self.assertNotIn("@I05@", result)
-        
+
     def test_us30(self):
         '''
         List all living married people in a GEDCOM file
@@ -286,70 +328,66 @@ class Test(unittest.TestCase):
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
-        
+
         result = user_story_30(indi, fam)
-        
+
         self.assertIn("@I04@", result)
         self.assertIn("@I05@", result)
         self.assertIn("@I09@", result)
         self.assertIn("@I10@", result)
         self.assertNotIn("@I08@", result)
+
+    def test_us34(self):
+        '''
+        List all couples who were married when the older spouse was more than twice as old as the younger spouse
+        '''
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_34(indi, fam)
+
+        self.assertNotIn("@I08@", result)
         
+    def test_us35(self):
+        """
+        List all people born in the past 30 days
+        """
+        file = open('user_story_geds/us35.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_35(indi)
+        self.assertIn("@I1@", result)
+        self.assertIn("@I4@", result)
+        self.assertNotIn("@I3@", result)
+        self.assertNotIn("@I5@", result)
+        self.assertNotIn("@I20@", result)
+
+    def test_us36(self):
+        """
+        List all people born in the past 30 days
+        """
+        file = open('user_story_geds/us36.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_36(indi)
+        self.assertIn("@I2@", result)
+        self.assertIn("@I6@", result)
+        self.assertNotIn("@I3", result)
+        self.assertNotIn("@I5@", result)
+        self.assertNotIn("@I20@", result)
+
 
 if __name__ == '__main__':
     print('Running unit tests')
-    file = open('NicoleFamily.ged', 'r')
+    file = open('user_story_geds/bigged.ged', 'r')
     indi, fam = create_tables(file)
     create_indi(indi)
     create_fam(fam)
     file.close()
 
-    file = open('user_story_geds/us01.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us02.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us07.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us10.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us11.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us15.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us22.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
-
-    file = open('user_story_geds/us23.ged', 'r')
-    indi, fam = create_tables(file)
-    create_indi(indi)
-    create_fam(fam)
-    file.close()
     unittest.main()
     unittest.main()
+
