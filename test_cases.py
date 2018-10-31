@@ -310,7 +310,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(user_story_23(indi))
      
-    '''def test_us25(self):
+    def test_us25(self):
         """
         No more than one child with the same name and birth date should appear in a family
         """
@@ -339,11 +339,11 @@ class Test(unittest.TestCase):
 
         self.assertTrue(user_story_25(indi, fam))
 
-        file = open('user_story_geds/us25.ged', 'r')
+        file = open('user_story_geds/us34.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertFalse(user_story_25(indi, fam))'''
+        self.assertTrue(user_story_25(indi, fam))
      
 
     def test_us27(self):
