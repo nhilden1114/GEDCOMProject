@@ -48,31 +48,30 @@ class Test(unittest.TestCase):
         A person's birthday must be before death date
         """
 
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Nicole"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('2000-2-11', '%Y-%m-%d').date(), datetime.datetime.strptime('1900-2-11','%Y-%m-%d').date(), "Caroline"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('3000-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('2000-11-2','%Y-%m-%d').date(), "Michayla"), False)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('1999-11-2','%Y-%m-%d').date(), "Elena"), True)
-        self.assertEqual(user_story_3(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(), datetime.datetime.strptime('3000-11-2','%Y-%m-%d').date(), "David"), True)
+        file = open('user_story_geds/us3.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
 
+        self.assertEqual(user_story_3(indi, "@US3_I1@"), False)
+        self.assertEqual(user_story_3(indi, "US3_I2@"), True)
+        self.assertEqual(user_story_3(indi, "US3_I3@"), True)
+        self.assertEqual(user_story_3(indi, "US3_I4@"), True)
+        self.assertEqual(user_story_3(indi, "US3_I5"), False)
 
     def test_us4(self):
         """
         Divorce date should not be before marriage date
         """
 
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Kevin", "Debbie"),
-                         True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('1900-11-2', '%Y-%m-%d').date(), "Robert", "Judy"),
-                         False)
-        self.assertEqual(
-            user_story_4("NA", datetime.datetime.strptime('2000-11-2', '%Y-%m-%d').date(), "Noel", "Carol"), False)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('1999-11-2', '%Y-%m-%d').date(), "John", "Jane"), True)
-        self.assertEqual(user_story_4(datetime.datetime.strptime('1998-11-2', '%Y-%m-%d').date(),
-                                      datetime.datetime.strptime('1997-11-2', '%Y-%m-%d').date(), "Kevin", "Debbie"),
-                         False)
+        file = open('user_story_geds/us4.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_4(fam, "@US4_F1@"), False)
+        self.assertEqual(user_story_4(fam, "@US4_F2@"), True)
+        self.assertEqual(user_story_4(fam, "@US4_F3@"), True)
+        self.assertEqual(user_story_4(fam, "@US4_F4@"), False)
+        self.assertEqual(user_story_4(fam, "@US4_F5@"), True)
 
     def test_us5(self):
         """

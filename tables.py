@@ -63,19 +63,22 @@ def user_story_2(indi, marr_date, husbid, wifeid):
         return True
 
 
-def user_story_3(birthday, death_day, name):
+def user_story_3(indi, idtag):
     '''
     A person's birthday must be before their death date
     birthday is the birthday of the person
     death_day is the date of death of the person
     name is the person's name
     '''
+    birthday = indi[idtag].birth
+    death_day = indi[idtag].death
 
     if birthday != "NA":  # and birthday < date.today():
         if death_day != "NA":  # and death_day <= date.today():
             if calc_difference(birthday, death_day) < 0:
                 print("ERROR: US03: Death date of " + death_day.strftime(
-                    '%Y-%m-%d') + " should not be before " + name + "'s birth date of " + birthday.strftime('%Y-%m-%d'))
+                    '%Y-%m-%d') + " should not be before " + indi[idtag].name + "'s birth date of " +
+                      birthday.strftime('%Y-%m-%d'))
                 return False
             else:
                 return True
@@ -89,7 +92,7 @@ def user_story_3(birthday, death_day, name):
 ##        return False
 
 
-def user_story_4(marriage_date, divorce_date, husbname, wifename):
+def user_story_4(fam, idtag):
     '''
     Divorce date should not be before the marriage date
     marriage_date is the marriage date
@@ -97,6 +100,11 @@ def user_story_4(marriage_date, divorce_date, husbname, wifename):
     husbname is the name of the husband
     wifename is the name of the wife
     '''
+
+    divorce_date = fam[idtag].div
+    marriage_date = fam[idtag].marr
+    husbname = fam[idtag].husbname
+    wifename = fam[idtag].wifename
     if divorce_date == "NA":
         return True
 
@@ -664,7 +672,7 @@ def create_tables(file):
     user_story_36(indi)
 
     for famtag in fam:
-        user_story_4(fam[famtag].marr, fam[famtag].div, fam[famtag].husbname, fam[famtag].wifename)
+        user_story_4(fam, famtag)
         user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_6(fam[famtag].div, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_10(indi, famtag, fam)
@@ -675,7 +683,7 @@ def create_tables(file):
         user_story_21_b(indi, fam[famtag].wifeid, fam[famtag].wifename)
 
     for per in indi:
-        user_story_3(indi[per].birth, indi[per].death, indi[per].name)
+        user_story_3(indi, per)
         user_story_7(indi[per].birth, indi[per].death, indi[per].name)
 
     return indi, fam
