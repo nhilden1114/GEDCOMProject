@@ -691,6 +691,10 @@ def create_tables(file):
 
             elif tag == "CHIL":
                 family.chil.append(args)
+                
+                
+    print("...................................................... " + str(user_story_13(indi, fam)))
+
 
     user_story_13(indi, fam)
     user_story_23(indi)
@@ -763,8 +767,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         # file = open('user_story_geds/us22.ged', 'r')
 
-        #file = open('user_story_geds/bigged.ged', 'r')
-        file = open('user_story_geds/us25.ged')
+        file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/us13.ged')
     except OSError:
         print("Cannot open file")
 
