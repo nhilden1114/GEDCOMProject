@@ -372,14 +372,14 @@ def user_story_23(indi):
         print("ERROR: US23: Duplicates found in file, two people with the name name and birthdate")
         return False
     
-def familylist(indi, fam, family):
-    familylist = list()
-    familylist.append(fam[family].wifeid)
-    familylist.append(fam[family].husbid)
-    for child in fam[family].chil:
-        familylist.append(indi[child].idtag)
+#def familylist(indi, fam, family):
+ #   familylist = list()
+  #  familylist.append(fam[family].wifeid)
+   # familylist.append(fam[family].husbid)
+    #for child in fam[family].chil:
+     #   familylist.append(indi[child].idtag)
             
-    return familylist
+    #return familylist
     
 def user_story_25(indi, fam):
     '''
@@ -387,17 +387,20 @@ def user_story_25(indi, fam):
     '''
 
     for family in fam:
-        people = familylist(indi, fam, family)
-        for person in people:
-            templist = people
-            while len(templist) != 0:
-                if indi[person].birth == indi[templist[0]].birth:
-                    if indi[person].name == indi[templist[0]].name:
+        childlist = fam[family].chil
+        for child in childlist:
+            temp = childlist
+            while len(temp) > 1:
+                if indi[child].idtag == indi[temp[0]].idtag:
+                    temp.pop(0)
+                if indi[child].name == indi[temp[0]].name:
+                    if indi[child].birth == indi[temp[0]].birth:
                         print("ERROR: US25: Duplicates found in file, two people with the same name and birthdate: " +
-                              indi[person].name + " and " + indi[templist[0]].name + " have birthday of: " + indi[person].birth)
+                              indi[child].name + " and " + indi[temp[0]].name + " have birthday of: " + indi[child].birth.strftime(
+                            '%Y-%m-%d'))
                         return False
                 else:
-                    templist.pop(0)
+                    temp.pop(0)
     return True  
 
 
@@ -691,6 +694,7 @@ def create_tables(file):
 
     user_story_13(indi, fam)
     user_story_23(indi)
+    user_story_25(indi, fam)
     user_story_29(indi)
     user_story_30(indi, fam)
     user_story_34(indi, fam)
@@ -759,8 +763,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         # file = open('user_story_geds/us22.ged', 'r')
 
-        file = open('user_story_geds/bigged.ged', 'r')
-        #file = open('user_story_geds/us34.ged')
+        #file = open('user_story_geds/bigged.ged', 'r')
+        file = open('user_story_geds/us25.ged')
     except OSError:
         print("Cannot open file")
 
