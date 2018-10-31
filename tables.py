@@ -379,6 +379,37 @@ def user_story_23(indi):
     else:
         print("ERROR: US23: Duplicates found in file, two people with the name name and birthdate")
         return False
+    
+#def familylist(indi, fam, family):
+ #   familylist = list()
+  #  familylist.append(fam[family].wifeid)
+   # familylist.append(fam[family].husbid)
+    #for child in fam[family].chil:
+     #   familylist.append(indi[child].idtag)
+            
+    #return familylist
+    
+def user_story_25(indi, fam):
+    '''
+    No more than one child with the same name and birth date should appear in a family
+    '''
+
+    for family in fam:
+        childlist = fam[family].chil
+        for child in childlist:
+            temp = childlist
+            while len(temp) > 1:
+                if indi[child].idtag == indi[temp[0]].idtag:
+                    temp.pop(0)
+                if indi[child].name == indi[temp[0]].name:
+                    if indi[child].birth == indi[temp[0]].birth:
+                        print("ERROR: US25: Duplicates found in file, two people with the same name and birthdate: " +
+                              indi[child].name + " and " + indi[temp[0]].name + " have birthday of: " + indi[child].birth.strftime(
+                            '%Y-%m-%d'))
+                        return False
+                else:
+                    temp.pop(0)
+    return True  
 
 
 def user_story_29_helper(indi, idtag):
@@ -436,12 +467,16 @@ def user_story_30(indi, fam):
 
 def user_story_34_helper(indi, fam, family):
     if fam[family].marr != "NA" and indi[fam[family].wifeid].birth != "NA" and indi[fam[family].husbid].birth != "NA":
-        wife_diff = calc_difference(fam[family].marr, indi[fam[family].wifeid].birth)
-        husb_diff = calc_difference(fam[family].marr, indi[fam[family].husbid].birth)
+        wife_age_married = calc_difference(indi[fam[family].wifeid].birth, fam[family].marr)
+        husb_age_married = calc_difference(indi[fam[family].husbid].birth, fam[family].marr)
 
-        if husb_diff < wife_diff * 2:
+        if husb_age_married < 0 or wife_age_married < 0:
+            return False
+        if husb_age_married > wife_age_married * 2:
+            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
-        elif wife_diff < husb_diff * 2:
+        elif wife_age_married > husb_age_married * 2:
+            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
         else:
             return False
@@ -456,11 +491,13 @@ def user_story_34(indi, fam):
 
     married = []
     married_names = []
-    for i in indi:
-        for family in fam:
-            if user_story_30_helper(indi, i, fam) and user_story_34_helper(indi, fam, family):
-                married.append(i)
-                married_names.append(indi[i].name)
+    for family in fam:
+        if user_story_34_helper(indi, fam, family): 
+            print("appending: " + fam[family].husbname + " and " + fam[family].wifename)
+            married.append(fam[family].husbid)
+            married.append(fam[family].wifeid)
+            married_names.append(fam[family].husbname)
+            married_names.append(fam[family].wifename)
     print(
         "US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(
             married_names))
@@ -662,9 +699,14 @@ def create_tables(file):
 
             elif tag == "CHIL":
                 family.chil.append(args)
+                
+                
+    print("...................................................... " + str(user_story_13(indi, fam)))
+
 
     user_story_13(indi, fam)
     user_story_23(indi)
+    user_story_25(indi, fam)
     user_story_29(indi)
     user_story_30(indi, fam)
     user_story_34(indi, fam)
@@ -734,6 +776,7 @@ def main():
         # file = open('user_story_geds/us22.ged', 'r')
 
         file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/us13.ged')
     except OSError:
         print("Cannot open file")
 
