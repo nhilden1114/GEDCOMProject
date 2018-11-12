@@ -3,7 +3,8 @@ from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11, user_story_13
+from tables import user_story_11, user_story_12 
+from tables import user_story_13
 from tables import user_story_18, user_story_15
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
@@ -145,6 +146,42 @@ class Test(unittest.TestCase):
         self.assertEqual(user_story_11(indi, fam, "@US11_I03@", "@US11_I04@"), True)
         self.assertEqual(user_story_11(indi, fam, "@US11_I04@", "@US11_I07@"), True)
         self.assertEqual(user_story_11(indi, fam, "@US11_I05@", "@US11_I07@"), False)
+    
+    def test_us12(self):
+        '''
+        Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+        '''
+    
+        file = open('user_story_geds/us12.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_12(indi, fam), True)
+        
+        file = open('user_story_geds/us11.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_12(indi, fam), True)
+        
+        file = open('user_story_geds/us22.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_12(indi, fam), True)
+        
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_12(indi, fam), True)
+        
+        file = open('user_story_geds/us07.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_12(indi, fam), True)
+
 
     def test_us13(self):
         '''

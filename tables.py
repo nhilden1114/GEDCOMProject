@@ -258,6 +258,27 @@ def user_story_11(indi, fam, husbid, wifeid):
     return True
 
 
+def user_story_12(indi, fam): 
+    '''
+    Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+    '''
+    
+    for family in fam:
+        for child in fam[family].chil:    
+            if indi[child].birth != "NA":
+                wife_age = calc_difference(indi[fam[family].wifeid].birth, indi[child].birth)
+                husb_age = calc_difference(indi[fam[family].husbid].birth, indi[child].birth)
+                if wife_age >= 60:
+                    print ("ERROR: US12: " + str(indi[fam[family].wifeid].name) + " is too old!")
+                    return False
+                elif husb_age >= 80:
+                    print ("ERROR: US12: " + str(indi[fam[family].husbid].name) + " is too old!")
+                    return False
+                else:
+                    print ("ERROR: US12: Parents are an ok age")
+                    return True
+                
+    
 def user_story_13(indi, fam):
     '''
     Birth dates of siblings should be more than 8 months apart or less than 2 days apart
@@ -752,6 +773,8 @@ def create_tables(file):
                 
     #print("...................................................... " + str(user_story_13(indi, fam)))
 
+    
+    user_story_12(indi, fam)
     user_story_13(indi, fam)
     user_story_23(indi)
     user_story_25(indi, fam)
@@ -763,6 +786,7 @@ def create_tables(file):
     user_story_38(indi)
     user_story_39(indi, fam)
 
+
     for famtag in fam:
         user_story_4(fam, famtag)
         user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
@@ -772,10 +796,12 @@ def create_tables(file):
         user_story_18(indi, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_21_a(indi, fam[famtag].husbid, fam[famtag].husbname)
         user_story_21_b(indi, fam[famtag].wifeid, fam[famtag].wifename)
+        
 
     for per in indi:
         user_story_3(indi, per)
         user_story_7(indi[per].birth, indi[per].death, indi[per].name)
+        
 
     return indi, fam
 
@@ -823,8 +849,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
 
-        file = open('user_story_geds/bigged.ged', 'r')
-        #file = open('user_story_geds/us13.ged')
+        #file = open('user_story_geds/bigged.ged', 'r')
+        file = open('user_story_geds/us12.ged')
     except OSError:
         print("Cannot open file")
 
