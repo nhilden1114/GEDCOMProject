@@ -10,7 +10,7 @@ from tables import user_story_22, user_story_23
 from tables import user_story_25
 from tables import user_story_29, user_story_30
 from tables import user_story_34, user_story_35
-from tables import user_story_36
+from tables import user_story_36, user_story_38
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -54,10 +54,10 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertEqual(user_story_3(indi, "@US3_I1@"), False)
-        self.assertEqual(user_story_3(indi, "US3_I2@"), True)
-        self.assertEqual(user_story_3(indi, "US3_I3@"), True)
-        self.assertEqual(user_story_3(indi, "US3_I4@"), True)
-        self.assertEqual(user_story_3(indi, "US3_I5"), False)
+        self.assertEqual(user_story_3(indi, "@US3_I2@"), True)
+        self.assertEqual(user_story_3(indi, "@US3_I3@"), True)
+        self.assertEqual(user_story_3(indi, "@US3_I4@"), False)
+        self.assertEqual(user_story_3(indi, "@US3_I5@"), False)
 
     def test_us4(self):
         """
@@ -350,7 +350,7 @@ class Test(unittest.TestCase):
         Test that individuals ages are calculated
         '''
         self.assertEqual(determine_age(datetime.date(2000, 1, 1), datetime.date.today()), 18) 
-        self.assertEqual(determine_age(datetime.date(2000, 11, 11), datetime.date.today()), 17) 
+        self.assertEqual(determine_age(datetime.date(2000, 11, 30), datetime.date.today()), 17) 
         self.assertEqual(determine_age(datetime.date(1990, 7, 22), datetime.date.today()), 28) 
         self.assertEqual(determine_age(datetime.date(1990, 12, 25), datetime.date.today()), 27) 
         self.assertEqual(determine_age(datetime.date(2020, 1, 1), datetime.date.today()), -2) 
@@ -436,6 +436,22 @@ class Test(unittest.TestCase):
         self.assertNotIn("@US36_I3", result)
         self.assertNotIn("@US36_I5@", result)
         self.assertNotIn("@US36_I20@", result)
+
+    def test_us38(self):
+        """
+        List all living people with birthdays in the next 30 days
+        """
+        file = open('user_story_geds/us38.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_38(indi)
+        self.assertIn("@US38_I1@", result)
+        self.assertIn("@US38_I3@", result)
+        self.assertIn("@US38_I4@", result)
+        self.assertNotIn("@US38_I2@", result)
+        self.assertNotIn("@US38_I5@", result)
+
 
 
 if __name__ == '__main__':

@@ -559,6 +559,33 @@ def user_story_36(indi):
     print("US36: List of all deaths in the past 30 days: " + str(recent_deaths_names))
     return recent_deaths
 
+def user_story_38(indi):
+    '''
+    List all living people with birthdays in the next 30 days
+    indi is the dict of all individuals in the file
+    '''
+    living = list()
+    for person in indi:
+        if indi[person].alive == True:
+            living.append(person)
+            
+    upcomingBirthdays = list()
+    for alive in living:
+        if indi[alive].birth != "NA":
+            currentDate = datetime.datetime.now()
+            bdate = indi[alive].birth.strftime('%d %b %Y')
+            birthday = datetime.datetime.strptime(bdate, "%d %b %Y").replace(year=currentDate.year)
+            diff = birthday - currentDate;
+            if diff.days <= 30 and diff.days >= 0:
+                upcomingBirthdays.append(alive)            
+
+    #living = (living.append(person) for person in indi if indi[person].alive == True)
+
+    print("US38: List of all living people with birthdays in the next 30 days: " + str(upcomingBirthdays))
+    return upcomingBirthdays
+
+    
+
 
 class Person:
 
@@ -701,8 +728,7 @@ def create_tables(file):
                 family.chil.append(args)
                 
                 
-    print("...................................................... " + str(user_story_13(indi, fam)))
-
+    #print("...................................................... " + str(user_story_13(indi, fam)))
 
     user_story_13(indi, fam)
     user_story_23(indi)
@@ -712,13 +738,13 @@ def create_tables(file):
     user_story_34(indi, fam)
     user_story_35(indi)
     user_story_36(indi)
+    user_story_38(indi)
 
     for famtag in fam:
         user_story_4(fam, famtag)
         user_story_5(fam[famtag].marr, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_6(fam[famtag].div, fam[famtag].husbid, fam[famtag].wifeid, indi)
         user_story_10(indi, famtag, fam)
-        #user_story_11(indi, fam, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_15(fam[famtag].chil, famtag)
         user_story_18(indi, fam[famtag].husbid, fam[famtag].wifeid)
         user_story_21_a(indi, fam[famtag].husbid, fam[famtag].husbname)
@@ -773,10 +799,10 @@ def main():
     try:
         # file = open('us_15.ged', 'r')
         # file = open('NicoleFamily.ged', 'r')
-        # file = open('user_story_geds/us22.ged', 'r')
+        #file = open('user_story_geds/us3.ged', 'r')
 
         file = open('user_story_geds/bigged.ged', 'r')
-        #file = open('user_story_geds/us13.ged')
+        #file = open('user_story_geds/us38.ged')
     except OSError:
         print("Cannot open file")
 
