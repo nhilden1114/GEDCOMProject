@@ -584,8 +584,30 @@ def user_story_38(indi):
     print("US38: List of all living people with birthdays in the next 30 days: " + str(upcomingBirthdays))
     return upcomingBirthdays
 
-    
+def user_story_39(indi, fam):
+    '''
+    List all families with anniversaries in the next 30 days
+    indi is the dict of all individuals in the file
+    fam is the dict of all families in the file
+    '''
+    currentlyFam = list()
+    for family in fam:
+        if fam[family].div == "NA":
+            if indi[fam[family].husbid].death == "NA" and indi[fam[family].wifeid].death == "NA":
+                currentlyFam.append(family)
 
+    upcomingAnniversary = list()
+    for curr in currentlyFam:
+        if fam[curr].marr != "NA":
+            currentDate = datetime.datetime.now()
+            marrDate = fam[curr].marr.strftime('%d %b %Y')
+            married = datetime.datetime.strptime(marrDate, "%d %b %Y").replace(year=currentDate.year)
+            diff = married - currentDate;
+            if diff.days <= 30 and diff.days >= 0:
+                upcomingAnniversary.append(curr)  
+
+    print("US39: List all families with anniversaries in the next 30 days: " + str(upcomingAnniversary))
+    return upcomingAnniversary
 
 class Person:
 
@@ -739,6 +761,7 @@ def create_tables(file):
     user_story_35(indi)
     user_story_36(indi)
     user_story_38(indi)
+    user_story_39(indi, fam)
 
     for famtag in fam:
         user_story_4(fam, famtag)
@@ -797,12 +820,11 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        # file = open('us_15.ged', 'r')
         # file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
 
         file = open('user_story_geds/bigged.ged', 'r')
-        #file = open('user_story_geds/us38.ged')
+        #file = open('user_story_geds/us13.ged')
     except OSError:
         print("Cannot open file")
 

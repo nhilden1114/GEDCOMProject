@@ -11,6 +11,7 @@ from tables import user_story_25
 from tables import user_story_29, user_story_30
 from tables import user_story_34, user_story_35
 from tables import user_story_36, user_story_38
+from tables import user_story_39
 from tables import create_tables, create_indi, create_fam
 import unittest
 import datetime
@@ -53,11 +54,11 @@ class Test(unittest.TestCase):
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_3(indi, "@US3_I1@"), False)
-        self.assertEqual(user_story_3(indi, "@US3_I2@"), True)
-        self.assertEqual(user_story_3(indi, "@US3_I3@"), True)
-        self.assertEqual(user_story_3(indi, "@US3_I4@"), False)
-        self.assertEqual(user_story_3(indi, "@US3_I5@"), False)
+        self.assertEqual(user_story_3(indi, "@US03_I1@"), False)
+        self.assertEqual(user_story_3(indi, "@US03_I2@"), True)
+        self.assertEqual(user_story_3(indi, "@US03_I3@"), True)
+        self.assertEqual(user_story_3(indi, "@US03_I4@"), False)
+        self.assertEqual(user_story_3(indi, "@US03_I5@"), False)
 
     def test_us4(self):
         """
@@ -68,11 +69,11 @@ class Test(unittest.TestCase):
         indi, fam = create_tables(file)
         file.close()
 
-        self.assertEqual(user_story_4(fam, "@US4_F1@"), False)
-        self.assertEqual(user_story_4(fam, "@US4_F2@"), True)
-        self.assertEqual(user_story_4(fam, "@US4_F3@"), True)
-        self.assertEqual(user_story_4(fam, "@US4_F4@"), False)
-        self.assertEqual(user_story_4(fam, "@US4_F5@"), True)
+        self.assertEqual(user_story_4(fam, "@US04_F1@"), False)
+        self.assertEqual(user_story_4(fam, "@US04_F2@"), True)
+        self.assertEqual(user_story_4(fam, "@US04_F3@"), True)
+        self.assertEqual(user_story_4(fam, "@US04_F4@"), False)
+        self.assertEqual(user_story_4(fam, "@US04_F5@"), True)
 
     def test_us5(self):
         """
@@ -451,6 +452,27 @@ class Test(unittest.TestCase):
         self.assertIn("@US38_I4@", result)
         self.assertNotIn("@US38_I2@", result)
         self.assertNotIn("@US38_I5@", result)
+
+    def test_us39(self):
+        """
+        List all families with anniversaries in the next 30 days
+        """
+        file = open('user_story_geds/us39.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_39(indi, fam)
+        self.assertIn("@US39_F1@", result)
+        self.assertNotIn("@US38_F2@", result)
+        self.assertNotIn("@US38_F3@", result)
+
+        file = open('user_story_geds/us13.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        result = user_story_39(indi, fam)
+        self.assertIn("@US13_F2@", result)
+        self.assertNotIn("@US13_F1@", result)
 
 
 
