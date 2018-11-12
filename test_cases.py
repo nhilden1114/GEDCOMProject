@@ -176,7 +176,7 @@ class Test(unittest.TestCase):
         
         self.assertEqual(user_story_12(indi, fam), True)
         
-        file = open('user_story_geds/us07.ged', 'r')
+        file = open('user_story_geds/bigged.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
         
