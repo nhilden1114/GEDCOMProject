@@ -4,8 +4,8 @@ from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
 from tables import user_story_11, user_story_12 
-from tables import user_story_13
-from tables import user_story_18, user_story_15
+from tables import user_story_13,  user_story_15
+from tables import user_story_16, user_story_18
 from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_25
@@ -251,6 +251,42 @@ class Test(unittest.TestCase):
         self.assertFalse(user_story_15(
             ["Nicole", "Caroline", "Elena", "Michayla", "Ann", "David", "John", "Mary", "Vince", "Bob", "Kiki", "AJ",
              "JJ", "AA", "BB", "CC"], "Test_fam_of_16"))
+    
+    def test_us16(self):
+        '''
+        All male members of a family should have the same last name
+        '''
+        
+        file = open('user_story_geds/us16.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_16(indi, fam), False)
+        
+        file = open('user_story_geds/us11.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_16(indi, fam), True)
+        
+        file = open('user_story_geds/us22.ged')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_16(indi, fam), True)
+        
+        file = open('NicoleFamily.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_16(indi, fam), True)
+        
+        file = open('user_story_geds/bigged.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+        
+        self.assertEqual(user_story_16(indi, fam), True)
+
 
     def test_us18(self):
         """

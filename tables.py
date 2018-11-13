@@ -319,11 +319,34 @@ def user_story_15(child_list, family_tag):
         print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
         return False
 
-def user_story_16():
+def GetLastName(name): #Returns LastName
+    
+	theIndex = name.index("/")
+	return name[theIndex:]
+
+def user_story_16(indi, fam):
     '''
     All male members of a family should have the same last name
     '''
-
+    for family in fam:
+        childlist = fam[family].chil
+        for child in childlist:
+            husb_full_name = indi[fam[family].husbid].name
+            husb_last_name = GetLastName(husb_full_name)
+           #print ("US16: HUSB LASTNAME: " + husb_last_name)
+            
+            child_full_name = indi[child].name
+            child_last_name = GetLastName(child_full_name)
+            #print ("US16: CHILD LAST: " + child_last_name)
+            
+            if indi[child].gender == "M" and child_last_name != husb_last_name:
+                print ("ERROR: US16:  All male members of a family should have the same last name " + str(husb_last_name))
+                return False
+            else:
+                print ("US16:  All male members of a family have the same last name " + str(husb_last_name))
+                return True
+            
+ 
 def user_story_18(indi, husbid, wifeid):
     '''
     Siblings should NOT marry
@@ -780,6 +803,7 @@ def create_tables(file):
     
     user_story_12(indi, fam)
     user_story_13(indi, fam)
+    user_story_16(indi, fam)
     user_story_23(indi)
     user_story_25(indi, fam)
     user_story_29(indi)
@@ -853,8 +877,8 @@ def main():
         # file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
 
-        #file = open('user_story_geds/bigged.ged', 'r')
-        file = open('user_story_geds/us12.ged')
+        file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/us16.ged')
     except OSError:
         print("Cannot open file")
 
