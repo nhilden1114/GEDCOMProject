@@ -874,10 +874,10 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        # file = open('NicoleFamily.ged', 'r')
+        file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
 
-        file = open('user_story_geds/bigged.ged', 'r')
+        #file = open('user_story_geds/bigged.ged', 'r')
         #file = open('user_story_geds/us16.ged')
     except OSError:
         print("Cannot open file")
