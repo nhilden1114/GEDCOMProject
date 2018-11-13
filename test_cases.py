@@ -522,5 +522,3 @@ if __name__ == '__main__':
     file.close()
 
     unittest.main(exit = False, verbosity = 2)
-
-

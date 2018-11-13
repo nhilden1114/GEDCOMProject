@@ -275,7 +275,7 @@ def user_story_12(indi, fam):
                     print ("ERROR: US12: " + str(indi[fam[family].husbid].name) + " is too old!")
                     return False
                 else:
-                    print ("ERROR: US12: Parents are an ok age")
+                    print ("US12: Parents are an ok age")
                     return True
                 
     
@@ -319,6 +319,10 @@ def user_story_15(child_list, family_tag):
         print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
         return False
 
+def user_story_16():
+    '''
+    All male members of a family should have the same last name
+    '''
 
 def user_story_18(indi, husbid, wifeid):
     '''
