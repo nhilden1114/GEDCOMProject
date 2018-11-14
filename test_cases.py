@@ -189,12 +189,6 @@ class Test(unittest.TestCase):
         Birth dates of siblings should be more than 8 months apart or less than 2 days apart
         '''
         
-        #file = open('user_story_geds/us13.ged', 'r')
-        #indi, fam = create_tables(file)
-        #file.close()
-        
-        #print("...................................................... " + str(user_story_13(indi, fam)))
-        
         file = open('NicoleFamily.ged', 'r')
         indi, fam = create_tables(file)
         file.close()
@@ -231,20 +225,6 @@ class Test(unittest.TestCase):
         There should be fewer than 15 siblings in a family
         '''
 
-        # file = open('user_story_geds/us15.ged', 'r')
-        # indi, fam = create_tables(file)
-        # file.close()
-
-        # families = []
-        # family_tags = []
-        # for family in fam:
-        #   family_tags.append(family)
-        #  families.append(fam[family].chil)
-
-        # self.assertTrue(user_story_15(families[0], family_tags[0]))
-        # self.assertFalse(user_story_15(families[1], family_tags[1]))
-        # self.assertTrue(user_story_15(families[2], family_tags[2]))
-        # self.assertTrue(user_story_15(families[3], family_tags[3]))
         self.assertTrue(user_story_15(["Nicole", "Caroline"], "Test fam of 2"))
         self.assertTrue(user_story_15(["Nicole", "Caroline", "Elena", "Michayla"], "Test fam of 4"))
         self.assertTrue(user_story_15(["Nicole", "Caroline", "Elena", "Michayla", "Ann", "David"], "Test fam of 6"))
