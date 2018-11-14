@@ -512,6 +512,47 @@ def user_story_30(indi, fam):
     print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
+def user_story_33_helper(fam, indi, idtag):
+    '''
+    List of orphans
+    Parents are both deceased
+    Child is less than 18 years old
+    Comp date is either the current date or death date
+    '''
+
+    husb_id = fam[idtag].husbid
+    wife_id = fam[idtag].wifeid
+    children = fam[idtag].chil
+
+    husb_status = indi[husb_id].death
+    wife_status = indi[wife_id].death
+
+    orphs = []
+
+    if children != [] and husb_status != 'NA' and wife_status != 'NA':
+        for i in children:
+            get_child_birth = indi[i].birth
+            if calc_difference(get_child_birth, datetime.date.today()) >= 18:
+                continue
+            else:
+                orphs.append(i)
+    return orphs
+
+
+def user_story_33(indi, fam):
+
+    orphans = []
+    orphan_names = []
+    for i in fam:
+         temp = user_story_33_helper(fam, indi, i)
+         if temp != []:
+             for tag in temp:
+                orphans.append(tag)
+                orphan_names.append(indi[tag].name)
+
+    print("US33: List of all orphans in the GEDCOM file: " + str(orphan_names))
+    return orphans
+
 
 def user_story_34_helper(indi, fam, family):
     if fam[family].marr != "NA" and indi[fam[family].wifeid].birth != "NA" and indi[fam[family].husbid].birth != "NA":
@@ -541,7 +582,7 @@ def user_story_34(indi, fam):
     married_names = []
     for family in fam:
         if user_story_34_helper(indi, fam, family): 
-            print("appending: " + fam[family].husbname + " and " + fam[family].wifename)
+            #print("appending: " + fam[family].husbname + " and " + fam[family].wifename)
             married.append(fam[family].husbid)
             married.append(fam[family].wifeid)
             married_names.append(fam[family].husbname)
@@ -808,6 +849,7 @@ def create_tables(file):
     user_story_25(indi, fam)
     user_story_29(indi)
     user_story_30(indi, fam)
+    user_story_33(indi, fam)
     user_story_34(indi, fam)
     user_story_35(indi)
     user_story_36(indi)
@@ -874,10 +916,10 @@ def create_fam(fam):
 def main():
     """ Need to put a descriptive docstring here"""
     try:
-        file = open('NicoleFamily.ged', 'r')
+        #file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
 
-        #file = open('user_story_geds/bigged.ged', 'r')
+        file = open('user_story_geds/bigged.ged', 'r')
         #file = open('user_story_geds/us16.ged')
     except OSError:
         print("Cannot open file")
