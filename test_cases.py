@@ -10,6 +10,7 @@ from tables import user_story_21_a, user_story_21_b
 from tables import user_story_22, user_story_23
 from tables import user_story_25
 from tables import user_story_29, user_story_30
+from tables import user_story_33
 from tables import user_story_34, user_story_35
 from tables import user_story_36, user_story_38
 from tables import user_story_39
@@ -461,6 +462,24 @@ class Test(unittest.TestCase):
         self.assertIn("@I09@", result)
         self.assertIn("@I10@", result)
         self.assertNotIn("@I08@", result)
+
+    def test_us33(self):
+        """
+        A child with deceased parents must be less than 18 years old to be considered an orphan
+        """
+
+        file = open('user_story_geds/us33.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+
+        result = user_story_33(indi, fam)
+
+        self.assertIn("@US33_I01@", result)
+        self.assertNotIn("@US33_I21@", result)
+        self.assertNotIn("@US33_I16@", result)
+        self.assertNotIn("@US33_I08@", result)
+        self.assertNotIn("@US33_I11@", result)
 
     def test_us34(self):
         '''
