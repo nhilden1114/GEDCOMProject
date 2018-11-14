@@ -580,6 +580,32 @@ class Test(unittest.TestCase):
         self.assertNotIn("@US13_F1@", result)
 
 
+    def test_us42(self):
+        """
+        Reject illegitimate dates
+        """
+
+        file = open('user_story_geds/us39.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        file = open('user_story_geds/us42.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        file = open('user_story_geds/us3.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        file = open('user_story_geds/us01.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+        file = open('user_story_geds/us02.ged')
+        indi, fam = create_tables(file)
+        file.close()
+
+
 
 if __name__ == '__main__':
     print('Running unit tests')

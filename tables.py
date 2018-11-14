@@ -267,17 +267,18 @@ def user_story_12(indi, fam):
     for family in fam:
         for child in fam[family].chil:    
             if indi[child].birth != "NA":
-                wife_age = calc_difference(indi[fam[family].wifeid].birth, indi[child].birth)
-                husb_age = calc_difference(indi[fam[family].husbid].birth, indi[child].birth)
-                if wife_age >= 60:
-                    print ("ERROR: US12: " + str(indi[fam[family].wifeid].name) + " is too old!")
-                    return False
-                elif husb_age >= 80:
-                    print ("ERROR: US12: " + str(indi[fam[family].husbid].name) + " is too old!")
-                    return False
-                else:
-                    print ("US12: Parents are an ok age")
-                    return True
+                if indi[fam[family].wifeid].birth != "NA" and indi[fam[family].husbid].birth != "NA":
+                    wife_age = calc_difference(indi[fam[family].wifeid].birth, indi[child].birth)
+                    husb_age = calc_difference(indi[fam[family].husbid].birth, indi[child].birth)
+                    if wife_age >= 60:
+                        print ("ERROR: US12: " + str(indi[fam[family].wifeid].name) + " is too old!")
+                        return False
+                    elif husb_age >= 80:
+                        print ("ERROR: US12: " + str(indi[fam[family].husbid].name) + " is too old!")
+                        return False
+                    else:
+                        print ("US12: Parents are an ok age")
+                        return True
                 
     
 def user_story_13(indi, fam):
@@ -795,11 +796,13 @@ def create_tables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
 
                 if new_tag == "DATE":
-                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-
-                    user_story_1(new_date)
-                    person.birth = new_date
-                    person.age = determine_age(new_date, datetime.datetime.today())
+                    try:
+                        new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                        user_story_1(new_date)
+                        person.birth = new_date
+                        person.age = determine_age(new_date, datetime.datetime.today())
+                    except ValueError:
+                        print("ERROR: US42: " + str(new_args) + " is an Illegitimate birth date")
 
             elif tag == "DEAT":
                 person.alive = False
@@ -809,12 +812,13 @@ def create_tables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
 
                 if new_tag == "DATE":
-                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
-
-                    user_story_1(new_date)
-                    person.death = new_date
-                    person.age = determine_age(person.birth, new_date)
-
+                    try:
+                        new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                        user_story_1(new_date)
+                        person.death = new_date
+                        person.age = determine_age(person.birth, new_date)
+                    except ValueError:
+                        print("ERROR: US42: " + str(new_args) + " is an Illegitimate death date")
             elif tag == "FAMS":
                 person.fams.append(args)
 
@@ -828,14 +832,16 @@ def create_tables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
 
                 if new_tag == "DATE":
-                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    try:
+                        new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
 
-                    user_story_1(new_date)
-                    user_story_2(indi, new_date, family.husbid, family.wifeid)
-                    user_story_11(indi, fam, family.husbid, family.wifeid)
+                        user_story_1(new_date)
+                        user_story_2(indi, new_date, family.husbid, family.wifeid)
+                        user_story_11(indi, fam, family.husbid, family.wifeid)
 
-                    family.marr = new_date
-
+                        family.marr = new_date
+                    except ValueError:
+                        print("ERROR: US42: " + str(new_args) + " is an Illegitimate marriage date")
             elif tag == "DIV":
 
                 # need to access next line for the DATE
@@ -843,12 +849,14 @@ def create_tables(file):
                 new_level, new_tag, new_args, new_tokens = validLine(newLine)
 
                 if new_tag == "DATE":
-                    new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
+                    try:
+                        new_date = datetime.datetime.strptime(new_args, "%d %b %Y").date()
 
-                    user_story_1(new_date)
+                        user_story_1(new_date)
 
-                    family.div = new_date
-
+                        family.div = new_date
+                    except ValueError:
+                        print("ERROR: US42: " + str(new_args) + " is an Illegitimate divorce date")
             elif tag == "HUSB":
                 family.husbid = args
                 family.husbname = indi[args].name
@@ -859,9 +867,6 @@ def create_tables(file):
 
             elif tag == "CHIL":
                 family.chil.append(args)
-                
-                
-    #print("...................................................... " + str(user_story_13(indi, fam)))
 
     
     user_story_12(indi, fam)
