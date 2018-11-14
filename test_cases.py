@@ -153,7 +153,7 @@ class Test(unittest.TestCase):
         Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
         '''
     
-        file = open('user_story_geds/us12.ged')
+        file = open('user_story_geds/us39.ged')
         indi, fam = create_tables(file)
         file.close()
         

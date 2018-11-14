@@ -11,9 +11,6 @@ def determine_age(dob, date):
        date is either the current date or the death date
     """
     age = date.year - dob.year - ((dob.month, dob.day) > (date.month, date.day))
-
-    # age = abs((date – dob)).days / 365.25
-
     return age
 
 
@@ -82,15 +79,7 @@ def user_story_3(indi, idtag):
                 return False
             else:
                 return True
-
-
-##        else:
-##            print("ERROR: US03: Death date of " + death_day.strftime('%Y-%m-%d') + " is not valid")
-##            return False
-##    else:
-##        print("ERROR: US03: Birth date of " + birthday.strftime('%Y-%m-%d') + " is not valid")
-##        return False
-
+            
 
 def user_story_4(fam, idtag):
     '''
@@ -318,11 +307,13 @@ def user_story_15(child_list, family_tag):
     else:
         print("ERROR: US15: There should be fewer than 15 siblings in family " + family_tag)
         return False
+    
 
 def GetLastName(name): #Returns LastName
     
 	theIndex = name.index("/")
 	return name[theIndex:]
+
 
 def user_story_16(indi, fam):
     '''
@@ -333,11 +324,9 @@ def user_story_16(indi, fam):
         for child in childlist:
             husb_full_name = indi[fam[family].husbid].name
             husb_last_name = GetLastName(husb_full_name)
-           #print ("US16: HUSB LASTNAME: " + husb_last_name)
-            
             child_full_name = indi[child].name
             child_last_name = GetLastName(child_full_name)
-            #print ("US16: CHILD LAST: " + child_last_name)
+           
             
             if indi[child].gender == "M" and child_last_name != husb_last_name:
                 print ("ERROR: US16:  All male members of a family should have the same last name " + str(husb_last_name))
@@ -428,14 +417,6 @@ def user_story_23(indi):
         print("ERROR: US23: Duplicates found in file, two people with the name name and birthdate")
         return False
     
-#def familylist(indi, fam, family):
- #   familylist = list()
-  #  familylist.append(fam[family].wifeid)
-   # familylist.append(fam[family].husbid)
-    #for child in fam[family].chil:
-     #   familylist.append(indi[child].idtag)
-            
-    #return familylist
     
 def user_story_25(indi, fam):
     '''
@@ -512,6 +493,7 @@ def user_story_30(indi, fam):
     print("US30: List of all living married people in the GEDCOM file: " + str(married_names))
     return married
 
+
 def user_story_33_helper(fam, indi, idtag):
     husb_id = fam[idtag].husbid
     wife_id = fam[idtag].wifeid
@@ -559,10 +541,8 @@ def user_story_34_helper(indi, fam, family):
         if husb_age_married < 0 or wife_age_married < 0:
             return False
         if husb_age_married > wife_age_married * 2:
-            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
         elif wife_age_married > husb_age_married * 2:
-            #print("husb age: " + str(husb_age_married) + " wife age: " + str(wife_age_married))
             return True
         else:
             return False
@@ -579,7 +559,6 @@ def user_story_34(indi, fam):
     married_names = []
     for family in fam:
         if user_story_34_helper(indi, fam, family): 
-            #print("appending: " + fam[family].husbname + " and " + fam[family].wifename)
             married.append(fam[family].husbid)
             married.append(fam[family].wifeid)
             married_names.append(fam[family].husbname)
@@ -588,6 +567,7 @@ def user_story_34(indi, fam):
         "US34: List of all living married people when the older spouse was more than twice as old as the younger spouse in the GEDCOM file: " + str(
             married_names))
     return married
+
 
 def user_story_35_helper(indi, idtag):
     birthdays = indi[idtag].birth
@@ -645,6 +625,7 @@ def user_story_36(indi):
     print("US36: List of all deaths in the past 30 days: " + str(recent_deaths_names))
     return recent_deaths
 
+
 def user_story_38(indi):
     '''
     List all living people with birthdays in the next 30 days
@@ -665,10 +646,9 @@ def user_story_38(indi):
             if diff.days <= 30 and diff.days >= 0:
                 upcomingBirthdays.append(alive)            
 
-    #living = (living.append(person) for person in indi if indi[person].alive == True)
-
     print("US38: List of all living people with birthdays in the next 30 days: " + str(upcomingBirthdays))
     return upcomingBirthdays
+
 
 def user_story_39(indi, fam):
     '''
@@ -694,6 +674,7 @@ def user_story_39(indi, fam):
 
     print("US39: List all families with anniversaries in the next 30 days: " + str(upcomingAnniversary))
     return upcomingAnniversary
+
 
 class Person:
 
@@ -835,9 +816,6 @@ def create_tables(file):
             elif tag == "CHIL":
                 family.chil.append(args)
                 
-                
-    #print("...................................................... " + str(user_story_13(indi, fam)))
-
     
     user_story_12(indi, fam)
     user_story_13(indi, fam)
@@ -915,7 +893,6 @@ def main():
     try:
         #file = open('NicoleFamily.ged', 'r')
         #file = open('user_story_geds/us3.ged', 'r')
-
         file = open('user_story_geds/bigged.ged', 'r')
         #file = open('user_story_geds/us14.ged')
     except OSError:
