@@ -917,7 +917,7 @@ def main():
         #file = open('user_story_geds/us3.ged', 'r')
 
         file = open('user_story_geds/bigged.ged', 'r')
-        #file = open('user_story_geds/us16.ged')
+        #file = open('user_story_geds/us14.ged')
     except OSError:
         print("Cannot open file")
 
