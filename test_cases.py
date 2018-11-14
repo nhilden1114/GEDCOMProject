@@ -1,9 +1,11 @@
+from collections import *
 from tables import determine_age
 from tables import user_story_1, user_story_2
 from tables import user_story_3, user_story_4
 from tables import user_story_5, user_story_6
 from tables import user_story_7, user_story_10
-from tables import user_story_11, user_story_12 
+from tables import user_story_11, user_story_12
+from tables import user_story_14
 from tables import user_story_13,  user_story_15
 from tables import user_story_16, user_story_18
 from tables import user_story_21_a, user_story_21_b
@@ -218,6 +220,37 @@ class Test(unittest.TestCase):
         file.close()
 
         self.assertEqual(user_story_13(indi, fam), True)
+
+    def test_us14(self):
+        file = open('user_story_geds/us14.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertFalse(user_story_14(indi, fam))
+
+        file = open('user_story_geds/us39.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_14(indi, fam), None)
+
+        file = open('user_story_geds/us01.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_14(indi, fam), None)
+
+        file = open('user_story_geds/us22.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_14(indi, fam), None)
+
+        file = open('user_story_geds/us02.ged', 'r')
+        indi, fam = create_tables(file)
+        file.close()
+
+        self.assertEqual(user_story_14(indi, fam), None)
 
 
     def test_us15(self):

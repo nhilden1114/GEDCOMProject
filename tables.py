@@ -2,6 +2,7 @@ from prettytable import PrettyTable
 import datetime
 from datetime import date, timedelta
 from Project3 import validLine
+from collections import *
 
 
 def determine_age(dob, date):
@@ -304,6 +305,29 @@ def user_story_13(indi, fam):
                     print("ERROR: US13: Birthdate of " + births[i + 1].strftime(
                         '%Y-%m-%d') + " is too soon after birthday of sibling on " + births[i].strftime('%Y-%m-%d'))
     return flag
+
+def user_story_14(indi, fam):
+    """
+    Multiple births <= 5
+    No more than five siblings should be born at the same time
+    """
+    birthdays = []
+    for family in fam:
+        for child in fam[family].chil:
+            if indi[child].birth != "NA":
+                birthdays.append(indi[child].birth)
+            else:
+                return False
+    for birthday in birthdays:
+        count = Counter(birthdays)
+
+    multi_births = dict((k, v) for k, v in count.items() if v >= 5)
+    if multi_births.items() is None:
+        return True
+    # print("Multiple Birthdays: " + str(multi_births))
+    for key in multi_births:
+        print("ERROR: US14: There are more than 5 siblings born on " + str(key))
+        return False
 
 
 def user_story_15(child_list, family_tag):
@@ -842,6 +866,7 @@ def create_tables(file):
     
     user_story_12(indi, fam)
     user_story_13(indi, fam)
+    user_story_14(indi, fam)
     user_story_16(indi, fam)
     user_story_23(indi)
     user_story_25(indi, fam)
