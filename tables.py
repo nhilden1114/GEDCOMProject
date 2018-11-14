@@ -495,13 +495,6 @@ def user_story_30(indi, fam):
 
 
 def user_story_33_helper(fam, indi, idtag):
-    '''
-    List of orphans
-    Parents are both deceased
-    Child is less than 18 years old
-    Comp date is either the current date or death date
-    '''
-
     husb_id = fam[idtag].husbid
     wife_id = fam[idtag].wifeid
     children = fam[idtag].chil
@@ -522,7 +515,11 @@ def user_story_33_helper(fam, indi, idtag):
 
 
 def user_story_33(indi, fam):
-
+    '''
+    List of orphans: Parents are both deceased, Child is less than 18 years old
+    indi is the dict of all individuals in the file
+    fam is the dict of all families in the file
+    '''
     orphans = []
     orphan_names = []
     for i in fam:
